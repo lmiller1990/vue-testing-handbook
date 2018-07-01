@@ -4,7 +4,8 @@ module.exports = {
     sidebar: [
       '/',
       ['/rendering-a-component', 'Getting Started'],
-      ['/setting-up-for-tdd', 'Setting up for TDD']
+      ['/setting-up-for-tdd', 'Setting up for TDD'],
+      ['/components-with-props', 'Testing Props']
       // '/getting-started/setting-up-for-tdd'
     ]
   },
