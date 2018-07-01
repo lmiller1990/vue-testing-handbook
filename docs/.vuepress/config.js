@@ -3,8 +3,8 @@ module.exports = {
   themeConfig: {
     sidebar: [
       '/',
-      '/getting-started/mounting-a-component',
-      '/getting-started/setting-up-for-tdd'
+      '/getting-started/',
+      // '/getting-started/setting-up-for-tdd'
     ]
   },
 }
