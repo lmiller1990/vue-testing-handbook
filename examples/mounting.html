@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script src="vue.js"></script>
+  <script src="vue-template-compiler.js"></script>
+  <script src="vue-test-utils.js"></script>
+</head>
+<body>
+  
+<script>
+const Child = Vue.component("Child", {
+  name: "Child",
+  template: "<div>Child component</div>"
+})
+
+const Parent = Vue.component("Parent", {
+  name: "Parent",
+  template: "<div><child /></div>"
+})
+
+const { shallowMount, mount } = VueTestUtils
+
+const shallowWrapper = shallowMount(Parent)
+const mountWrapper = mount(Parent)
+
+console.log(shallowWrapper.html())
+console.log(mountWrapper.html())
+</script>
+</body>
+</html>
