@@ -1,6 +1,4 @@
-## Setting up for TDD
-
-### vue-cli
+## vue-cli
 
 `vue-test-utils` is the official testing library for Vue, and will be used throughout the guide. It runs in both a browser and Node.js environment, and works with any test runner. 
 

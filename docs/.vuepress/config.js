@@ -3,7 +3,8 @@ module.exports = {
   themeConfig: {
     sidebar: [
       '/',
-      '/getting-started/',
+      ['/rendering-a-component', 'Getting Started'],
+      ['/setting-up-for-tdd', 'Setting up for TDD']
       // '/getting-started/setting-up-for-tdd'
     ]
   },

@@ -1,5 +1,3 @@
-## Getting Started
-
 ## Two ways to render
 
 `vue-test-utils` provides two ways to render, or __mount__ a component - `mount` and `shallowMount`. A component mounted using either of these methods returns a `wrapper`, which is an object containing the Vue component, plus some useful methods for testing.
