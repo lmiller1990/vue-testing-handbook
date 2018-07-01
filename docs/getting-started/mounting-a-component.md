@@ -55,10 +55,10 @@ console.log(mountWrapper.html())
 Which is the completely rendered markup of `Parent` and `Child`. `mountWrapper.html()`, on the other hand, produces this:
 
 ```html
-<div><vuecomponent-stub></vuecomponent-stub></div
+<div><vuecomponent-stub></vuecomponent-stub></div>
 ```
 
-The place where `<Child />` should be has been replaced by `vuecomponent-stub />`! `shallowMount` renders regular html elements, but replaces Vue components with a stub.
+The place where `<Child />` should be has been replaced by `vuecomponent-stub />`. `shallowMount` renders regular html elements, but replaces Vue components with a stub.
 
 > A stub is kind of "fake" an object that stands in for a real one.
 
