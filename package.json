@@ -8,5 +8,8 @@
   },
   "dependencies": {
     "vuepress": "^0.10.2"
+  },
+  "devDependencies": {
+    "markdown-it-include": "^1.0.0"
   }
 }
