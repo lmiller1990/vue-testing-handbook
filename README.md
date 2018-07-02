@@ -14,6 +14,12 @@ We are aiming to support Japanese and English for now.
 
 ## Contributing 
 
+### Development enviroment
+
+Clone the repo and run `yarn`. Then run `yarn dev` to open the dev server.　Access it on `localhost:8080`.
+
+There is an example project to run tests and examples. To run it, `cd examples`, then run `yarn`. To run the test run `yarn test:unit`.
+
 ### Existing pages
 
 Make an issue regarding what you think can be improved, and why. Once everyone is happy with the addition, add it in English. Someone will translate it so the guide stays in sync for both languages, and it will be merged.
@@ -39,6 +45,12 @@ Vueテスティングハンドブックへようこそ！
 英語と日本語をサポートします。
 
 ## 貢献 
+
+### 開発環境
+
+レプをクローンして、`yarn`を実行します. そして`yarn dev`を実行して、`localhost:8080`にアクセスします。
+
+デモプロジェクトもあります。`cd examples`して、そして`yarn`を実行してインストールします。`yarn test:unit`でテストを実行します。
 
 ### 既存のページに貢献
 
