@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <ComponentWithAsyncCall />
-  </div>
+  <ComponentWithAsyncCall />
 </template>
 
 <script>
