@@ -20,9 +20,11 @@ created() {
 }
 ```
 
-We want to write a test that asserts `<UsersDisplay>` is rendered. That means when you do `mount(UserContainer)`, `<UsersDisplay>` is also mounted, and `created` initiates an ajax request. Since this is a unit test, we only are interested in whether `<UserContainer>` correctly renders `<UsersDisplay>` - verify the ajax request is the responsibility of `<UsersDisplay>`, which should be tested in the `<UsersDisplay>` test file.
+We want to write a test that asserts `<UsersDisplay>` is rendered. 
 
-One way to prevent the `<UsersDisplay>` from initiating the ajax request is by _stubbing_ it. Let's write our own components and test, to get a better understanding how the different ways and benefits to stubs.
+`axios` is making an ajax request to an external service in the `created` hook. That means when you do `mount(UserContainer)`, `<UsersDisplay>` is also mounted, and `created` initiates an ajax request. Since this is a unit test, we only are interested in whether `<UserContainer>` correctly renders `<UsersDisplay>` - verifying the ajax request is triggered with the correct endpoint, etc, is the responsibility of `<UsersDisplay>`, which should be tested in the `<UsersDisplay>` test file.
+
+One way to prevent the `<UsersDisplay>` from initiating the ajax request is by _stubbing_ the component out. Let's write our own components and test, to get a better understanding how the different ways and benefits of using stubs.
 
 ### Creating the components
 
@@ -46,7 +48,7 @@ export default {
 </script>
 ```
 
-This is a simple component. It's sole responsibility is to render `<ComponentWithAsyncCall>`. `<ComponentWithAsyncCall>`, as the name suggests, make an ajax call:
+`<ParentWithAPICallChild>` is a simple component. It's sole responsibility is to render `<ComponentWithAsyncCall>`. `<ComponentWithAsyncCall>`, as the name suggests, makes an ajax call using the `axios` http client:
 
 ```html
 <template>
@@ -73,7 +75,7 @@ export default {
 </script>
 ```
 
-`<ComponentWithAsyncCall>` calls `makeApiCall` in it's `created` hook.
+`<ComponentWithAsyncCall>` calls `makeApiCall` in the `created` lifecycle hook.
 
 ### Write a test using `mount`
 
@@ -102,7 +104,7 @@ console.log src/components/ComponentWithAsyncCall.vue:17
   Making api call
 ```
 
-The test is passing - great! But, we can improve it. Notice the `console.log` in the test output - this comes from the `makeApiCall` method. Ideally, we don't want to be making calls to external services in our unit tests, especially when it's from a component that is not the main focus of the current test. We can use the `stubs` mounting option, described in the `vue-test-utils` docs [here](https://vue-test-utils.vuejs.org/api/options.html#stubs).
+The test is passing - great! However, we can do better. Notice the `console.log` in the test output - this comes from the `makeApiCall` method. Ideally we don't want to make calls to external services in our unit tests, especially when it's from a component that is not the main focus of the current test. We can use the `stubs` mounting option, described in the `vue-test-utils` docs [here](https://vue-test-utils.vuejs.org/api/options.html#stubs).
 
 ### Using `stubs` to stub `<ComponentWithAsyncCall>`
 
@@ -120,9 +122,9 @@ it('renders with mount and does initialize API call', () => {
 })
 ```
 
-The test still passes when `yarn test:unit` is run, however the `console.log` is nowhere to be seen. That's because passing `[component]: true` to `stubs` replaced the original component with a _stub_. The external interface is still the same (we can still select is using `find`, since the `name` property, which is used internally by `find` is still the same), however the internal methods, such as `makeApiCall` are replaced by dummy methods that don't do anything.
+The test still passes when `yarn test:unit` is run, however the `console.log` is nowhere to be seen. That's because passing `[component]: true` to `stubs` replaced the original component with a _stub_. The external interface is still the same (we can still select is using `find`, since the `name` property, which is used internally by `find`, is still the same). The internal methods, such as `makeApiCall`, are replaced by dummy methods that don't do anything - they are "stubbed out".
 
-You can also specify a different stub, to take the place of the component, if you like:
+You can also specify the markup to use for the stub, if you like:
 
 ```js
 const wrapper = mount(ParentWithAPICallChild, {
@@ -131,8 +133,6 @@ const wrapper = mount(ParentWithAPICallChild, {
   }
 })
 ```
-
-There is an even easier way, though!
 
 ### Automatically stubbing with `shallowMount`
 
@@ -146,7 +146,7 @@ it('renders with shallowMount and does not initialize API call', () => {
 })
 ```
 
-Running `yarn test:unit` doesn't show any `console.log`, and test passes. `shallowMount` is useful for testing components that have a lot of child components.
+Running `yarn test:unit` doesn't show any `console.log`, and test passes. `shallowMount` automatically stubbed `<ComponentWithAsyncCall>`. `shallowMount` is useful for testing components that have a lot of child components, that might have behavior triggered in lifecycle hooks such as `created` or `mounted`, as so on. I tend to use `shallowMount` by default, unless I have a good reason to use `mount`. It depends on your use case, and what you are testing.
 
 ### Conclusion
 
