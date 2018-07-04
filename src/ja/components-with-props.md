@@ -69,6 +69,63 @@ it("Test 2", ()=> {
 
 ### 実際にコンポーネントを作成してみよう
 
+さて今までの知識を使ってTDDでコンポーネントを作成していきましょう。
 
-This is creating componets parts by TDD 
+ColorButton.vue
+
+```html
+<template>
+  <button>
+    {{ msg }}
+  </button>
+</template>
+
+<script>
+export default {
+  name: "ColorButton",
+
+  props: {
+    msg: {
+      type: String,
+      required: true
+    },
+    color: {
+      type: String,
+      defalt: "#00A4AC"
+    }
+  }
+}
+</script>
+```
+
+ColorButton.spec.js
+
+```js
+import { shallowMount } from '@vue/test-utils'
+import ColorButton from '@/components/ColorButton.vue'
+
+describe('Greeting.vue', () => {
+  it('renders a msg', () => {
+    const wrapper = shallowMount(ColorButton,{
+      propsData: {
+        msg: "Button text"
+      }
+    })
+
+    console.log(wrapper.html())
+
+    expect(wrapper.find("button").text()).toBe("Button text")
+  })
+})
+```
+
+console.logの出力結果
+
+```html
+<button>
+  Button text
+</button>
+```
+
+
 
