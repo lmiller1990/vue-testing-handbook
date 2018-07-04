@@ -1,15 +1,21 @@
 <template>
-  <div>
+  <button>
     {{ msg }}
-  </div>
+  </button>
 </template>
 
 <script>
 export default {
   name: "ColorButton",
-  data() {
-    return {
-      msg: "Message from ColorButton.vue"
+
+  props: {
+    msg: {
+      type: String,
+      required: true
+    },
+    color: {
+      type: String,
+      defalt: "#00A4AC"
     }
   }
 }

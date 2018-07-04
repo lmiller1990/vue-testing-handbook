@@ -3,10 +3,12 @@ import ColorButton from '@/components/ColorButton.vue'
 
 describe('Greeting.vue', () => {
   it('renders a greeting', () => {
-    const wrapper = mount(ColorButton)
+    const wrapper = mount(ColorButton,{
+      propsData: {
+        msg: "Button text"
+      }
+    })
 
     console.log(wrapper.html())
-
-    // expect(wrapper.text()).toMatch("Vue and TDD")
   })
 })
