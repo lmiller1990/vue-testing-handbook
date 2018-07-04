@@ -10,9 +10,9 @@ This is a collection of short, focused examples on how to test Vue components. I
 
 Most sections have have a simple component or two, some tests, and the related code. Here is an example
 
-[Setting up for TDD](https://github.com/lmiller1990/vue-testing-handbook/blob/master/docs/setting-up-for-tdd.md)
-[Component](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app/src/components/Greeting.vue)
-[Test](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app/tests/unit/Greeting.spec.js)
+- [Setting up for TDD](https://github.com/lmiller1990/vue-testing-handbook/blob/master/docs/setting-up-for-tdd.md)
+- [Component](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app/src/components/Greeting.vue)
+- [Test](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app/tests/unit/Greeting.spec.js)
 
 ## Languages
 
@@ -48,9 +48,9 @@ Vueテスティングハンドブックへようこそ！
 
 Most sections have have a simple component or two, some tests, and the related code. Here is an example
 
-[TDDの開発環境の準備(英語)](https://github.com/lmiller1990/vue-testing-handbook/blob/master/docs/setting-up-for-tdd.md)
-[コンポーネント](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app/src/components/Greeting.vue)
-[テスト](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app/tests/unit/Greeting.spec.js)
+- [TDDの開発環境の準備(英語)](https://github.com/lmiller1990/vue-testing-handbook/blob/master/docs/setting-up-for-tdd.md)
+- [コンポーネント](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app/src/components/Greeting.vue)
+- [テスト](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app/tests/unit/Greeting.spec.js)
 
 ## 言語
 

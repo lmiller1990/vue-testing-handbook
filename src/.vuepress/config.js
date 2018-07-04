@@ -1,4 +1,5 @@
 module.exports = {
+  base: "/vue-testing-handbook/",
   title: "Vue testing handbook",
   locales: {
     '/': {

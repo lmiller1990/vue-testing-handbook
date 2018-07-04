@@ -1,2 +1,14 @@
-demo-app/node_modules
-node_modules
+node_modules/
+.DS_Store
+.python-version
+.coverage
+.vscode*
+.vs/
+*.log
+!.gitkeep
+npm-debug.log*
+.npm
+.eslintcache
+.cache-loader
+.idea
+.nyc_output
