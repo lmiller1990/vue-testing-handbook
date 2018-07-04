@@ -71,6 +71,8 @@ it("Test 2", ()=> {
 
 さて今までの知識を使ってTDDでコンポーネントを作成していきましょう。
 
+#### 1st example
+
 ColorButton.vue
 
 ```html
@@ -91,7 +93,7 @@ export default {
     },
     color: {
       type: String,
-      defalt: "#00A4AC"
+      default: "#00A4AC"
     }
   }
 }
@@ -126,6 +128,64 @@ console.logの出力結果
   Button text
 </button>
 ```
+
+`props` で渡された `msg` がきちんと描画されていることがわかります。
+
+#### 2nd example
+色のテストをしたかったけどバグがあるかもなのでテストしない
+
+```html
+<template>
+  <button
+    :style="{ color: color }"
+  >
+    {{ msg }}
+  </button>
+</template>
+```
+
+```js
+it('renders a text with color', () => {
+  const msg = "Button text"
+  const wrapper = shallowMount(ColorButton,{
+    propsData: {
+      msg
+    }
+  })
+
+  // how to test this
+})
+```
+
+#### 3rd example リファクタリング factory function
+
+```js
+describe('Greeting.vue', () => {
+  const fuctory = (propsData) => {
+    shallowMount(ColorButton,{
+      propsData: {
+        msg: "Button text"
+      }
+    })
+  }
+
+  it('renders a msg', () => {
+    const wrapper = fuctory()
+
+    expect(wrapper.find("button").text()).toBe("Button text")
+  })
+
+  it('renders a text with color', () => {
+    const wrapper = fuctory()
+
+    expect(wrapper.find("button")).toBe(msg)
+  })
+})
+```
+
+Green!!It's　OKAY
+
+
 
 
 

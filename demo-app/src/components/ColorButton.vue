@@ -1,5 +1,7 @@
 <template>
-  <button>
+  <button
+    :style="{ color: color }"
+  >
     {{ msg }}
   </button>
 </template>
@@ -15,7 +17,7 @@ export default {
     },
     color: {
       type: String,
-      defalt: "#00A4AC"
+      default: "pink"
     }
   }
 }
