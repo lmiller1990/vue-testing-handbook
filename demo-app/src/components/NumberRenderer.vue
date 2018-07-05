@@ -28,7 +28,6 @@ export default {
         }
       }
 
-      console.log(this)
       return this.even === false ? odds.join(", ") : evens.join(", ")
     }
   },

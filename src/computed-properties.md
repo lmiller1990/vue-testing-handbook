@@ -1,12 +1,12 @@
 ## Testing Computed Properties
 
-Testing methods and computed are especially simple, since they are just plain old JavaScript functions. The only real difference is computed properties do not take arguments.
+Testing computed properties are especially simple, since they are just plain old JavaScript functions.
 
 Let's start with looking at two different ways to test a `computed` property. We will develop a `<NumberRenderer>` component, that renders either odd or even numbers, based on a `numbers` computed property. 
 
 ### Writing the test
 
-The `<NumberRenderer>` component will receive an `even` prop, that is a boolean. If `true`, the component should render 2, 4, 6, 8, and 10. If `false`, it sohuld render 1, 3, 5, 7 and 9. The list of values will be calculated in a `computed` property called `numbers`.
+The `<NumberRenderer>` component will receive an `even` prop, that is a boolean. If `even` is `true`, the component should render 2, 4, 6, and 8. If `false`, it should render 1, 3, 5, 7 and 9. The list of values will be calculated in a `computed` property called `numbers`.
 
 ### Testing by rendering the value
 
@@ -62,7 +62,7 @@ Now we start development, and let the error messages guide our implementation. `
   Received: ""
 ```
 
-Looks like everything is hooked up correctly. Let's get started on `numbers`:
+It looks like everything is hooked up correctly. Let's start implementing `numbers`:
 
 ```js
 computed: {
@@ -195,4 +195,4 @@ So we need to use `call`, which lets us bind an alternative `this` object, in ou
 
 ### To `call` or to `shallowMount`?
 
-Both techniques presented are useful for testing computed properties. If you are testing a component that does a lot of actions on in a lifecycle methods you would like to avoid, or you want to to stub values, using `call` and passing a custom context can be useful. Of course, you want to make sure the value is correctly rendered as well, so make sure you choose the correct technique when testing your computed properties.
+Both techniques presented are useful for testing computed properties. If you are testing a component that does some time consuming operations in a lifecycle methods you would like to avoid executing in your computed unit test, or you want to stub out some values, using `call` and passing a custom context can be useful. Of course, you want to make sure the value is correctly rendered as well, so make sure you choose the correct technique when testing your computed properties, and test all the edge cases.
