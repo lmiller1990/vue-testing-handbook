@@ -1,0 +1,67 @@
+<template>
+  <div>
+    {{ numbers }}
+  </div>
+</template>
+
+<script>
+export default {
+  name: "NumberRenderer",
+
+  props: {
+    even: {
+      type: Boolean,
+      required: true
+    }
+  },
+
+  computed: {
+    numbers() {
+      const evens = []
+      const odds = []
+
+      for (let i = 1; i < 10; i++) {
+        if (i % 2 === 0) {
+          evens.push(i)
+        } else {
+          odds.push(i)
+        }
+      }
+
+      console.log(this)
+      return this.even === false ? odds.join(", ") : evens.join(", ")
+    }
+  },
+
+  methods: {
+    arrayToString(arr) {
+      return arr.join(", ")
+    }
+  }
+  /*
+
+  computed: {
+    numbers() {
+      const evens = []
+      const odds = []
+
+      for (let i = 1; i < 10; i++) {
+        if (i % 2 === 0) {
+          evens.push(i)
+        } else {
+          odds.push(i)
+        }
+      }
+
+      const arr = this.even ? evens : odds 
+      return this.arrayToString(arr)
+    }
+  },
+
+  methods: {
+    arrayToString(arr) {
+      return arr.join(", ")
+    }
+  }*/
+}
+</script>
