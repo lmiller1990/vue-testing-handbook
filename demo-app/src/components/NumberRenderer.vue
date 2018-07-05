@@ -38,30 +38,5 @@ export default {
       return arr.join(", ")
     }
   }
-  /*
-
-  computed: {
-    numbers() {
-      const evens = []
-      const odds = []
-
-      for (let i = 1; i < 10; i++) {
-        if (i % 2 === 0) {
-          evens.push(i)
-        } else {
-          odds.push(i)
-        }
-      }
-
-      const arr = this.even ? evens : odds 
-      return this.arrayToString(arr)
-    }
-  },
-
-  methods: {
-    arrayToString(arr) {
-      return arr.join(", ")
-    }
-  }*/
 }
 </script>
