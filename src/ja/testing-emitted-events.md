@@ -1,5 +1,7 @@
 ## 発生したイベントのテスト
 
+このページのテストのソースコードは[こちら](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Emitter.spec.js)にあります。
+
 アプリケーションが多くなれば大きくなるほど、コンポーネントも増えていきます。親と子のコンポーネントをデータを共通するとき、子のコンポーネントがイベントを発火させて、親は反応します。
 
 `vue-test-utils`の`wrapper`APIの`emitted`メソッドで発火したイベントを簡単に検証できます。ドキュメンテーションは[こちら](https://vue-test-utils.vuejs.org/ja/api/wrapper/emitted.html)です。
@@ -128,3 +130,5 @@ it("コンポーネントをレンダーせずにイベントを検証する", (
 - そのプロパティは配列です。イベントが数回発生したら、`[0]`、`[1]`などでアクセス
 - 発生したイベントの引数も配列になります。`[0]`、`[1]`でアクセスします。
 - `$emit`をモックして`call`で呼び出して、レンダーせずに検証できます。
+
+このページのテストのソースコードは[こちら](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Emitter.spec.js)にあります。
