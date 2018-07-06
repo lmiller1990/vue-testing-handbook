@@ -54,7 +54,7 @@ describe("Emitter", () => {
 ```
 PASS  tests/unit/Emitter.spec.js
 Emitter
-  ✓ emits an event with two arguments (31ms)
+  ✓ ２つの引数があるイベントを発火する (31ms)
 
 console.log tests/unit/Emitter.spec.js:10
   { myEvent: [ [ 'name', 'password' ] ] }
