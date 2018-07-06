@@ -60,7 +60,7 @@ console.log tests/unit/Emitter.spec.js:10
   { myEvent: [ [ 'name', 'password' ] ] }
 ```
 
-### emitted()のシンタックス
+### emittedのシンタックス
 
 `emitted`はオブジェクトを返します。発生したイベントはプロパティになります。`emitted().[event]`で検証できます：
 
