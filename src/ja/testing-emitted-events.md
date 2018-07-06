@@ -93,7 +93,7 @@ console.log tests/unit/Emitter.spec.js:11
 テストでイベントが発生したかを検証してみます。
 
 ```js
-it("emits an event with two arguments", () => {
+it("２つの引数があるイベントを発火する", () => {
   const wrapper = shallowMount(Emitter)
 
   wrapper.vm.emitEvent()
