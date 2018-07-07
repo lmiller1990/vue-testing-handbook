@@ -1,4 +1,4 @@
-## 発生したイベントのテスト
+### 発生したイベントのテスト
 
 このページのテストのソースコードは[こちら](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Emitter.spec.js)にあります。
 
@@ -6,7 +6,7 @@
 
 `vue-test-utils`の`wrapper`APIの`emitted`メソッドで発火したイベントを簡単に検証できます。ドキュメンテーションは[こちら](https://vue-test-utils.vuejs.org/ja/api/wrapper/emitted.html)です。
 
-### コンポーネントとテストを書く
+## コンポーネントとテストを書く
 
 簡単なコンポーネントを書きながら学びましょう。`<Emitter>`というコンポーネントを作って、このコードを書きます。
 
@@ -49,7 +49,7 @@ describe("Emitter", () => {
 })
 ```
 
-`vue-test-utils`の[`emitted`]APIでコンポーネントが発生したイベントが見えます。
+`vue-test-utils`の[emitted API](https://vue-test-utils.vuejs.org/ja/api/wrapper/emitted.html)でコンポーネントが発生したイベントが見えます。
 
 `yarn test:unit`でテストを実行してみます。
 
@@ -62,7 +62,7 @@ console.log tests/unit/Emitter.spec.js:10
   { myEvent: [ [ 'name', 'password' ] ] }
 ```
 
-### emittedのシンタックス
+## emittedのシンタックス
 
 `emitted`はオブジェクトを返します。発生したイベントはプロパティになります。`emitted().[event]`で検証できます：
 
@@ -106,7 +106,7 @@ it("２つの引数があるイベントを発火する", () => {
 
 テストはパスします。
 
-### コンポーネントをマウントせずにイベントのテスト
+## コンポーネントをマウントせずにイベントのテスト
 
 たまにコンポーネントをレンダーせずにイベントが発生したかを`call`で検証できます。新しいテストを書きます。
 
@@ -123,7 +123,7 @@ it("コンポーネントをレンダーせずにイベントを検証する", (
 
 `$emit`はただのJavaScriptのオブジェクトなので、`$emit`をモックして、`call`で`emitEvent`の`this`につけます。`created`、`mounted`のライフサイクルフックに重い処理をする場合、`call`で呼び出したらコンポーネントはマウントしないので、ライフサイクルメソッドも呼び出しません。`this`を細かく指定したい時にも便利です。
 
-### まとめ
+## まとめ
  
 - `vue-test-utils`の`emitted`APIでコンポーネントによって発生したイベントを検証できます。
 - `emitted`は関数です。呼び出したイベントは`emitted`が返すオブジェクトのプロパティになります。
