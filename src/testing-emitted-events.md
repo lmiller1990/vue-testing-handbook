@@ -4,7 +4,7 @@ The source code for the test described on this page can be found [here](https://
 
 As applications grow larger, the number of components grows as well. When these components need to share data, the child components emits an event, and the parent component responds.
 
-The wrapper that `vue-test-utils` renders provides has an `emitted` API which allows us to make assertions on emitted events. The documentation for `emitted` is found [here](https://vue-test-utils.vuejs.org/ja/api/wrapper/emitted.html).
+`vue-test-utils` provides an `emitted` API which allows us to make assertions on emitted events. The documentation for `emitted` is found [here](https://vue-test-utils.vuejs.org/ja/api/wrapper/emitted.html).
 
 ## Write a Component and Test
 
@@ -39,7 +39,7 @@ import Emitter from "@/components/Emitter.vue"
 import { shallowMount } from "@vue/test-utils"
 
 describe("Emitter", () => {
-  it("２つの引数があるイベントを発火する", () => {
+  it("emits an event with two arguments", () => {
     const wrapper = shallowMount(Emitter)
 
     wrapper.vm.emitEvent()
@@ -48,7 +48,7 @@ describe("Emitter", () => {
   })
 })
 ```
-Using this [emitted API](https://vue-test-utils.vuejs.org/ja/api/wrapper/emitted.html) provided by `vue-test-utils`, we can easily see the the emitted event.
+Using the [emitted API](https://vue-test-utils.vuejs.org/ja/api/wrapper/emitted.html) provided by `vue-test-utils`, we can easily see the the emitted events.
 
 Run the test with `yarn test:unit`.
 
@@ -88,7 +88,7 @@ console.log tests/unit/Emitter.spec.js:11
   [ [ 'name', 'password' ], [ 'name', 'password' ] ]
 ```
 
-`emitted().emitEvent` returns an array. The first instance of `emitEvent` is accessible using with `emitted().emitEvent[0]`. The arguments are accessable using a similar syntax, `emitted().emitEvent[0][0]` and so forth. 
+`emitted().emitEvent` returns an array. The first instance of `emitEvent` is accessible using with `emitted().emitEvent[0]`. The arguments are accessible using a similar syntax, `emitted().emitEvent[0][0]` and so forth. 
 
 Let's make an actual assertion against the emitted event.
 
@@ -122,7 +122,7 @@ it("emits an event without mounting the component", () => {
 
 Since `$emit` is just a JavaScript object, you can mock `$emit`, and by using `call` to attach it to the `this` context of `emitEvent`. By using `call`, you can call a method without mounting the component. 
 
-Using `call` can be useful in situations where you have some heavy processing in lifecycle methods like `created` and `mounted` that you don't want to execute. Sine you don't mount the component, the lifecycle methods are never called. It can also be useful when you want to manipulate ths `this` context in a specific manner.
+Using `call` can be useful in situations where you have some heavy processing in lifecycle methods like `created` and `mounted` that you don't want to execute. Since you don't mount the component, the lifecycle methods are never called. It can also be useful when you want to manipulate ths `this` context in a specific manner.
 
 ## Conclusion
 
