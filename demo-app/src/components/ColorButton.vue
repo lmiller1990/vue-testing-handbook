@@ -1,9 +1,11 @@
 <template>
-  <button
-    :style="{ color: color }"
-  >
+<div>
+  <span v-if="isAdmin">管理者権限を実行する</span>
+  <span v-else>権限がありません</span>
+  <button>
     {{ msg }}
   </button>
+</div>
 </template>
 
 <script>
@@ -15,9 +17,9 @@ export default {
       type: String,
       required: true
     },
-    color: {
-      type: String,
-      default: "pink"
+    isAdmin: {
+      type: Boolean,
+      default: false
     }
   }
 }

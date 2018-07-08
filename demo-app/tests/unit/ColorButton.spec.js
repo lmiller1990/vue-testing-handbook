@@ -2,26 +2,29 @@ import { shallowMount } from '@vue/test-utils'
 import ColorButton from '@/components/ColorButton.vue'
 
 describe('Greeting.vue', () => {
-  it('renders a msg', () => {
-    const wrapper = shallowMount(ColorButton,{
-      propsData: {
-        msg: "Button text"
-      }
-    })
-
-    expect(wrapper.find("button").text()).toBe("Button text")
-  })
-
-  it('renders a text with color', () => {
+  it('メッセージを表示する', () => {
     const msg = "Button text"
     const wrapper = shallowMount(ColorButton,{
       propsData: {
-        msg
+        msg: msg
       }
     })
 
-    console.log(wrapper.html())
+    expect(wrapper.find("span").text()).toBe("権限がありません")
+    expect(wrapper.find("button").text()).toBe("Button text")
+  })
 
-    // expect(wrapper.find("button")).toBe(msg)
+  it('メッセージを表示する', () => {
+    const msg = "Button text"
+    const isAdmin = true
+    const wrapper = shallowMount(ColorButton,{
+      propsData: {
+        msg,
+        isAdmin
+      }
+    })
+
+    expect(wrapper.find("span").text()).toBe("管理者権限を実行する")
+    expect(wrapper.find("button").text()).toBe("Button text")
   })
 })
