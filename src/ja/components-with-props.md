@@ -1,7 +1,4 @@
-## Components with props
-
-Talk about
-
+## `component` と `props`
 
 ### `propsData`の基本的な使い方
 
@@ -57,7 +54,7 @@ const factory = (propsData) => {
 }
 
 it("Test 1", ()=> {
-  const wrapper = factory({ qux: "hoge" })
+  const wrapper = factory({ msg: "Test 1" })
 })
 
 it("Test 2", ()=> {
@@ -65,21 +62,25 @@ it("Test 2", ()=> {
 })
 ```
 
-何度も作成するコンポーネントのwapperは、factory関数を作ってあげるととてもシンプルにテストがかけるようになります。
+何度も作成するコンポーネントのwapperは可能な限りfactory関数で生成しましょう。とてもシンプルにテストがかけるようになります。
 
 ### 実際にコンポーネントを作成してみよう
 
-さて今までの知識を使ってTDDでコンポーネントを作成していきましょう。
+さて今までの知識を使ってコンポーネントを作成していきましょう。
 
-#### 1st example
+#### 1. コンポーネントを作成する
 
 ColorButton.vue
 
 ```html
 <template>
+<div>
+  <span v-if="isAdmin">管理者権限を実行する</span>
+  <span v-else>権限がありません</span>
   <button>
     {{ msg }}
   </button>
+</div>
 </template>
 
 <script>
@@ -91,14 +92,18 @@ export default {
       type: String,
       required: true
     },
-    color: {
-      type: String,
-      default: "#00A4AC"
+    isAdmin: {
+      type: Boolean,
+      default: false
     }
   }
 }
 </script>
 ```
+
+propsは2種類あり、`msg` で単純なメッセージを描画して `isAdmin` によってメッセージの出し分けをする簡単なコンポーネントになります。
+
+#### 2. 権限がない状態のmsgを描画する
 
 ColorButton.spec.js
 
@@ -107,85 +112,148 @@ import { shallowMount } from '@vue/test-utils'
 import ColorButton from '@/components/ColorButton.vue'
 
 describe('Greeting.vue', () => {
-  it('renders a msg', () => {
+  it('権限がない状態のメッセージを表示する', () => {
+    const msg = "Button text"
     const wrapper = shallowMount(ColorButton,{
       propsData: {
-        msg: "Button text"
+        msg: msg
       }
     })
 
     console.log(wrapper.html())
 
+    expect(wrapper.find("span").text()).toBe("権限がありません")
     expect(wrapper.find("button").text()).toBe("Button text")
   })
 })
+```
+
+テスト結果
+
+```shell
+PASS  tests/unit/ColorButton.spec.js
+  Greeting.vue
+    ✓ 権限がない状態のメッセージを表示する (15ms)
 ```
 
 console.logの出力結果
 
 ```html
-<button>
-  Button text
-</button>
+<div>
+  <span>権限がありません</span>
+  <button>
+    Button text
+  </button>
+</div>
 ```
 
 `props` で渡された `msg` がきちんと描画されていることがわかります。
 
-#### 2nd example
-色のテストをしたかったけどバグがあるかもなのでテストしない
+#### 3. 権限がある状態のmsgを描画する
 
-```html
-<template>
-  <button
-    :style="{ color: color }"
-  >
-    {{ msg }}
-  </button>
-</template>
-```
+`isAdmin` がtrueの状態でのレンダリングをテストしていきます。
+
+ColorButton.spec.js
 
 ```js
-it('renders a text with color', () => {
-  const msg = "Button text"
-  const wrapper = shallowMount(ColorButton,{
-    propsData: {
-      msg
-    }
-  })
+import { shallowMount } from '@vue/test-utils'
+import ColorButton from '@/components/ColorButton.vue'
 
-  // how to test this
+describe('Greeting.vue', () => {
+  it('権限がある状態のメッセージを表示する', () => {
+    const msg = "Button text"
+    const isAdmin = true
+    const wrapper = shallowMount(ColorButton,{
+      propsData: {
+        msg,
+        isAdmin
+      }
+    })
+
+    expect(wrapper.find("span").text()).toBe("管理者権限を実行する")
+    expect(wrapper.find("button").text()).toBe("Button text")
+  })
 })
 ```
 
-#### 3rd example リファクタリング factory function
+テスト結果
+
+```shell
+PASS  tests/unit/ColorButton.spec.js
+  Greeting.vue
+    ✓ 権限がある状態のメッセージを表示する (4ms)
+```
+
+console.logの出力結果
+
+```html
+<div>
+  <span>管理者権限を実行する</span>
+  <button>
+    Button text
+  </button>
+</div>
+```
+
+`props` で渡された `isAdmin` によって `<span>` の中がきちんと描画されていることがわかります。
+
+#### 4. リファクタリング
+
+先ほど紹介したfactory関数でリファクタリングしたいと思います。
 
 ```js
-describe('Greeting.vue', () => {
-  const fuctory = (propsData) => {
-    shallowMount(ColorButton,{
+describe("リファクタリング", () => {
+  const msg = "Button text"
+  const factory = (propsData) => {
+    return shallowMount(ColorButton, {
       propsData: {
-        msg: "Button text"
+        msg,
+        ...propsData
       }
     })
   }
+  const context = describe
 
-  it('renders a msg', () => {
-    const wrapper = fuctory()
+  context("管理者あり", ()=> {
+    it("メッセージを表示する", () => {
+      const wrapper = factory()
 
-    expect(wrapper.find("button").text()).toBe("Button text")
+      expect(wrapper.find("span").text()).toBe("権限がありません")
+      expect(wrapper.find("button").text()).toBe("Button text")
+    })
   })
 
-  it('renders a text with color', () => {
-    const wrapper = fuctory()
+  context("管理者なし", ()=> {
+    it("メッセージを表示する", () => {
+      const wrapper = factory({isAdmin: true})
 
-    expect(wrapper.find("button")).toBe(msg)
+      expect(wrapper.find("span").text()).toBe("管理者権限を実行する")
+      expect(wrapper.find("button").text()).toBe("Button text")
+    })
   })
 })
 ```
 
-Green!!It's　OKAY
+さてテストを見ていきたいと思います。まだテストはGreenでPASSしています。
 
+```shell
+PASS  tests/unit/ColorButton.spec.js
+  Greeting.vue
+    リファクタリング
+      管理者あり
+        ✓ メッセージを表示する (5ms)
+      管理者なし
+        ✓ メッセージを表示する (2ms)
+```
 
+テストがあることで、変更やリファクタリングが怖くなくなりました。
+
+### まとめ
+
+- `propsData` はコンポーネントをマウントするときに引数として渡し、 `props` として利用できる
+- factory関数を定義することでテストが簡単にかける
+- `const context = describe` とすることでRspecみたいにかける
+- `propsData` を使わずに [`setProps`](https://vue-test-utils.vuejs.org/ja/api/wrapper-array/#setprops-props) を使えばプロパティを強制的に更新することもできる
 
 
 

@@ -3,19 +3,21 @@ import ColorButton from '@/components/ColorButton.vue'
 
 describe('Greeting.vue', () => {
   describe("リファクタリング前", () => {
-    it('メッセージを表示する', () => {
+    it('権限がない状態のメッセージを表示する', () => {
       const msg = "Button text"
       const wrapper = shallowMount(ColorButton,{
         propsData: {
           msg: msg
         }
       })
+
+      console.log(wrapper.html())
   
       expect(wrapper.find("span").text()).toBe("権限がありません")
       expect(wrapper.find("button").text()).toBe("Button text")
     })
   
-    it('メッセージを表示する', () => {
+    it('権限がある状態のメッセージを表示する', () => {
       const msg = "Button text"
       const isAdmin = true
       const wrapper = shallowMount(ColorButton,{
@@ -24,6 +26,8 @@ describe('Greeting.vue', () => {
           isAdmin
         }
       })
+
+      console.log(wrapper.html())
   
       expect(wrapper.find("span").text()).toBe("管理者権限を実行する")
       expect(wrapper.find("button").text()).toBe("Button text")
@@ -32,7 +36,7 @@ describe('Greeting.vue', () => {
 
 
 
-  describe("リファクタリング", () => {
+  describe("リファクタリング後", () => {
     const msg = "Button text"
     const factory = (propsData) => {
       return shallowMount(ColorButton, {
@@ -42,8 +46,9 @@ describe('Greeting.vue', () => {
         }
       })
     }
+    const context = describe
 
-    describe("管理者あり", ()=> {
+    context("管理者あり", ()=> {
       it("メッセージを表示する", () => {
         const wrapper = factory()
   
@@ -52,7 +57,7 @@ describe('Greeting.vue', () => {
       })
     })
 
-    describe("管理者なし", ()=> {
+    context("管理者なし", ()=> {
       it("メッセージを表示する", () => {
         const wrapper = factory({isAdmin: true})
   
