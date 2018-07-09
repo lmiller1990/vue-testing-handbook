@@ -2,6 +2,8 @@
 
 One of the most common things your Vue components will be doing in listening for inputs from the user. `vue-test-utils` and Jest make it easy to test inputs. Let's take a look at how to use `trigger` and Jest mocks to verify our components are working correctly.
 
+The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/FormSubmitter.spec.js).
+
 ## Creating the component
 
 We will create a simple form component, `<FormSubmitter>`, that contains a `<input>` and a `<button>`. When the button is clicked, something should happen. The first example will simply reveal a success message, then we will move on to a more interesting example that submits the form to an external endpoint.
@@ -260,3 +262,5 @@ In this section, we saw how to:
 - write tests using the three steps of unit testing
 - mock a method attached to `Vue.prototype` using the `mocks` mounting option
 - how to use `flush-promises` to immediately resolve all promises, a useful technique in unit testing
+
+The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/FormSubmitter.spec.js).
