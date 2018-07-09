@@ -1,6 +1,10 @@
 <template>
   <div>
-    <form @submit.prevent="handleSubmitAsync">
+    <form @submit.prevent="handleSubmitAsync" v-if="asyncTest">
+      <input v-model="username" data-username>
+      <input type="submit">
+    </form>
+    <form @submit.prevent="handleSubmit" v-else>
       <input v-model="username" data-username>
       <input type="submit">
     </form>
@@ -21,13 +25,13 @@
     data() {
       return {
         username: '',
-        submitted: false
+        submitted: false,
+        asyncTest: false
       }
     },
 
     methods: {
       handleSubmit() {
-        console.log("Sumbitted")
         this.submitted = true
       },
 

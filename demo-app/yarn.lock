@@ -3120,6 +3120,10 @@ flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
 
+flush-promises@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/flush-promises/-/flush-promises-1.0.0.tgz#8fd4d3aeb3f7f57a713aca40f1526ef25463fa23"
+
 flush-write-stream@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/flush-write-stream/-/flush-write-stream-1.0.3.tgz#c5d586ef38af6097650b49bc41b55fabb19f35bd"
