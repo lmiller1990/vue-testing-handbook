@@ -1,6 +1,4 @@
-## `component` と `props`
-
-### `propsData`の基本的な使い方
+## propsData の基本的な使い方
 
 `propsData` は基本的に `mount` や `shallowMount` とともに使うことができ、 `propsData` は親コンポーネントから `props` として渡されたものとしてテストで使用できます。
 
@@ -14,63 +12,11 @@ const wrapper = shallowMount(Foo, {
 })
 ```
 
-### A tip of `propsData`: factory関数を作ろう
+## コンポーネントの作成とテスト
 
-同じコンポーネントのテストをしていると何度も `mount` して `propsData` を書くと思いますが、どうやってその回数を減らせるかについて書いて行きたいと思います。
+### ColorButton.vue
 
-#### Bad
-
-```js
-it("Test 1", ()=> {
-  const wrapper = shallowMount(Foo, {
-    propsData: {
-      foo: "bar",
-      msg: "Test 1"
-    }
-  })
-})
-
-it("Test 2", ()=> {
-  const wrapper = shallowMount(Foo, {
-    propsData: {
-      foo: "bar",
-      msg: "Test 2",
-      hoge: true
-    }
-  })
-})
-```
-
-#### Good
-
-```js
-const factory = (propsData) => {
-  return shallowMount(Component, {
-    propsData: {
-      foo: "bar",
-      ...propsData
-    }
-  })
-}
-
-it("Test 1", ()=> {
-  const wrapper = factory({ msg: "Test 1" })
-})
-
-it("Test 2", ()=> {
-  const wrapper = factory({ msg: "Test 2", hoge: true })
-})
-```
-
-何度も作成するコンポーネントのwapperは可能な限りfactory関数で生成しましょう。とてもシンプルにテストがかけるようになります。
-
-### 実際にコンポーネントを作成してみよう
-
-さて今までの知識を使ってコンポーネントを作成していきましょう。
-
-#### 1. コンポーネントを作成する
-
-ColorButton.vue
+2つの `props` を持つ簡単なコンポーネントを作成する。
 
 ```html
 <template>
@@ -101,17 +47,15 @@ export default {
 </script>
 ```
 
-propsは2種類あり、`msg` で単純なメッセージを描画して `isAdmin` によってメッセージの出し分けをする簡単なコンポーネントになります。
+### 最初のテスト
 
-#### 2. 権限がない状態のmsgを描画する
-
-ColorButton.spec.js
+権限がない状態でのメッセージを検証していく。
 
 ```js
 import { shallowMount } from '@vue/test-utils'
 import ColorButton from '@/components/ColorButton.vue'
 
-describe('Greeting.vue', () => {
+describe('SubmitButton.vue', () => {
   it('権限がない状態のメッセージを表示する', () => {
     const msg = "Button text"
     const wrapper = shallowMount(ColorButton,{
@@ -130,7 +74,7 @@ describe('Greeting.vue', () => {
 
 テスト結果
 
-```shell
+```
 PASS  tests/unit/ColorButton.spec.js
   Greeting.vue
     ✓ 権限がない状態のメッセージを表示する (15ms)
@@ -149,9 +93,9 @@ console.logの出力結果
 
 `props` で渡された `msg` がきちんと描画されていることがわかります。
 
-#### 3. 権限がある状態のmsgを描画する
+### 2つ目のテスト
 
-`isAdmin` がtrueの状態でのレンダリングをテストしていきます。
+権限がある状態 ( `isAdmin` が true ) でのメッセージを検証していく。
 
 ColorButton.spec.js
 
@@ -159,7 +103,7 @@ ColorButton.spec.js
 import { shallowMount } from '@vue/test-utils'
 import ColorButton from '@/components/ColorButton.vue'
 
-describe('Greeting.vue', () => {
+describe('SubmitButton.vue', () => {
   it('権限がある状態のメッセージを表示する', () => {
     const msg = "Button text"
     const isAdmin = true
@@ -197,24 +141,30 @@ console.logの出力結果
 
 `props` で渡された `isAdmin` によって `<span>` の中がきちんと描画されていることがわかります。
 
-#### 4. リファクタリング
+## テストのリファクタリング
 
-先ほど紹介したfactory関数でリファクタリングしたいと思います。
+Don't repeat yourselfの原則に従って従ってテストをリファクタリングしていきましょう。テストがPassしているのでリファクタリングも怖くありません。
+
+### factory関数
+
+テストの度に `shallowMount` を呼び出し同じような `propsData` を渡しているので、factory関数でリファクタリングしたいと思います。
 
 ```js
-describe("リファクタリング", () => {
-  const msg = "Button text"
-  const factory = (propsData) => {
-    return shallowMount(ColorButton, {
-      propsData: {
-        msg,
-        ...propsData
-      }
-    })
-  }
-  const context = describe
+const msg = "Button text"
+const factory = (propsData) => {
+  return shallowMount(ColorButton, {
+    propsData: {
+      msg,
+      ...propsData
+    }
+  })
+}
+```
 
-  context("管理者あり", ()=> {
+呼び出すたびに `shallowMount` で wrap してくれる factory 関数ができました。これを使ってテストをDRYにしていきましょう。
+
+```js
+  describe("管理者あり", ()=> {
     it("メッセージを表示する", () => {
       const wrapper = factory()
 
@@ -223,7 +173,7 @@ describe("リファクタリング", () => {
     })
   })
 
-  context("管理者なし", ()=> {
+  describe("管理者なし", ()=> {
     it("メッセージを表示する", () => {
       const wrapper = factory({isAdmin: true})
 
@@ -231,14 +181,13 @@ describe("リファクタリング", () => {
       expect(wrapper.find("button").text()).toBe("Button text")
     })
   })
-})
 ```
 
 さてテストを見ていきたいと思います。まだテストはGreenでPASSしています。
 
 ```shell
-PASS  tests/unit/ColorButton.spec.js
-  Greeting.vue
+PASS  tests/unit/SubmitButton.spec.js
+  SubmitButton.vue
     リファクタリング
       管理者あり
         ✓ メッセージを表示する (5ms)
@@ -251,9 +200,5 @@ PASS  tests/unit/ColorButton.spec.js
 ### まとめ
 
 - `propsData` はコンポーネントをマウントするときに引数として渡し、 `props` として利用できる
-- factory関数を定義することでテストが簡単にかける
-- `const context = describe` とすることでRspecみたいにかける
+- factory関数を定義することでテストがDRYにかける
 - `propsData` を使わずに [`setProps`](https://vue-test-utils.vuejs.org/ja/api/wrapper-array/#setprops-props) を使えばプロパティを強制的に更新することもできる
-
-
-
