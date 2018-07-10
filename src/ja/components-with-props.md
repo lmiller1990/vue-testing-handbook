@@ -1,8 +1,8 @@
-## propsData の基本的な使い方
+## propsDataの基本的な使い方
 
 `propsData` は基本的に `mount` や `shallowMount` とともに使うことができ、 `propsData` は親コンポーネントから `props` として渡されたものとしてテストで使用できます。
 
-第二引数のオブジェクトの中に書くことができますが、基本的な書き方は次の通りです：
+第二引数のオブジェクトの中に書くことができますが、基本的な書き方は次の通りです。
 
 ```js
 const wrapper = shallowMount(Foo, {
@@ -143,7 +143,7 @@ console.logの出力結果
 
 ## テストのリファクタリング
 
-Don't repeat yourselfの原則に従って従ってテストをリファクタリングしていきましょう。テストがPassしているのでリファクタリングも怖くありません。
+`Don't repeat yourself` の原則に従って従ってテストをリファクタリングしていきましょう。テストがPassしているのでリファクタリングも怖くありません。
 
 ### factory関数
 
@@ -197,7 +197,7 @@ PASS  tests/unit/SubmitButton.spec.js
 
 テストがあることで、変更やリファクタリングが怖くなくなりました。
 
-### まとめ
+## まとめ
 
 - `propsData` はコンポーネントをマウントするときに引数として渡し、 `props` として利用できる
 - factory関数を定義することでテストがDRYにかける

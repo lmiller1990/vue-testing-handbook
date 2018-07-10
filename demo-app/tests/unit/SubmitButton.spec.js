@@ -30,8 +30,6 @@ describe('SubmitButton.vue', () => {
     })
   })
 
-
-
   describe("リファクタリング後", () => {
     const msg = "送信する"
     const factory = (propsData) => {
