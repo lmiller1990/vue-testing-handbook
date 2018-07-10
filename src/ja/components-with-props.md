@@ -1,10 +1,4 @@
-<<<<<<< HEAD
 ## propsData の基本的な使い方
-=======
-## `component` と `props`
-
-### `propsData`の基本的な使い方
->>>>>>> c8ab672b19eb25d29c06661bb03b8478ab226b96
 
 `propsData` は基本的に `mount` や `shallowMount` とともに使うことができ、 `propsData` は親コンポーネントから `props` として渡されたものとしてテストで使用できます。
 
