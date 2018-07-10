@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "ColorButton",
+  name: "SubmitButton",
 
   props: {
     msg: {
