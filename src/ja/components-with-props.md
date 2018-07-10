@@ -14,7 +14,7 @@ const wrapper = shallowMount(Foo, {
 
 ## コンポーネントの作成とテスト
 
-### ColorButton.vue
+### SubmitButton.vue
 
 2つの `props` を持つ簡単なコンポーネントを作成する。
 
@@ -31,7 +31,7 @@ const wrapper = shallowMount(Foo, {
 
 <script>
 export default {
-  name: "ColorButton",
+  name: "SubmitButton",
 
   props: {
     msg: {
@@ -53,12 +53,12 @@ export default {
 
 ```js
 import { shallowMount } from '@vue/test-utils'
-import ColorButton from '@/components/ColorButton.vue'
+import SubmitButton from '@/components/SubmitButton.vue'
 
 describe('SubmitButton.vue', () => {
   it('権限がない状態のメッセージを表示する', () => {
-    const msg = "Button text"
-    const wrapper = shallowMount(ColorButton,{
+    const msg = "送信する"
+    const wrapper = shallowMount(SubmitButton,{
       propsData: {
         msg: msg
       }
@@ -67,7 +67,7 @@ describe('SubmitButton.vue', () => {
     console.log(wrapper.html())
 
     expect(wrapper.find("span").text()).toBe("権限がありません")
-    expect(wrapper.find("button").text()).toBe("Button text")
+    expect(wrapper.find("button").text()).toBe("送信する")
   })
 })
 ```
@@ -75,7 +75,7 @@ describe('SubmitButton.vue', () => {
 テスト結果
 
 ```
-PASS  tests/unit/ColorButton.spec.js
+PASS  tests/unit/SubmitButton.spec.js
   Greeting.vue
     ✓ 権限がない状態のメッセージを表示する (15ms)
 ```
@@ -86,7 +86,7 @@ console.logの出力結果
 <div>
   <span>権限がありません</span>
   <button>
-    Button text
+    送信する
   </button>
 </div>
 ```
@@ -97,17 +97,17 @@ console.logの出力結果
 
 権限がある状態 ( `isAdmin` が true ) でのメッセージを検証していく。
 
-ColorButton.spec.js
+SubmitButton.spec.js
 
 ```js
 import { shallowMount } from '@vue/test-utils'
-import ColorButton from '@/components/ColorButton.vue'
+import SubmitButton from '@/components/SubmitButton.vue'
 
 describe('SubmitButton.vue', () => {
   it('権限がある状態のメッセージを表示する', () => {
-    const msg = "Button text"
+    const msg = "送信する"
     const isAdmin = true
-    const wrapper = shallowMount(ColorButton,{
+    const wrapper = shallowMount(SubmitButton,{
       propsData: {
         msg,
         isAdmin
@@ -115,7 +115,7 @@ describe('SubmitButton.vue', () => {
     })
 
     expect(wrapper.find("span").text()).toBe("管理者権限を実行する")
-    expect(wrapper.find("button").text()).toBe("Button text")
+    expect(wrapper.find("button").text()).toBe("送信する")
   })
 })
 ```
@@ -123,7 +123,7 @@ describe('SubmitButton.vue', () => {
 テスト結果
 
 ```shell
-PASS  tests/unit/ColorButton.spec.js
+PASS  tests/unit/SubmitButton.spec.js
   Greeting.vue
     ✓ 権限がある状態のメッセージを表示する (4ms)
 ```
@@ -134,7 +134,7 @@ console.logの出力結果
 <div>
   <span>管理者権限を実行する</span>
   <button>
-    Button text
+    送信する
   </button>
 </div>
 ```
@@ -150,9 +150,9 @@ Don't repeat yourselfの原則に従って従ってテストをリファクタ�
 テストの度に `shallowMount` を呼び出し同じような `propsData` を渡しているので、factory関数でリファクタリングしたいと思います。
 
 ```js
-const msg = "Button text"
+const msg = "送信する"
 const factory = (propsData) => {
-  return shallowMount(ColorButton, {
+  return shallowMount(SubmitButton, {
     propsData: {
       msg,
       ...propsData
@@ -169,7 +169,7 @@ const factory = (propsData) => {
       const wrapper = factory()
 
       expect(wrapper.find("span").text()).toBe("権限がありません")
-      expect(wrapper.find("button").text()).toBe("Button text")
+      expect(wrapper.find("button").text()).toBe("送信する")
     })
   })
 
@@ -178,7 +178,7 @@ const factory = (propsData) => {
       const wrapper = factory({isAdmin: true})
 
       expect(wrapper.find("span").text()).toBe("管理者権限を実行する")
-      expect(wrapper.find("button").text()).toBe("Button text")
+      expect(wrapper.find("button").text()).toBe("送信する")
     })
   })
 ```
