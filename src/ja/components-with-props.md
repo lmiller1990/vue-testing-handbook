@@ -76,7 +76,7 @@ describe('SubmitButton.vue', () => {
 
 ```
 PASS  tests/unit/SubmitButton.spec.js
-  Greeting.vue
+  SubmitButton.vue
     ✓ 権限がない状態のメッセージを表示する (15ms)
 ```
 
@@ -124,7 +124,7 @@ describe('SubmitButton.vue', () => {
 
 ```shell
 PASS  tests/unit/SubmitButton.spec.js
-  Greeting.vue
+  SubmitButton.vue
     ✓ 権限がある状態のメッセージを表示する (4ms)
 ```
 
