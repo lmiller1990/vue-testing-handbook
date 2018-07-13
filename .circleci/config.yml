@@ -3,17 +3,17 @@ jobs:
   build:
     docker: # See https://docs.docker.com/get-started/#docker-concepts if you are new to Docker.
       - image: node:8.0
-    steps:
-      - checkout
-      - run: echo "A first hello"
-      - run:
-        name: install dependencies
-        command: |
-          cd demo-app
-          yarn install
+        steps:
+          - checkout
+          - run: echo "A first hello"
+          - run:
+            name: install dependencies
+            command: |
+              cd demo-app
+              yarn install
 
-      - run:
-        name: unit tests
-        command: |
-          yarn test:unit
+          - run:
+            name: unit tests
+            command: |
+              yarn test:unit
 
