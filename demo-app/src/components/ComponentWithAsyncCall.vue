@@ -14,6 +14,7 @@ export default {
   
   methods: {
     async makeApiCall() {
+      /* eslint-disable no-console */
       console.log("Making api call")
       await axios.get("https://jsonplaceholder.typicode.com/posts/1")
     }
