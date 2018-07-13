@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import ComponentWithAsyncCall from "./ComponentWithAsyncCall.vue"
+  import ComponentWithAsyncCall from "./ComponentWithAsyncCall.vue"
 
 export default {
   name: "ParentWithAPICallChild",
