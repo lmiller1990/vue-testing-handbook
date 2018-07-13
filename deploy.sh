@@ -14,11 +14,10 @@ mv src/.vuepress/dist docs
 # if you are deploying to a custom domain
 # echo 'www.example.com' > CNAME
 
-git init
 git add -A
 git commit -m 'deploy'
 
 # if you are deploying to https://<USERNAME>.github.io/<REPO>
-git push -f git@github.com:lmiller1990/vue-testing-handbook.git master
+git push -f https://github.com/lmiller1990/vue-testing-handbook.git master
 
 cd -
