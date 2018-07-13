@@ -72,7 +72,7 @@ describe('SubmitButton.vue', () => {
 })
 ```
 
-テスト結果
+`yarn test:unit`でテストを実行します。テスト結果：
 
 ```
 PASS  tests/unit/SubmitButton.spec.js
@@ -80,7 +80,7 @@ PASS  tests/unit/SubmitButton.spec.js
     ✓ 権限がない状態のメッセージを表示する (15ms)
 ```
 
-console.logの出力結果
+`console.log(wrapper.html())`の出力結果も表示されました：
 
 ```html
 <div>
@@ -96,8 +96,6 @@ console.logの出力結果
 ### 2つ目のテスト
 
 権限がある状態 ( `isAdmin` が true ) でのメッセージを検証していく。
-
-SubmitButton.spec.js
 
 ```js
 import { shallowMount } from '@vue/test-utils'
@@ -120,11 +118,11 @@ describe('SubmitButton.vue', () => {
 })
 ```
 
-テスト結果
+`yarn test:unit`を実行して、テスト結果を確認します。
 
 ```shell
-PASS  tests/unit/SubmitButton.spec.js
-  SubmitButton.vue
+pass  tests/unit/submitbutton.spec.js
+  submitbutton.vue
     ✓ 権限がある状態のメッセージを表示する (4ms)
 ```
 
