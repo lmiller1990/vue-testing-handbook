@@ -1,7 +1,7 @@
 <template>
 <div>
-  <span v-if="isAdmin">管理者権限を実行する</span>
-  <span v-else>権限がありません</span>
+  <span v-if="isAdmin">Admin Privledges</span>
+  <span v-else>Not Authorized</span>
   <button>
     {{ msg }}
   </button>
