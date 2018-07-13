@@ -20,13 +20,13 @@ Create a simple component that has two `props`:
 
 ```html
 <template>
-<div>
-  <span v-if="isAdmin">Admin Privledges</span>
-  <span v-else>Not Authorized</span>
-  <button>
-    {{ msg }}
-  </button>
-</div>
+  <div>
+    <span v-if="isAdmin">Admin Privledges</span>
+    <span v-else>Not Authorized</span>
+    <button>
+      {{ msg }}
+    </button>
+  </div>
 </template>
 
 <script>
@@ -121,7 +121,7 @@ describe('SubmitButton.vue', () => {
 Run the test with `yarn test:unit` and check the results:
 
 ```shell
-pass  tests/unit/submitbutton.spec.js
+PASS  tests/unit/SubmitButton.spec.js
   SubmitButton.vue
     ✓ displays a admin privledges message (4ms)
 ```
@@ -144,5 +144,59 @@ Let's refactor the tests adhering to the principal "Don't repeat yourself". Sinc
 
 ### Factory functions
 
-In both tests we call `shallowMount` then pass a similar `propsData` object.
+In both tests we call `shallowMount` then pass a similar `propsData` object. We can refactor this using a factory function. A factory function simply a function that returns an object - it _makes_ objects, thus the name "factory" function.
 
+```js
+const msg = "submit"
+const factory = (propsData) => {
+  return shallowMount(SubmitButton, {
+    propsData: {
+      msg,
+      ...propsData
+    }
+  })
+}
+```
+
+The aboce is a function that will `shallowMount` a `SubmitButton` component. We can pass any props to change as the first argument to `factory`. Let's DRY up the test with the factory function.
+
+```js
+describe("SubmitButton", () => {
+  describe("has admin privledges", ()=> {
+    it("renders a message", () => {
+      const wrapper = factory()
+
+      expect(wrapper.find("span").text()).toBe("Not Authorized")
+      expect(wrapper.find("button").text()).toBe("submit")
+    })
+  })
+
+  describe("does not have admin privledges", ()=> {
+    it("renders a message", () => {
+      const wrapper = factory({ isAdmin: true })
+
+      expect(wrapper.find("span").text()).toBe("Admin Privledges")
+      expect(wrapper.find("button").text()).toBe("submit")
+    })
+  })
+})
+```
+
+Let's run the tests again. Everything is still passing.
+
+```sh
+PASS  tests/unit/SubmitButton.spec.js
+ SubmitButton
+   has admin privledges
+     ✓ renders a message (26ms)
+   does not have admin privledges
+     ✓ renders a message (3ms)
+```
+
+Since we have a good test suite, we can now easily and confidently refactor.
+
+## Conclusion
+
+- By passing a `propsData` when mounting a component, you can set the `props` to be used in the test
+- Factory functions can be used to DRY you tests
+- Intead of `propsData`, you can also use [`setProps`](https://vue-test-utils.vuejs.org/api/wrapper-array/#setprops-props) to set prop values during tests

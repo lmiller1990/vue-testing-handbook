@@ -20,13 +20,13 @@ const wrapper = shallowMount(Foo, {
 
 ```html
 <template>
-<div>
-  <span v-if="isAdmin">管理者権限を実行する</span>
-  <span v-else>権限がありません</span>
-  <button>
-    {{ msg }}
-  </button>
-</div>
+  <div>
+    <span v-if="isAdmin">管理者権限を実行する</span>
+    <span v-else>権限がありません</span>
+    <button>
+      {{ msg }}
+    </button>
+  </div>
 </template>
 
 <script>
@@ -145,7 +145,7 @@ console.logの出力結果
 
 ### factory関数
 
-テストの度に `shallowMount` を呼び出し同じような `propsData` を渡しているので、factory関数でリファクタリングしたいと思います。
+テストの度に `shallowMount` を呼び出し同じような `propsData` を渡しているので、factory関数でリファクタリングしたいと思います。
 
 ```js
 const msg = "送信する"
@@ -159,26 +159,26 @@ const factory = (propsData) => {
 }
 ```
 
-呼び出すたびに `shallowMount` で wrap してくれる factory 関数ができました。これを使ってテストをDRYにしていきましょう。
+呼び出すたびに `shallowMount` で wrap してくれる factory 関数ができました。更新したい`props`を`factory`に渡せます。これを使ってテストをDRYにしていきましょう。
 
 ```js
-  describe("管理者あり", ()=> {
-    it("メッセージを表示する", () => {
-      const wrapper = factory()
+describe("管理者あり", ()=> {
+  it("メッセージを表示する", () => {
+    const wrapper = factory()
 
-      expect(wrapper.find("span").text()).toBe("権限がありません")
-      expect(wrapper.find("button").text()).toBe("送信する")
-    })
+    expect(wrapper.find("span").text()).toBe("権限がありません")
+    expect(wrapper.find("button").text()).toBe("送信する")
   })
+})
 
-  describe("管理者なし", ()=> {
-    it("メッセージを表示する", () => {
-      const wrapper = factory({isAdmin: true})
+describe("管理者なし", ()=> {
+  it("メッセージを表示する", () => {
+    const wrapper = factory({ isAdmin: true })
 
-      expect(wrapper.find("span").text()).toBe("管理者権限を実行する")
-      expect(wrapper.find("button").text()).toBe("送信する")
-    })
+    expect(wrapper.find("span").text()).toBe("管理者権限を実行する")
+    expect(wrapper.find("button").text()).toBe("送信する")
   })
+})
 ```
 
 さてテストを見ていきたいと思います。まだテストはGreenでPASSしています。
@@ -197,6 +197,6 @@ PASS  tests/unit/SubmitButton.spec.js
 
 ## まとめ
 
-- `propsData` はコンポーネントをマウントするときに引数として渡し、 `props` として利用できる
+- `propsData` はコンポーネントをマウントするときに引数として渡し、`props`として利用できる
 - factory関数を定義することでテストがDRYにかける
 - `propsData` を使わずに [`setProps`](https://vue-test-utils.vuejs.org/ja/api/wrapper-array/#setprops-props) を使えばプロパティを強制的に更新することもできる
