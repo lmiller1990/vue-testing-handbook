@@ -16,5 +16,6 @@ jobs:
       - run:
           name: unit tests
           command: |
+            cd demo-app
             yarn test:unit
 
