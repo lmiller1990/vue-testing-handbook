@@ -15,6 +15,7 @@ describe("NumberRenderer", () => {
   it("renders odd numbers", () => {
     const localThis = { even: false }
 
-    expect(NumberRenderer.computed.numbers.call(localThis)).toBe("1, 3, 5, 7, 9")
+    expect(NumberRenderer.computed.numbers.call(localThis))
+      .toBe("1, 3, 5, 7, 9")
   })
 })

@@ -19,31 +19,31 @@
 </template>
 
 <script>
-  export default {
-    name: "FormSubmitter",
+export default {
+  name: "FormSubmitter",
 
-    data() {
-      return {
-        username: '',
-        submitted: false,
-        asyncTest: false
-      }
+  data() {
+    return {
+      username: '',
+      submitted: false,
+      asyncTest: false
+    }
+  },
+
+  methods: {
+    handleSubmit() {
+      this.submitted = true
     },
 
-    methods: {
-      handleSubmit() {
-        this.submitted = true
-      },
-
-      handleSubmitAsync() {
-        return this.$http.get("/api/v1/register", { username: this.username })
-          .then(() => {
-            this.submitted = true
-          })
-          .catch((e) => {
-            throw Error("Something went wrong", e)
-          })
-      }
+    handleSubmitAsync() {
+      return this.$http.get("/api/v1/register", { username: this.username })
+        .then(() => {
+          this.submitted = true
+        })
+        .catch((e) => {
+          throw Error("Something went wrong", e)
+        })
     }
   }
+}
 </script>

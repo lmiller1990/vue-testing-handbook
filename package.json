@@ -5,12 +5,16 @@
   "license": "MIT",
   "scripts": {
     "dev": "vuepress dev src",
-    "docs:build": "vuepress build src"
+    "docs:build": "vuepress build src",
+    "lint": "yarn eslint --ext js,vue ."
   },
   "dependencies": {
     "vuepress": "^0.10.2"
   },
   "devDependencies": {
+    "babel-eslint": "^8.2.6",
+    "eslint": "^5.1.0",
+    "eslint-plugin-vue": "^4.5.0",
     "markdown-it-include": "^1.0.0"
   }
 }

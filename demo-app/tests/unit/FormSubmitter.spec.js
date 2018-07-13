@@ -7,7 +7,7 @@ let data = ''
 
 const mockHttp = {
   get: (_url, _data) => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       url = _url
       data = _data
       resolve()

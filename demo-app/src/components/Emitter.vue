@@ -4,15 +4,15 @@
 </template>
 
 <script>
-  export default {
-    name: "Emitter",
+export default {
+  name: "Emitter",
 
-    methods: { 
-      emitEvent() {
-        this.$emit("myEvent", "name", "password")
-      }
+  methods: { 
+    emitEvent() {
+      this.$emit("myEvent", "name", "password")
     }
   }
+}
 </script>
 
 <style scoped>

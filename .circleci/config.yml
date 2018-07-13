@@ -13,6 +13,11 @@ jobs:
             yarn install
 
       - run:
+          name: lint
+          command: |
+            yarn lint
+
+      - run:
           name: unit tests
           command: |
             cd demo-app
