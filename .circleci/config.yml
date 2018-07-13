@@ -6,3 +6,14 @@ jobs:
     steps:
       - checkout
       - run: echo "A first hello"
+      - run:
+        name: install dependencies
+        command: |
+          cd demo-app
+          yarn install
+
+      - run:
+        name: unit tests
+        command: |
+          yarn test:unit
+
