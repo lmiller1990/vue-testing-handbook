@@ -29,7 +29,8 @@ module.exports = {
           ['/vuex-mutations', 'Vuex - Mutations'],
           ['/vuex-actions', 'Vuex - Actions'],
           ['/vuex-getters', 'Vuex - Getters'],
-          ['/vuex-in-components', 'Mocking Vuex in components'],
+          ['/vuex-in-components', 'Vuex in components - $state and getters'],
+          ['/vuex-in-components-mutations-and-getters', 'Vuex in components - mutations and actions'],
           ['/jest-mocking-modules', 'Jest - mocking modules'],
           ['/vue-router', 'Vue Router'],
         ]
@@ -51,6 +52,7 @@ module.exports = {
           ['/ja/vuex-actions', 'Vuex - アクション'],
           ['/ja/vuex-getters', 'Vuex - ゲッター'],
           ['/ja/vuex-in-components', 'コンポーネントの中でVuexのテスト'],
+          ['/ja/vuex-in-components-mutations-and-getters.md', 'Vuex in components - mutations and actions'],
           ['/ja/jest-mocking-modules', 'Jestでモジュールをモック'],
           ['/ja/vue-router', 'Vueルーター'],                 
         ]
