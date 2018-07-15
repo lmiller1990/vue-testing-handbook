@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  export default {
-    name: "Bilingual"
-  }
+export default {
+  name: "Bilingual"
+}
 </script>
