@@ -1,8 +1,202 @@
-### Methods and computed properties
+### 計算プロパティ
 
-Show how to
+計算プロパティは単純なジャバスクリプトなオブジェクトなのでテストを書くのが簡単です。
 
-- call methods with `wrapper.vm.$options`
-- call with `call`: `Component.methods.someMethod.call(localThis...)`
-- computed properties, both in the component and with `call`
-- talk about benefits to each approach
+計算プロパティのテストを各２つの方法を紹介します。`numbers`の計算プロパティによって偶数か奇数のリストををレンダーする`<NumberRenderer>`コンポーネントを作ります。
+
+### テストを書く
+
+`<NumberRenderer>`はブルの`even`プロップを受け取ります。`even`は`true`の場合、2, 4, 6, 8を表示します。`false`の場合、1, 3, 5, 7, 9を表示します。`numbers`のプロパティで計算します。
+
+### 値をレンダーしてテストを書く
+
+テストを書いてみましょう。
+
+```js
+import { shallowMount } from "@vue/test-utils"
+import NumberRenderer from "@/components/NumberRenderer.vue"
+
+describe("NumberRenderer", () => {
+  it("偶数をレンダー", () => {
+    const wrapper = shallowMount(NumberRenderer, {
+      propsData: {
+        even: true
+      }
+    })
+
+    expect(wrapper.text()).toBe("2, 4, 6, 8")
+  })
+})
+```
+
+実行する前に`<NumberRenderer>`を書いてみます。
+
+```
+<template>
+  <div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "NumberRenderer",
+
+  props: {
+    even: {
+      type: Boolean,
+      required: true
+    }
+  }
+}
+</script>
+```
+
+開発しましょう。`yarn test:unit`を実行して、エラーメッセージによって進みます。
+
+```
+● NumberRenderer › 偶数をレンダー
+
+  expect(received).toBe(expected) // Object.is equality
+
+  Expected: "2, 4, 6, 8"
+  Received: ""
+```
+
+`numbers`の計算プロパティを書いてみます。
+
+```js
+computed: {
+  numbers() {
+    const evens = []
+
+    for (let i = 1; i < 10; i++) {
+      if (i % 2 === 0) {
+        evens.push(i)
+      }
+    }
+
+    return evens
+  }
+}
+```
+
+テンプレートを更新して新しく書いたプロパティを使います：
+
+```html
+<template>
+  <div>
+    {{ numbers }}
+  </div>
+</template>
+```
+
+`yarn test:unit`を実行すると：
+
+```
+FAIL  tests/unit/NumberRenderer.spec.js
+● NumberRenderer › 偶数をレンダー
+
+  expect(received).toBe(expected) // Object.is equality
+
+  Expected: "2, 4, 6, 8"
+  Received: "[
+    2,
+    4,
+    6,
+    8
+  ]"
+```
+
+ 数が正しいですが、リストをいい感じにフォーマットしたいです。返す値を更新します：
+
+```js
+return evens.join(", ")
+```
+
+`yarn test:unit`を実行したらパスです。
+
+### `call`でテストを書く
+
+`even: false`の場合のテストを追加しましょう。今回はコンポーネントをレンダーせずに計算プロパティをてすすする方法を紹介します。
+
+先にテストを書きます：
+
+```js
+it("奇数をレンダー", () => {
+  const localThis = { even: false }
+
+  expect(NumberRenderer.computed.numbers.call(localThis)).toBe("1, 3, 5, 7, 9")
+})
+```
+
+コンポーネントを`shallowMount`でランダーして`wrapper.text()`の検証をする代わりに、`call`で別の`this`を渡します。テストをパスしてから、`call`を使わないとどうなるかをみます。
+
+上に書いてあるテストを実行する：
+
+```
+FAIL  tests/unit/NumberRenderer.spec.js
+● NumberRenderer › 奇数をレンダー
+
+  expect(received).toBe(expected) // Object.is equality
+
+  Expected: "1, 3, 5, 7, 9"
+  Received: "2, 4, 6, 8"
+```
+
+`numbers`を更新します：
+
+```js
+numbers() {
+  const evens = []
+  const odds = []
+
+  for (let i = 1; i < 10; i++) {
+    if (i % 2 === 0) {
+      evens.push(i)
+    } else {
+      odds.push(i)
+    }
+  }
+
+  return this.even === true ? evens.join(", ") : odds.join(", ")
+}
+```
+
+偶数と奇数の場合はパスです。`call`を使わないとどうなりますか？使わないように更新します：
+
+```js
+it("奇数をレンダー", () => {
+  const localThis = { even: false }
+
+  expect(NumberRenderer.computed.numbers()).toBe("1, 3, 5, 7, 9")
+})
+```
+
+このままでテストを実行すると失敗します。
+
+```
+FAIL  tests/unit/NumberRenderer.spec.js
+● NumberRenderer › 奇数をレンダー
+
+  expect(received).toBe(expected) // Object.is equality
+
+  Expected: "1, 3, 5, 7, 9"
+  Received: "2, 4, 6, 8"
+```
+
+`vue`は`props`を`this`にバンドしてくれます。`shallowMount`などでレンダーしないので、`this`に何もバインドしません。`numbers`の中で`console.log(this)`をすると`this`が見えます。`this`は`numbers`プロパティがある`computed`オブジェクトとなります。
+
+```
+{ numbers: [Function: numbers] }
+```
+
+それで`call`を使うと別の`this`値を渡せます。上のテストで`even`ポロパティがある`this`オブジェクトを渡しました。
+
+### `call`か`shallowMount`?
+
+計算プロパティのテストを書くには`call`と`shallowMount`の療法は便利なテクニックです。`call`が特に便利な場合は：
+
+- ライフサイクルフックに実行するのに時間がかかる場合、またライフサイクルフックを呼び出したくない場合です。コンポーネントをレンダーしないので、ライフサイクルフックも実行しません。
+- `this`を細かく設定したい場合
+
+もちろんコンポーネントが正しくレンダーするてすつも必要です。テストしたいことに合わせてもっとも適切なテクニックを選んで、エッジケースをちゃんとテストします。
