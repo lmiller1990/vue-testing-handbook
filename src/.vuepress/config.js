@@ -1,6 +1,7 @@
 module.exports = {
   base: "/vue-testing-handbook/",
   title: "Vue testing handbook",
+  ga: "UA-122389064-1",
   locales: {
     '/': {
       lang: 'en-US',
