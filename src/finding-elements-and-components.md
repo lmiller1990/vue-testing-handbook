@@ -1,11 +1,126 @@
-## Finding elements and components
+### Finding Elements
 
-Talk about
+`vue-test-utils` provides a number of ways to find and assert the presence of html elements or other Vue components using the `find` method. The main use of `find` is asserting a component correct renders an element or child component.
 
-- how to use `find` and `findAll`
-- `find(".class")`
-- `find(VueComponent)`
-- `find({ name: "component-name" })`
-- give examples with `shallowMount` and `mount`
+### Creating the Components
 
-Talk about stubbing briefly, then in more detail in the next section.
+For the benefit of this example, create a `<Child>` and `<Parent>` and component.
+
+Child: 
+
+```vue
+<template>
+  <div>Child</div>
+</template>
+
+<script>
+export default {
+  name: "Child"
+}
+</script>
+```
+
+Parent:
+
+```vue
+<template>
+  <div>
+    <span 
+      class="title"
+      v-show="showSpan" 
+    >
+      Parent Component
+    </span>
+    <Child v-if="showChild" />
+  </div>
+</template>
+
+<script>
+import Child from "./Child.vue"
+
+export default {
+  name: "Parent",
+
+  components: { Child },
+
+  data() {
+    return {
+      showSpan: false,
+      showChild: false
+    }
+  }
+}
+</script>
+```
+
+### `find` with `querySelector` syntax
+
+Regular elements can easily be selected using the syntax used with `document.querySelector`. `vue-test-utils` also provides a `isVisible` method to check if elements conditionally rendered with `v-show` are visible. Create a `Parent.spec.js`, and inside add the following test:
+
+```js
+import { mount, shallowMount } from "@vue/test-utils"
+import Parent from "@/components/Parent.vue"
+
+describe("Parent", () => {
+  it("does not render a span", () => {
+    const wrapper = shallowMount(Parent)
+
+    expect(wrapper.find("span").isVisible()).toBe(false)
+  })
+})
+```
+
+Since `v-show="showSpan"` defaults to `false`, we expect the found `<span>` element's `isVisible` method to return false. Next, a test around the case where `showSpan` is `true`.
+
+```js
+it("does render a span", () => {
+  const wrapper = shallowMount(Parent, {
+    data() {
+      return { showSpan: true }
+    }
+  })
+
+  expect(wrapper.find("span").isVisible()).toBe(true)
+})
+```
+
+It passes! Much like `isVisible` for `v-show`, `vue-test-utils` provides a `exists` method to be used when testing elements conditionally rendered using `v-if`.
+
+### Finding Components with `name` and `Component`
+
+Finding child components is a little different to finding regular HTML elements. There two main ways to assert the presence of child Vue components:
+
+1. `find(Component)`
+2. `find({ name: "ComponentName" })`
+
+These are a bit easier to understand in the context of an example test. Let's start with the `find(Component)` syntax. This requires us to `import` the component, and pass it to the `find` function.
+
+```js
+import Child from "@/components/Child.vue"
+
+it("does not render a Child component", () => {
+  const wrapper = shallowMount(Parent)
+
+  expect(wrapper.find(Child).exists()).toBe(false)
+})
+```
+
+`find` is pretty complex. You can see the part of the source that finds children Vue components [here](https://github.com/vuejs/vue-test-utils/blob/dev/packages/test-utils/src/find-vue-components.js). It basically checks the component's `name`, and then checks the `constructor` and some other properties. 
+
+As mentioned in the previous paragraph, the `name` property is one of the checks done by `find` when you pass a component, so instead of passing the component, you can simply pass an object with the correct `name` property. This means you do not need to `import` the component. Let's test the case where `<Child>` is rendered:
+
+```js
+it("renders a Child component", () => {
+  const wrapper = shallowMount(Parent, {
+    data() {
+      return { showChild: true }
+    }
+  })
+
+  expect(wrapper.find({ name: "Child" }).exists()).toBe(true)
+})
+```
+
+It passes! Using the `name` property can be a little unintuitive, so importing the actual component is an alternative. Another option is to simply add a `class` or `id` and query using the `querySelector` style syntax presented in the first two examples.
+
+### `findAll`
