@@ -1,12 +1,12 @@
 ### Finding Elements
 
-`vue-test-utils` provides a number of ways to find and assert the presence of html elements or other Vue components using the `find` method. The main use of `find` is asserting a component correct renders an element or child component.
+`vue-test-utils` provides a number of ways to find and assert the presence of html elements or other Vue components using the `find` method. The main use of `find` is asserting a component correctly renders an element or child component.
 
 The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Parent.spec.js).
 
 ### Creating the Components
 
-For the benefit of this example, create a `<Child>` and `<Parent>` and component.
+For this example, we will create a `<Child>` and `<Parent>` and component.
 
 Child: 
 
@@ -27,10 +27,7 @@ Parent:
 ```vue
 <template>
   <div>
-    <span 
-      class="title"
-      v-show="showSpan" 
-    >
+    <span v-show="showSpan">
       Parent Component
     </span>
     <Child v-if="showChild" />
@@ -72,7 +69,7 @@ describe("Parent", () => {
 })
 ```
 
-Since `v-show="showSpan"` defaults to `false`, we expect the found `<span>` element's `isVisible` method to return false. Next, a test around the case where `showSpan` is `true`.
+Since `v-show="showSpan"` defaults to `false`, we expect the found `<span>` element's `isVisible` method to return `false`. The tests passes when run with `yarn test:unit`. Next, a test around the case when `showSpan` is `true`.
 
 ```js
 it("does render a span", () => {
@@ -86,7 +83,7 @@ it("does render a span", () => {
 })
 ```
 
-It passes! Much like `isVisible` for `v-show`, `vue-test-utils` provides a `exists` method to be used when testing elements conditionally rendered using `v-if`.
+It passes! Much like `isVisible` for `v-show`, `vue-test-utils` provides an `exists` method to be used when testing elements conditionally rendered using `v-if`.
 
 ### Finding Components with `name` and `Component`
 
@@ -107,9 +104,9 @@ it("does not render a Child component", () => {
 })
 ```
 
-`find` is pretty complex. You can see the part of the source that finds children Vue components [here](https://github.com/vuejs/vue-test-utils/blob/dev/packages/test-utils/src/find-vue-components.js). It basically checks the component's `name`, and then checks the `constructor` and some other properties. 
+The implementation for `find` is quite complex, since it works with the `querySelector` syntax, as well as several other syntaxes. You can see the part of the source that finds children Vue components [here](https://github.com/vuejs/vue-test-utils/blob/dev/packages/test-utils/src/find-vue-components.js). It basically checks the component's `name` against each child rendered, and then checks the `constructor`, and some other properties. 
 
-As mentioned in the previous paragraph, the `name` property is one of the checks done by `find` when you pass a component, so instead of passing the component, you can simply pass an object with the correct `name` property. This means you do not need to `import` the component. Let's test the case where `<Child>` is rendered:
+As mentioned in the previous paragraph, the `name` property is one of the checks done by `find` when you pass a component. Instead of passing the component, you can simply pass an object with the correct `name` property. This means you do not need to `import` the component. Let's test the case when `<Child>` should be rendered:
 
 ```js
 it("renders a Child component", () => {
@@ -127,7 +124,7 @@ It passes! Using the `name` property can be a little unintuitive, so importing t
 
 ### `findAll`
 
-There is often cases when you want to assert a number of elements is rendered. Let's see an example. A common case is a list of items rendered with `v-for`. Here is a `<ParentWithManyChildren>` that renders several `<Child>` components.
+There is often cases when you want to assert a number of elements is rendered. A common case is a list of items rendered with `v-for`. Here is a `<ParentWithManyChildren>` that renders several `<Child>` components.
 
 ```js
 <template>
@@ -157,7 +154,7 @@ it("renders many children", () => {
 })
 ```
 
-Running `yarn test:unit` yields are passing test. You can use the `querySelector` syntax with `findAll` as well.
+Running `yarn test:unit` shows the test passes. You can use the `querySelector` syntax with `findAll` as well.
 
 ### Conclusion
 
