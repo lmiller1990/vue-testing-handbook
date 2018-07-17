@@ -2,6 +2,8 @@
 
 `vue-test-utils` provides a number of ways to find and assert the presence of html elements or other Vue components using the `find` method. The main use of `find` is asserting a component correct renders an element or child component.
 
+The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Parent.spec.js).
+
 ### Creating the Components
 
 For the benefit of this example, create a `<Child>` and `<Parent>` and component.
@@ -124,3 +126,46 @@ it("renders a Child component", () => {
 It passes! Using the `name` property can be a little unintuitive, so importing the actual component is an alternative. Another option is to simply add a `class` or `id` and query using the `querySelector` style syntax presented in the first two examples.
 
 ### `findAll`
+
+There is often cases when you want to assert a number of elements is rendered. Let's see an example. A common case is a list of items rendered with `v-for`. Here is a `<ParentWithManyChildren>` that renders several `<Child>` components.
+
+```js
+<template>
+  <div>
+    <Child v-for="id in [1, 2 ,3]" :key="id" />
+  </div>
+</template>
+
+<script>
+import Child from "./Child.vue"
+
+export default {
+  name: "ParentWithManyChildren",
+
+  components: { Child }
+}
+</script>
+```
+
+We can write a test using `findAll` to assert three `<Child>` components are rendered like this:
+
+```js
+it("renders many children", () => {
+  const wrapper = shallowMount(ParentWithManyChildren)
+
+  expect(wrapper.findAll(Child).length).toBe(3)
+})
+```
+
+Running `yarn test:unit` yields are passing test. You can use the `querySelector` syntax with `findAll` as well.
+
+### Conclusion
+
+This page covers:
+
+- using `find` and `findAll` with the `querySelector` syntax
+- `isVisible` and `exists`
+- using `find` and `findAll` with a component or name as the selector
+
+The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Parent.spec.js).
+
