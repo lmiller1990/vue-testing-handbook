@@ -1,5 +1,6 @@
 import { mount, shallowMount } from "@vue/test-utils"
 import Parent from "@/components/Parent.vue"
+import ParentWithManyChildren from "@/components/ParentWithManyChildren.vue"
 import Child from "@/components/Child.vue"
 
 describe("Parent", () => {
@@ -33,5 +34,13 @@ describe("Parent", () => {
     })
 
     expect(wrapper.find({ name: "Child" }).exists()).toBe(true)
+  })
+})
+
+describe("ParentWithManyChildren", () => {
+  it("renders many children", () => {
+    const wrapper = shallowMount(ParentWithManyChildren)
+
+    expect(wrapper.findAll(Child).length).toBe(3)
   })
 })
