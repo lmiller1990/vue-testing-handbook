@@ -1,4 +1,4 @@
-## Testing Computed Properties
+### Testing Computed Properties
 
 Testing computed properties are especially simple, since they are just plain old JavaScript functions.
 
@@ -129,7 +129,7 @@ it("renders odd numbers", () => {
 })
 ```
 
-Instead of rendering the component and making an assertion on `wrapper.text()`, we are using `call` to provide alternative `this` context to `numbers`. We will see what happens if we don't use call after we get the test to pass.
+Instead of rendering the component and making an assertion on `wrapper.text()`, we are using `call` to provide alternative `this` context to `numbers`. We will see what happens if we don't use `call` after we get the test to pass.
 
 Running the current test yields:
 
@@ -195,4 +195,9 @@ So we need to use `call`, which lets us bind an alternative `this` object, in ou
 
 ### To `call` or to `shallowMount`?
 
-Both techniques presented are useful for testing computed properties. If you are testing a component that does some time consuming operations in a lifecycle methods you would like to avoid executing in your computed unit test, or you want to stub out some values, using `call` and passing a custom context can be useful. Of course, you want to make sure the value is correctly rendered as well, so make sure you choose the correct technique when testing your computed properties, and test all the edge cases.
+Both techniques presented are useful for testing computed properties. Call can be useful when:
+
+- You are testing a component that does some time consuming operations in a lifecycle methods you would like to avoid executing in your computed unit test.
+- You want to stub out some values on `this`. Using `call` and passing a custom context can be useful. 
+
+Of course, you want to make sure the value is correctly rendered as well, so make sure you choose the correct technique when testing your computed properties, and test all the edge cases.
