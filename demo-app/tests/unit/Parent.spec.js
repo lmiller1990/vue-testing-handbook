@@ -1,4 +1,4 @@
-import { mount, shallowMount } from "@vue/test-utils"
+import { shallowMount } from "@vue/test-utils"
 import Parent from "@/components/Parent.vue"
 import ParentWithManyChildren from "@/components/ParentWithManyChildren.vue"
 import Child from "@/components/Child.vue"
