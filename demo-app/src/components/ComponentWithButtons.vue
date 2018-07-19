@@ -7,7 +7,7 @@
     </button>
 
     <button 
-      class="commit" 
+      class="dispatch" 
       @click="handleDispatch">
       Dispatch
     </button>
@@ -23,7 +23,7 @@ export default {
       this.$store.commit("testMutation", { msg: "Test Commit" })
     },
 
-    handleCommit() {
+    handleDispatch() {
       this.$store.dispatch("testAction", { msg: "Test Dispatch" })
     }
   }
