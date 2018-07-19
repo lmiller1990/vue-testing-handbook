@@ -112,9 +112,9 @@ it("dispatches an action when a button is clicked", () => {
 })
 ```
 
-This is a lot more compact than the previous example. No `localVue`, no `Vuex` - instead of mocking the function, in the previous where we did `testMutation = jest.fn()`, we actually mock the `dispatch` itself. Since `$store.dispatch` is just a regular JavaScript function, we are able to do this. Then we assert the correct action handler, `testAction`, is the first argument, and the second argument, the payload, is correct. We don't care what the action actually does - that can be tested in isolation. The goal of this test is to simply verify that clicking a button dispatches the correct action with payload.
+This is a lot more compact than the previous example. No `localVue`, no `Vuex` - instead of mocking the function, in the previous where we did `testMutation = jest.fn()`, we actually mock the `dispatch` function itself. Since `$store.dispatch` is just a regular JavaScript function, we are able to do this. Then we assert the correct action handler, `testAction`, is the first argument, and the second argument, the payload, is correct. We don't care what the action actually does - that can be tested in isolation. The goal of this test is to simply verify that clicking a button dispatches the correct action with payload.
 
-Whether you use a real store, or a the more compact mock store, is down to personal preference. Both are correct. The important thing is you are testing your components.
+Whether you use a real store or a mock store is your tests is down to personal preference. Both are correct. The important thing is you are testing your components.
 
 ### Conclusion
 
