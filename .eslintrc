@@ -2,7 +2,8 @@
   "globals": {
     "expect": true,
     "describe": true,
-    "it": true
+    "it": true,
+    "jest": true
   },
   env: {
     node: true
