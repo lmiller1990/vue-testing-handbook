@@ -1,7 +1,6 @@
 import actions from "@/store/actions.js"
 
-import axios from "axios"
-
+/*
 let url = ''
 let body = {}
 
@@ -13,7 +12,8 @@ jest.mock("axios", () => {
     }
   }
 })
-
+*/
+let url = ""
 describe("authenticate", () => {
   it("authenticated a user", async () => {
     const commit = jest.fn()
@@ -23,6 +23,7 @@ describe("authenticate", () => {
     await actions.authenticate({ commit }, { username, password })
 
     expect(url).toBe("/api/authenticate")
-    expect(body).toEqual({ username, password })
+    expect(commit).toHaveBeenCalledWith(
+      "SET_AUTHENTICATED", { username, password })
   })
 })

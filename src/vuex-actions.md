@@ -32,9 +32,41 @@ The action test should assert:
 2. is the payload correct?
 3. was the correct mutation committed with the result
 
-Since we are using Jest, we can easily mock the API call using `jest.mock`. We will use a fake `axios` instead of the real one, which will give us more control over it's behavior.
+Let's go ahead and write the test, and let the failure messages guide us to a passing test.
 
 ### Writing the Test
 
 ```js
+describe("authenticate", () => {
+  it("authenticated a user", async () => {
+    const commit = jest.fn()
+    const username = "alice"
+    const password = "password"
+
+    await actions.authenticate({ commit }, { username, password })
+
+    expect(url).toBe("/api/authenticate")
+    expect(commit).toHaveBeenCalledWith(
+      "SET_AUTHENTICATED", { username, password })
+  })
+})
 ```
+
+Running this test gives us the following failure message:
+
+```
+ FAIL  tests/unit/actions.spec.js
+  ● authenticate › authenticated a user
+
+    SyntaxError: The string did not match the expected pattern.
+
+      at XMLHttpRequest.open (node_modules/jsdom/lib/jsdom/living/xmlhttprequest.js:482:15)
+      at dispatchXhrRequest (node_modules/axios/lib/adapters/xhr.js:45:13)
+      at xhrAdapter (node_modules/axios/lib/adapters/xhr.js:12:10)
+      at dispatchRequest (node_modules/axios/lib/core/dispatchRequest.js:59:10)
+```
+
+This error is coming somewhere from within `axios`. We are making a request to `/api...`, and in the case of the test runner, there isn't even a server to make a request to.
+
+Since we are using Jest, we can easily mock the API call using `jest.mock`. We will use a fake `axios` instead of the real one, which will give us more control over it's behavior.
+
