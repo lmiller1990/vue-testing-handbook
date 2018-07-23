@@ -10,7 +10,8 @@
   "dependencies": {
     "axios": "^0.18.0",
     "flush-promises": "^1.0.0",
-    "vue": "^2.5.16"
+    "vue": "^2.5.16",
+    "vue-router": "^3.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.0-rc.3",
