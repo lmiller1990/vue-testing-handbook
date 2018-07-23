@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    asdf
     <router-view />
   </div>
 </template>
