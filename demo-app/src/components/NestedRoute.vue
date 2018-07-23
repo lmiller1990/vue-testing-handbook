@@ -1,5 +1,10 @@
 <template>
-  <div>Nested Route</div>
+  <div>
+    Nested Route
+    <div class="username">
+      {{ $route.params.username }}
+    </div>
+  </div>
 </template>
 
 <script>
