@@ -8,8 +8,14 @@
 </template>
 
 <script>
+import { bustCache } from "@/bust-cache.js"
 export default {
-  name: "NestedRoute"
+  name: "NestedRoute",
+
+  beforeRouteLeave(to, from, next) {
+    bustCache()
+    next()
+  }
 }
 </script>
 

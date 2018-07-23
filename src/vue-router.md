@@ -191,3 +191,156 @@ it("renders a username from query string", () => {
 Now the test passes. In this case, we don't do any navigation or anything that relies on the implementation of the router, so using `mocks` is good. We don't really care how `username` comes to be in the query string, only that it is present. 
 
 Often the server will provide the routing, as opposed to client side routing with Vue Router. In such cases, using `mocks` to set the query string in a test is a good alternative to using a real instance of Vue Router.
+
+### Stategies for Testing Router Hooks
+
+Vue Router provides several types of router hooks, or ["navigation guards"](https://router.vuejs.org/guide/advanced/navigation-guards.html). Two such examples are:
+
+1. Global guards (`router.beforeEach`). Declared on the router instance.
+2. In component guards, such as `beforeRouteEnter`. Declare in components.
+
+Making sure these actually work correctly is usually a job for an integration test, since you need to have a user navigate from one route to another, generally. But you can also use unit tests to see if the functions are working correctly and get faster feedback about potential bugs. This section presents come strategies on doing so.
+
+### Global Guards
+
+Let's say you have a `bustCache` function that should be called on every route contiain a component with the `shouldBustCache` meta field. You routes might look like this:
+
+```js
+import NestedRoute from "@/components/NestedRoute.vue"
+
+export default [
+  {
+    path: "/nested-route",
+    component: NestedRoute,
+    meta: {
+      shouldBustCache: true
+    }
+  }
+]
+```
+
+Using the `shouldBustCache` meta field, you want to invalidate the current cache to ensure the user gets the latest data. An implementation might look like this:
+
+```js
+import Vue from "vue"
+import VueRouter from "vue-router"
+import routes from "./routes.js"
+import { bustCache } from "./bust-cache.js"
+
+Vue.use(VueRouter)
+
+const router = new VueRouter({ routes })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.shouldBustCache)) {
+    bustCache()
+  }
+  next()
+})
+
+export default router
+```
+
+In your unit test, you __could__ import the router instance, and attempt to call `beforeEach` by typing `router.beforeHooks[0]()`. This will throw an error about `next` - since you didn't pass the correct arguments. Instead of this, one strategy is to decouple and indepedently export the `beforeEach` function. How about:
+
+```js
+export function beforeEach((to, from, next) {
+  if (to.matched.some(record => record.meta.shouldBustCache)) {
+    bustCache()
+  }
+  next()
+}
+
+router.beforeEach((to, from, next) => beforeEach(to, from, next))
+
+export default router
+```
+
+Now writing a test is easy, albeit a little long:
+
+```js
+import { beforeEach } from "@/router.js"
+import mockModule from "@/bust-cache.js"
+
+jest.mock("@/bust-cache.js", () => ({ bustCache: jest.fn() }))
+
+describe("beforeEach", () => {
+  afterEach(() => {
+    mockModule.bustCache.mockClear()
+  })
+
+  it("busts the cache when going to /user", () => {
+    const to = {
+      matched: [{ meta: { shouldBustCache: true } }]
+    }
+    const next = jest.fn()
+
+    beforeEach(to, undefined, next)
+
+    expect(mockModule.bustCache).toHaveBeenCalled()
+    expect(next).toHaveBeenCalled()
+  })
+
+  it("busts the cache when going to /user", () => {
+    const to = {
+      matched: [{ meta: { shouldBustCache: false } }]
+    }
+    const next = jest.fn()
+
+    beforeEach(to, undefined, next)
+
+    expect(mockModule.bustCache).not.toHaveBeenCalled()
+    expect(next).toHaveBeenCalled()
+  })
+})
+```
+
+The main points of interest are we mock the entire module using `jest.mock`, and reset the mock using the `afterEach` hook. By exporting the `beforeEach` as a decouple, regular JavaScript function, it become trivial to test. To ensure the hook is actually busting the cache and showing the most recent data, a e2e testing tool like [Cypress.io](https://www.cypress.io/), which comes with applications scaffolded using vue-cli, can be used.
+
+### Component Guards
+
+Component Guards are also easy to test, once you see them as decoupled, regular JavaScript functions. Let's say we added a `beforeRouteLeave` hook to `<NestedRoute>`:
+
+```vue
+<script>
+import { bustCache } from "@/bust-cache.js"
+export default {
+  name: "NestedRoute",
+
+  beforeRouteLeave(to, from, next) {
+    bustCache()
+    next()
+  }
+}
+</script>
+```
+
+We can test this in exactly the same way as the global guard:
+
+```js
+// ...
+import mockModule from "@/bust-cache.js"
+
+jest.mock("@/bust-cache.js", () => ({ bustCache: jest.fn() }))
+
+it("calls bustCache and next when leaving the route", () => {
+  const next = jest.fn()
+  NestedRoute.beforeRouteLeave(undefined, undefined, next)
+
+  expect(mockModule.bustCache).toHaveBeenCalled()
+  expect(next).toHaveBeenCalled()
+})
+```
+
+While this is useful for quick and immediate feedback during development, since routers and navigation hooks often interact with several components, you should also have integration tests to ensure everything is working as expected.
+
+### Conclusion
+
+This guide covered:
+
+- testing components conditionally rendered by Vue Router
+- mocking Vue components using `jest.mock` and `localVue`
+- decoupling global navigation guards from the router and testing the indepedently
+- using `jest.mock` to mock a module
+
+The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/App.spec.js) and [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/NestedRoute.spec.js).
