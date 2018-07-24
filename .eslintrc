@@ -3,7 +3,8 @@
     "expect": true,
     "describe": true,
     "it": true,
-    "jest": true
+    "jest": true,
+    "afterEach": true
   },
   env: {
     node: true
