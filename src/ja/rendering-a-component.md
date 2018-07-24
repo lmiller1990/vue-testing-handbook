@@ -1,8 +1,7 @@
-## Two ways to render
+## コンポーネントのレンダリング - 二つの方法
+`vue-test-utils`はコンポーネントのレンダリング(__マウント__)に二つの方法を提供しています - `mount`と`shallowMount`。マウントされたコンポーネントはいずれもこの二つの方法を使い、`wrapper`を返します。`wrapper`は、Vue componentを含むオブジェクトです。また、テストを実行するに色々な便利なメソッドを持っています。
 
-`vue-test-utils` provides two ways to render, or __mount__ a component - `mount` and `shallowMount`. A component mounted using either of these methods returns a `wrapper`, which is an object containing the Vue component, plus some useful methods for testing.
-
-Let's start off with two simple components:
+それでは、二つシンプルなコンポーネントを使って、例を見てみましょう：
 
 ```js
 const Child = Vue.component("Child", {
@@ -18,7 +17,7 @@ const Parent = Vue.component("Parent", {
 })
 ```
 
-Let's start off by rendering `Child` and calling the `html` method `vue-test-utils` provides to inspect the markup.
+`Child`をレンダリングし、`vue-test-utils`が提供するメソッド`html`を呼び出して、マークアップを出力しましょう。
 
 ```js
 const shallowWrapper = shallowMount(Child)
@@ -27,6 +26,8 @@ const mountWrapper = mount(Child)
 console.log(shallowWrapper.html())
 console.log(mountWrapper.html())
 ```
+
+`mountWrapper.html()`と`shallowWrapper.html()`は両方
 
 Both `mountWrapper.html()` and `shallowWrapper.html()` yield the following output:
 
