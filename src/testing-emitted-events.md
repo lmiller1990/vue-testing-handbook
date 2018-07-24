@@ -5,7 +5,6 @@ As applications grow larger, the number of components grows as well. When these 
 `vue-test-utils` provides an `emitted` API which allows us to make assertions on emitted events. The documentation for `emitted` is found [here](https://vue-test-utils.vuejs.org/ja/api/wrapper/emitted.html).
 
 The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Emitter.spec.js).
-visual
 
 ## Write a Component and Test
 
