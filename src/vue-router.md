@@ -42,7 +42,7 @@ export default {
   name: "NestedRoute"
 }
 </script>
-``
+```
 
 ### Creating the Router and Routes
 
