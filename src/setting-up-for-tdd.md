@@ -203,4 +203,4 @@ Greeting.vue
 
 Jest gives us good feedback. We can see the expected and actual result, as well as on which line the expectation failed. The test did fail, as expected. Revert `Greeting.vue` and make sure the test is passing again.
 
-Next we will look at some of the options `vue-test-utils` provides, and how to tests components that use `props`.
+Next we will look at the two methods `vue-test-utils` provides to render components - `mount` and `shallowMount`. 
