@@ -18,7 +18,7 @@ module.exports = {
         sidebar: [
           ['/', 'Welcome'],
           ['/setting-up-for-tdd', 'Setting up for TDD'],
-          ['/rendering-a-component', 'Rendering Componenets'],
+          ['/rendering-a-component', 'Rendering Components'],
           ['/components-with-props', 'Testing Props'],
           ['/computed-properties', 'Computed Properties'],
           ['/simulating-user-input', 'Simulating user input'],
