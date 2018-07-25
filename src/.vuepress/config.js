@@ -17,8 +17,8 @@ module.exports = {
       '/': {
         sidebar: [
           ['/', 'Welcome'],
-          ['/rendering-a-component', 'Getting Started'],
           ['/setting-up-for-tdd', 'Setting up for TDD'],
+          ['/rendering-a-component', 'Rendering Componenets'],
           ['/components-with-props', 'Testing Props'],
           ['/computed-properties', 'Computed Properties'],
           ['/simulating-user-input', 'Simulating user input'],
@@ -39,8 +39,8 @@ module.exports = {
       '/ja/': {
         sidebar: [
           ['/ja/', 'ようこそ'],
-          ['/ja/rendering-a-component', '初めから'],
           ['/ja/setting-up-for-tdd', 'テスト駆動開発環境を準備'],
+          ['/ja/rendering-a-component', 'コンポーネントをレンダー'],
           ['/ja/components-with-props', 'プロップスのテスト'],
           ['/ja/computed-properties', '算出プロパティ'],
           ['/ja/simulating-user-input', 'ユーザー入力をシミュレーション'],
