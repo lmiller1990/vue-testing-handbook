@@ -1,4 +1,4 @@
-### Testing Actions
+## Testing Actions
 
 Talk about how to test actions (separately to components)
 

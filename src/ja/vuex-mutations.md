@@ -1,4 +1,4 @@
-### Testing Mutations
+## Testing Mutations
 
 Talk about testing mutations. Similar to `vuex-actions`.
 

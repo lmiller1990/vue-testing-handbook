@@ -1,4 +1,4 @@
-### Mocking Modules
+## Mocking Modules
 
 Not directly related to Vue testing, more specific to Jest. Jest is used heavily throughout this handbook, though, and becoming widely adopted in the industry, so I think it deserves a section.
 

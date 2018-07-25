@@ -1,4 +1,4 @@
-### Triggering Events
+## Triggering Events
 
 One of the most common things your Vue components will be doing in listening for inputs from the user. `vue-test-utils` and Jest make it easy to test inputs. Let's take a look at how to use `trigger` and Jest mocks to verify our components are working correctly.
 

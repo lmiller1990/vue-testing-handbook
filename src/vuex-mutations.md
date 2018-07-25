@@ -1,10 +1,10 @@
-### Testing Mutations
+## Testing Mutations
 
 Testing mutations in isolation is very straight forward, because mutations are just regular JavaScript functions. This page discusses testing mutations in isolation. If you want to test mutations in the context of a component committing a mutation, see [here](https://lmiller1990.github.io/vue-testing-handbook/vuex-in-components-mutations-and-actions.html).
 
 The test used in the following example can be found [here](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app/tests/unit/mutations.spec.js).
 
-### Creating the Mutation
+## Creating the Mutation
 
 Mutations tend to following a set pattern. Get some data, maybe do some processing, then assign the data to the state. Here is the outline of an `ADD_POST` mutation. Once implemented, it will receive a `post` object in the payload, and add the `post.id` to `state.postIds`. It will also add the post object to the `state.posts` object, where the key is the `post.id`. This is a common pattern in apps using Vuex.
 
@@ -87,7 +87,7 @@ export default {
 
 Now the test passes!
 
-### Conclusion
+## Conclusion
 
 Testing Vuex mutations requires nothing specific to Vue or Vuex, since they are just regular JavaScript functions. Simply import them and test as needed. The only thing to be careful of is Vue's reactivity caveats, which apply to Vuex as well. You can read more about the reactivity system and common caveats [here](https://vuejs.org/v2/guide/reactivity.html#Change-Detection-Caveats).
 

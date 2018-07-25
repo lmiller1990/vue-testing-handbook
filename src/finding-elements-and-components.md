@@ -1,10 +1,10 @@
-### Finding Elements
+## Finding Elements
 
 `vue-test-utils` provides a number of ways to find and assert the presence of html elements or other Vue components using the `find` method. The main use of `find` is asserting a component correctly renders an element or child component.
 
 The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Parent.spec.js).
 
-### Creating the Components
+## Creating the Components
 
 For this example, we will create a `<Child>` and `<Parent>` and component.
 
@@ -52,7 +52,7 @@ export default {
 </script>
 ```
 
-### `find` with `querySelector` syntax
+## `find` with `querySelector` syntax
 
 Regular elements can easily be selected using the syntax used with `document.querySelector`. `vue-test-utils` also provides a `isVisible` method to check if elements conditionally rendered with `v-show` are visible. Create a `Parent.spec.js`, and inside add the following test:
 
@@ -85,7 +85,7 @@ it("does render a span", () => {
 
 It passes! Much like `isVisible` for `v-show`, `vue-test-utils` provides an `exists` method to be used when testing elements conditionally rendered using `v-if`.
 
-### Finding Components with `name` and `Component`
+## Finding Components with `name` and `Component`
 
 Finding child components is a little different to finding regular HTML elements. There two main ways to assert the presence of child Vue components:
 
@@ -122,7 +122,7 @@ it("renders a Child component", () => {
 
 It passes! Using the `name` property can be a little unintuitive, so importing the actual component is an alternative. Another option is to simply add a `class` or `id` and query using the `querySelector` style syntax presented in the first two examples.
 
-### `findAll`
+## `findAll`
 
 There is often cases when you want to assert a number of elements is rendered. A common case is a list of items rendered with `v-for`. Here is a `<ParentWithManyChildren>` that renders several `<Child>` components.
 
@@ -156,7 +156,7 @@ it("renders many children", () => {
 
 Running `yarn test:unit` shows the test passes. You can use the `querySelector` syntax with `findAll` as well.
 
-### Conclusion
+## Conclusion
 
 This page covers:
 

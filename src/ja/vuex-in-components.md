@@ -1,4 +1,4 @@
-### Testing Vuex in components
+## Testing Vuex in components
 
 - how to mock Vuex
 

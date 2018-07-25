@@ -1,14 +1,14 @@
-### Testing Computed Properties
+## Testing Computed Properties
 
 Testing computed properties are especially simple, since they are just plain old JavaScript functions.
 
 Let's start with looking at two different ways to test a `computed` property. We will develop a `<NumberRenderer>` component, that renders either odd or even numbers, based on a `numbers` computed property. 
 
-### Writing the test
+## Writing the test
 
 The `<NumberRenderer>` component will receive an `even` prop, that is a boolean. If `even` is `true`, the component should render 2, 4, 6, and 8. If `false`, it should render 1, 3, 5, 7 and 9. The list of values will be calculated in a `computed` property called `numbers`.
 
-### Testing by rendering the value
+## Testing by rendering the value
 
 The test:
 
@@ -115,7 +115,7 @@ return evens.join(", ")
 
 Now `yarn test:unit` passes! 
 
-### Testing with `call` 
+## Testing with `call` 
 
 We will now add a test for the case of `even: false`. This time, we will see an alternative way to test a computed property, without actually rendering the component.
 
@@ -193,7 +193,7 @@ FAIL  tests/unit/NumberRenderer.spec.js
 
 So we need to use `call`, which lets us bind an alternative `this` object, in our case, one with a `even` property.
 
-### To `call` or to `shallowMount`?
+## To `call` or to `shallowMount`?
 
 Both techniques presented are useful for testing computed properties. Call can be useful when:
 
@@ -201,3 +201,8 @@ Both techniques presented are useful for testing computed properties. Call can b
 - You want to stub out some values on `this`. Using `call` and passing a custom context can be useful. 
 
 Of course, you want to make sure the value is correctly rendered as well, so make sure you choose the correct technique when testing your computed properties, and test all the edge cases.
+
+## Conclusion
+
+- computed properties can be using `shallowMount` making assertions on the rendered markup
+- complex computed properties can be independently tested by using `call`

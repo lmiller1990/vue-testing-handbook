@@ -1,4 +1,4 @@
-## Basic of propsData
+## Setting props with propsData
 
 `propsData` can be used with both `mount` and `shallowMount`. It is often used to test components that receive props from their parent component.
 
@@ -14,9 +14,7 @@ const wrapper = shallowMount(Foo, {
 
 ## Creating the component and test
 
-### SubmitButton.vue
-
-Create a simple component that has two `props`:
+Create a simple `<SubmitButton>` component that has two `props`:
 
 ```html
 <template>
@@ -47,7 +45,7 @@ export default {
 </script>
 ```
 
-### The first test
+## The First Test
 
 We will make an assertion on the message in the case the user does not have admin privledges.
 
@@ -93,7 +91,7 @@ The result of `console.log(wrapper.html())` is also printed:
 
 We can see the `msg` prop is processed and the resulting markup is correctly rendered.
 
-### A second test
+## A Second Test
 
 Let's make an assertion on the other possible state: when `isAdmin` is `true`:
 
@@ -142,7 +140,7 @@ We can see the `isAdmin` prop was used to render correct `<span>` element.
 
 Let's refactor the tests adhering to the principal "Don't repeat yourself". Since all the tests are passing, we can confidentally refactor. As long are they all still passing after the refactor, we can be sure we did not break anything.
 
-### Factory functions
+## Refactor with a Factory Functions
 
 In both tests we call `shallowMount` then pass a similar `propsData` object. We can refactor this using a factory function. A factory function simply a function that returns an object - it _makes_ objects, thus the name "factory" function.
 

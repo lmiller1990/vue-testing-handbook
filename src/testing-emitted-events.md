@@ -1,4 +1,4 @@
-### Testing Emitted Events
+## Testing Emitted Events
 
 As applications grow larger, the number of components grows as well. When these components need to share data, the child components emits an event, and the parent component responds.
 

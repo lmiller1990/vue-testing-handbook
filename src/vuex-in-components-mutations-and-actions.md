@@ -1,4 +1,4 @@
-### Mutations and Actions
+## Mutations and Actions
 
 The previous guide discussed testing components that use `$store.state` and `$store.getters`, which both provide the current state to the component. When asserting a component correctly commits a mutation or dispatches an action, what we really want to do is assert `$store.commit` and `$store.dispatch` is called with the correct handler (the mutation or action to call) and payload.
 
@@ -6,7 +6,7 @@ There are two ways to go about this. One is to use a real Vuex store with `creat
 
 The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ComponentWithButtons.spec.js).
 
-### Creating the Component
+## Creating the Component
 
 For these examples, we will test a `<ComponentWithButtons>` component:
 
@@ -44,7 +44,7 @@ export default {
 </script>
 ```
 
-### Testing with a real Vuex store
+## Testing with a real Vuex store
 
 Let's write a `ComponentWithButtons.spec.js` with a test for the mutation first. Remember, we want to verify two things:
 
@@ -89,7 +89,7 @@ That's a lot of code. Nothing too exciting is happening, though. We create a `lo
 
 This is a lot of boilerplate code to write, but is a correct and valid way to verify components are behaving correctly. Another alternative that requires less code is using a mock store. Let's see how to do that for while writing a test to assert `testAction` is dispatched.
 
-### Testing using a mock store
+## Testing using a mock store
 
 Let's see the code, then compare and contrast it to the previous test. Remember, we want to verify:
 
@@ -116,7 +116,7 @@ This is a lot more compact than the previous example. No `localVue`, no `Vuex` -
 
 Whether you use a real store or a mock store is your tests is down to personal preference. Both are correct. The important thing is you are testing your components.
 
-### Conclusion
+## Conclusion
 
 In this section we covered:
 

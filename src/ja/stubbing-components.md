@@ -1,4 +1,4 @@
-### Stubbing components
+## Stubbing components
 
 Talk about
 

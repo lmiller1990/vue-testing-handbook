@@ -1,4 +1,4 @@
-### Testing Vuex
+## Testing Vuex
 
 The next few guides discuss testing Vuex.
 

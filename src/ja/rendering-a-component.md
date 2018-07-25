@@ -1,2 +1,2 @@
-### Two ways to render
+## Two ways to render
 

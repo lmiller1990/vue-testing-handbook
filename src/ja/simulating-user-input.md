@@ -1,4 +1,4 @@
-### Triggering Events
+## Triggering Events
 
 Talk about
 

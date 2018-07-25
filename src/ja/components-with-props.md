@@ -14,7 +14,7 @@ const wrapper = shallowMount(Foo, {
 
 ## コンポーネントの作成とテスト
 
-### SubmitButton.vue
+## SubmitButton.vue
 
 2つの `props` を持つ簡単なコンポーネントを作成する。
 
@@ -47,7 +47,7 @@ export default {
 </script>
 ```
 
-### 最初のテスト
+## 最初のテスト
 
 権限がない状態でのメッセージを検証していく。
 
@@ -93,7 +93,7 @@ PASS  tests/unit/SubmitButton.spec.js
 
 `props` で渡された `msg` がきちんと描画されていることがわかります。
 
-### 2つ目のテスト
+## 2つ目のテスト
 
 権限がある状態 ( `isAdmin` が true ) でのメッセージを検証していく。
 
@@ -143,7 +143,7 @@ console.logの出力結果
 
 `Don't repeat yourself` の原則に従って従ってテストをリファクタリングしていきましょう。テストがPassしているのでリファクタリングも怖くありません。
 
-### factory関数
+## factory関数
 
 テストの度に `shallowMount` を呼び出し同じような `propsData` を渡しているので、factory関数でリファクタリングしたいと思います。
 

@@ -1,10 +1,10 @@
-### Testing Actions
+## Testing Actions
 
 Testing actions in isolation is very straight forward. It is very similar to testing mutations in isolation - see [here](https://lmiller1990.github.io/vue-testing-handbook/vuex-mutations.html) for more on mutation testing. Testing actions in the context of a component is correctly dispatching them is discussed [here](https://lmiller1990.github.io/vue-testing-handbook/vuex-in-components-mutations-and-actions.html).
 
 The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/actions.spec.js).
 
-### Creating the Action
+## Creating the Action
 
 We will write a action that follows a common Vuex pattern:
 
@@ -36,7 +36,7 @@ The action test should assert:
 
 Let's go ahead and write the test, and let the failure messages guide us.
 
-### Writing the Test
+## Writing the Test
 
 ```js
 describe("authenticate", () => {
@@ -96,7 +96,7 @@ We save `url` and `body` to variables to we can assert the correct endpoint is r
 
 `yarn unit:pass` now yields a passing test!
 
-### Testing for the API Error
+## Testing for the API Error
 
 We only tested the case where the API call succeed. It's important to test all the possible outcomes. Let's write a test for the case where an error occurs. This time, we will write the test first, followed by the implementation.
 
@@ -168,11 +168,11 @@ export default {
 
 Now the test is passing.
 
-### Improvements
+## Improvements
 
 Now you know how to test actions in isolation. There is at least one potential improvement that can be made, which is to implement the `axios` mock as a [manual mock](https://jestjs.io/docs/en/manual-mocks). This involves creating a `__mocks__` directory on the same level as `node_modules` and implementing the mock module there. By doing this, you can share the mock implementation across all your tests. Jest will automatically use a `__mocks__` mock implementation. There are plenty of examples on the Jest website and around the internet on how to do so. Refactoring this test to use a manual mock is left as an exercise to the reader.
 
-### Conclusion
+## Conclusion
 
 This guide discussed:
 

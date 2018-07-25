@@ -1,4 +1,4 @@
-### Vue Router
+## Vue Router
 
 Since a router usually involves multiple components operating together, often routing tests take place further up the [testing pyramid](https://medium.freecodecamp.org/the-front-end-test-pyramid-rethink-your-testing-3b343c2bca51), right up at the e2e/integration test level. However, having some unit tests around your routing can be beneficial as well.
 
@@ -11,7 +11,7 @@ Since most Vue applications use the official Vue Router, this guide will focus t
 
 The source code for the tests described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/App.spec.js) and [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/NestedRoute.spec.js).
 
-### Creating the Components
+## Creating the Components
 
 We will build a simple `<App>`, that has a `/nested-child` route. Visiting `/nested-child` renders a `<NestedRoute>` component. Create an `App.vue` file, and insert the following minimal component:
 
@@ -44,7 +44,7 @@ export default {
 </script>
 ```
 
-### Creating the Router and Routes
+## Creating the Router and Routes
 
 Now we need some routes to test. Let's start with the routes:
 
@@ -70,7 +70,7 @@ export default new VueRouter({ routes })
 
 Since we do not want to polluate the global namespace by calling `Vue.use(...)` in our tests, we will create the router on a test by test basis. This will let us have more fine grained control over the state of the application during the unit tests.
 
-### Writing the Test
+## Writing the Test
 
 Let's look at some code, then talk about what's going on. We are testing `App.vue`, so in `App.spec.js` add the following:
 
@@ -102,7 +102,7 @@ We can use the same `localVue` for all the `<App>` tests, so it is declared outs
 
 Another notable point that is different from other guides in this book is we are using `mount` instead of `shallowMount`. If we use `shallowMount`, `<router-link>` will be stubbed out, regardless of the current route, a useless stub component will be rendered.
 
-### Workaround for large render trees using `mount`
+## Workaround for large render trees using `mount`
 
 Using `mount` is fine in some cases, but sometimes it is not ideal. For example, if you are rendering your entire `<App>` component, chances are the render tree is large, containing many components with their own children components and so on. A lot of children components will trigger various lifecycle hooks, making API requests and the such.
 
@@ -115,7 +115,7 @@ jest.mock("@/components/NestedRoute.vue", () => ({
 }))
 ```
 
-### Using a Mock Router
+## Using a Mock Router
 
 Sometimes a real router is not necessary. Let's update `<NestedRoute>` to show a username based on the current path's query string. This time we will use TDD to implement the feature. Here is a basic test that simply renders the component and makes an assertion:
 
@@ -192,7 +192,7 @@ Now the test passes. In this case, we don't do any navigation or anything that r
 
 Often the server will provide the routing, as opposed to client side routing with Vue Router. In such cases, using `mocks` to set the query string in a test is a good alternative to using a real instance of Vue Router.
 
-### Stategies for Testing Router Hooks
+## Stategies for Testing Router Hooks
 
 Vue Router provides several types of router hooks, called ["navigation guards"](https://router.vuejs.org/guide/advanced/navigation-guards.html). Two such examples are:
 
@@ -201,7 +201,7 @@ Vue Router provides several types of router hooks, called ["navigation guards"](
 
 Making sure these behavae correctly is usually a job for an integration test, since you need to have a user navigate from one route to another. However, you can also use unit tests to see if the functions called in the navigation guards are working correctly and get faster feedback about potential bugs. Here are some strategies on decouple logic from nagivation guards, and writing unit tests around them.
 
-### Global Guards
+## Global Guards
 
 Let's say you have a `bustCache` function that should be called on every route that contains the `shouldBustCache` meta field. You routes might look like this:
 
@@ -299,7 +299,7 @@ The main point of interest is we mock the entire module using `jest.mock`, and r
 
 To ensure the hook is actually calling `bustCache` and showing the most recent data, a e2e testing tool like [Cypress.io](https://www.cypress.io/), which comes with applications scaffolded using vue-cli, can be used.
 
-### Component Guards
+## Component Guards
 
 Component Guards are also easy to test, once you see them as decoupled, regular JavaScript functions. Let's say we added a `beforeRouteLeave` hook to `<NestedRoute>`:
 
@@ -337,7 +337,7 @@ it("calls bustCache and next when leaving the route", () => {
 
 While this style of unit test can be  useful for immediate feedback during development, since routers and navigation hooks often interact with several components to achieve some effect, you should also have integration tests to ensure everything is working as expected.
 
-### Conclusion
+## Conclusion
 
 This guide covered:
 

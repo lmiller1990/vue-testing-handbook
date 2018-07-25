@@ -2,7 +2,7 @@
 
 You can find the test described on this page [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ParentWithAPICallChild.spec.js).
 
-### Why stub?
+## Why stub?
 
 When writing unit tests, often we want to _stub_ parts of the code we are not interested in. A stub is simply a piece of code that stands in for another. Let's say you are writing a test for a `<UserContainer>` component. It looks like this:
 
@@ -26,7 +26,7 @@ We want to write a test that asserts `<UsersDisplay>` is rendered.
 
 One way to prevent the `<UsersDisplay>` from initiating the ajax request is by _stubbing_ the component out. Let's write our own components and test, to get a better understanding how the different ways and benefits of using stubs.
 
-### Creating the components
+## Creating the components
 
 This example will use two components. The first is `ParentWithAPICallChild`, which simply renders another component:
 
@@ -77,7 +77,7 @@ export default {
 
 `<ComponentWithAsyncCall>` calls `makeApiCall` in the `created` lifecycle hook.
 
-### Write a test using `mount`
+## Write a test using `mount`
 
 Let's start off by writing a test to verify that `<ComponentWithAsyncCall>` is rendered:
 
@@ -106,7 +106,7 @@ console.log src/components/ComponentWithAsyncCall.vue:17
 
 The test is passing - great! However, we can do better. Notice the `console.log` in the test output - this comes from the `makeApiCall` method. Ideally we don't want to make calls to external services in our unit tests, especially when it's from a component that is not the main focus of the current test. We can use the `stubs` mounting option, described in the `vue-test-utils` docs [here](https://vue-test-utils.vuejs.org/api/options.html#stubs).
 
-### Using `stubs` to stub `<ComponentWithAsyncCall>`
+## Using `stubs` to stub `<ComponentWithAsyncCall>`
 
 Let's update the test, this time stubbing `<ComponentWithAsyncCall>`:
 
@@ -134,7 +134,7 @@ const wrapper = mount(ParentWithAPICallChild, {
 })
 ```
 
-### Automatically stubbing with `shallowMount`
+## Automatically stubbing with `shallowMount`
 
 Instead of using `mount` and manually stubbing `<ComponentWithAsyncCall>`, we can simply use `shallowMount`, which automatically stubs any other components by default. The test with `shallowMount` looks like this:
 
@@ -148,7 +148,7 @@ it('renders with shallowMount and does not initialize API call', () => {
 
 Running `yarn test:unit` doesn't show any `console.log`, and test passes. `shallowMount` automatically stubbed `<ComponentWithAsyncCall>`. `shallowMount` is useful for testing components that have a lot of child components, that might have behavior triggered in lifecycle hooks such as `created` or `mounted`, as so on. I tend to use `shallowMount` by default, unless I have a good reason to use `mount`. It depends on your use case, and what you are testing.
 
-### Conclusion
+## Conclusion
 
 - `stubs` is useful for stubbing out the behavior of children that is unrelated to the current unit test
 - `shallowMount` stubs out child components by default
