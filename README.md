@@ -50,7 +50,10 @@ Vueテスティングハンドブックへようこそ！
 
 ## どういうガイドですか？
 
-このガイドはVueコンポーネントをどうテストする簡単な例のコレクションです。コンポーネントをテストする更新ライブラルーの`vue-test-utils`とモダーンテストフレームワークのJestを使います。`vue-test-utils`のAPIとコンポーネントのテストのベストプラクティスを紹介します。よく使うJestのAPIも紹介します。
+このガイドはVueコンポーネントをどのようにテストし、どう使用するのかを簡単な例と共に紹介します。
+コンポーネントをテストする更新ライブラリーの`vue-test-utils`とモダンテストフレームワークの`Jest`を使います。
+`vue-test-utils`のAPIとコンポーネントのテストのベストプラクティスを紹介します。
+よく使うJestのAPIも合わせて紹介します。
 
 Most sections have have a simple component or two, some tests, and the related code. Here is an example
 
@@ -66,9 +69,40 @@ Most sections have have a simple component or two, some tests, and the related c
 
 ### 開発環境
 
-レプをクローンして、`yarn install`を実行して必要なモジュールをインストールします。そして`yarn dev`を実行して、`localhost:8080`にアクセスします。
+#### リポジトリをローカルにクローン
+- コマンド
+`git clone git@github.com:lmiller1990/vue-testing-handbook.git`
 
-ガイドに使うテストのデモプロジェクトもあります。`cd demo-app`して、そして`yarn install`を実行してインストールします。`yarn test:unit`でテストを実行します。
+#### モジュールのインストール
+- コマンド
+`yarn install`
+
+#### 実行
+- コマンド
+`yarn dev`
+
+#### 表示
+- ブラウザからアクセス
+`localhost:8080`
+
+#### 終了
+- コマンド
+`ctrl + c`
+
+### デモ
+ガイドに使うテストのデモプロジェクトもあります。
+
+#### デモ環境
+- コマンド
+`cd demo-app`
+
+#### モジュールのインストール
+- コマンド
+`yarn install`
+
+#### 実行
+- コマンド
+`yarn test:unit`
 
 ### 既存のページに貢献
 
@@ -76,4 +110,6 @@ Issueを切って、それかPRを出します。レビューします。
 
 ### 新しいページを追加
 
-課題を作って、新しいページの価値を説明してください。`demo-app`プロジェクトにも書いたコードの例を追加してください。そうすると、ガイドが説明した内容を簡単に再現できます。
+課題を作って、新しいページの価値を説明してください。
+`demo-app`プロジェクトにも書いたコードの例を追加してください。
+そうすると、ガイドが説明した内容を簡単に再現できます。
