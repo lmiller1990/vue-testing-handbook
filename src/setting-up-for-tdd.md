@@ -1,4 +1,4 @@
-## vue-cli
+## Installing vue-cli
 
 `vue-test-utils` is the official testing library for Vue, and will be used throughout the guide. It runs in both a browser and Node.js environment, and works with any test runner. We will be running our tests in a Node.js environment throughout this guide.
 
@@ -37,7 +37,7 @@ We ran an existing test that came with the project. Let's get our handy dirty, w
 
 We don't need `src/components/HelloWorld.vue` or `tests/unit/HelloWorld.spec.js` anymore, so you can delete those.
 
-### Creating the `Greeting` component
+## Creating the `Greeting` component
 
 Create a `Greeting.vue` file in `src/components`. Inside `Greeting.vue`, add the following:
 
@@ -61,7 +61,7 @@ export default {
 </script>
 ```
 
-### Writing the test
+## Writing the test
 
 `Greeting` has only one responsibility - to render the `greeting` value. The strategy will be:
 
@@ -91,7 +91,7 @@ const wrapper = mount(Greeting)
 console.log(wrapper.html())
 ```
 
-### Running the test
+## Running the test
 
 Run the test by typing `yarn test:unit` into your terminal. Any file in the `tests` directory ending with `.spec.js` is automatically executed. If everything went well, you should see:
 
@@ -203,4 +203,4 @@ Greeting.vue
 
 Jest gives us good feedback. We can see the expected and actual result, as well as on which line the expectation failed. The test did fail, as expected. Revert `Greeting.vue` and make sure the test is passing again.
 
-Next we will look at some of the options `vue-test-utils` provides, and how to tests components that use `props`.
+Next we will look at the two methods `vue-test-utils` provides to render components - `mount` and `shallowMount`. 

@@ -1,0 +1,30 @@
+{
+  "globals": {
+    "expect": true,
+    "describe": true,
+    "it": true,
+    "jest": true,
+    "afterEach": true
+  },
+  env: {
+    node: true
+  },
+  "parserOptions": {
+    "parser": "babel-eslint",
+    "ecmaVersion": 2017,
+    "sourceType": "module"
+  },
+  "root": true,
+  "rules": {
+    "no-debugger": 2,
+    "no-proto": 0,
+    "max-len": 2,
+    "indent": ["error", 2],
+    "no-multi-spaces": "error"
+  },
+   extends: [
+    'eslint:recommended',
+    'plugin:vue/base',
+    'plugin:vue/essential'
+  ]
+}

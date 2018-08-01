@@ -1,0 +1,26 @@
+version: 2
+jobs:
+  build:
+    docker: # See https://docs.docker.com/get-started/#docker-concepts if you are new to Docker.
+      - image: node:8.10.0
+
+    steps:
+      - checkout
+      - run:
+          name: install dependencies
+          command: |
+            cd demo-app
+            yarn install
+
+      - run:
+          name: lint
+          command: |
+            yarn install
+            yarn lint
+
+      - run:
+          name: unit tests
+          command: |
+            cd demo-app
+            yarn test:unit
+

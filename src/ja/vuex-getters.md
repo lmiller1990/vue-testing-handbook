@@ -1,4 +1,4 @@
-### Testing getters
+## Testing getters
 
 Talk about testing getters outside of Vuex
 

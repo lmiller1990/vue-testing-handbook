@@ -1,6 +1,7 @@
 module.exports = {
   base: "/vue-testing-handbook/",
   title: "Vue testing handbook",
+  ga: "UA-122389064-1",
   locales: {
     '/': {
       lang: 'en-US',
@@ -16,8 +17,8 @@ module.exports = {
       '/': {
         sidebar: [
           ['/', 'Welcome'],
-          ['/rendering-a-component', 'Getting Started'],
           ['/setting-up-for-tdd', 'Setting up for TDD'],
+          ['/rendering-a-component', 'Rendering Components'],
           ['/components-with-props', 'Testing Props'],
           ['/computed-properties', 'Computed Properties'],
           ['/simulating-user-input', 'Simulating user input'],
@@ -29,7 +30,8 @@ module.exports = {
           ['/vuex-mutations', 'Vuex - Mutations'],
           ['/vuex-actions', 'Vuex - Actions'],
           ['/vuex-getters', 'Vuex - Getters'],
-          ['/vuex-in-components', 'Mocking Vuex in components'],
+          ['/vuex-in-components', 'Vuex in components - $state and getters'],
+          ['/vuex-in-components-mutations-and-actions', 'Vuex in components - mutations and actions'],
           ['/jest-mocking-modules', 'Jest - mocking modules'],
           ['/vue-router', 'Vue Router'],
         ]
@@ -37,8 +39,8 @@ module.exports = {
       '/ja/': {
         sidebar: [
           ['/ja/', 'ようこそ'],
-          ['/ja/rendering-a-component', '初めから'],
           ['/ja/setting-up-for-tdd', 'テスト駆動開発環境を準備'],
+          ['/ja/rendering-a-component', 'コンポーネントをレンダー'],
           ['/ja/components-with-props', 'プロップスのテスト'],
           ['/ja/computed-properties', '算出プロパティ'],
           ['/ja/simulating-user-input', 'ユーザー入力をシミュレーション'],
@@ -51,6 +53,7 @@ module.exports = {
           ['/ja/vuex-actions', 'Vuex - アクション'],
           ['/ja/vuex-getters', 'Vuex - ゲッター'],
           ['/ja/vuex-in-components', 'コンポーネントの中でVuexのテスト'],
+          ['/ja/vuex-in-components-mutations-and-actions.md', 'Vuex in components - mutations and actions'],
           ['/ja/jest-mocking-modules', 'Jestでモジュールをモック'],
           ['/ja/vue-router', 'Vueルーター'],                 
         ]

@@ -1,4 +1,4 @@
-### Mocking global objects
+## Mocking global objects
 
 ideas:
 

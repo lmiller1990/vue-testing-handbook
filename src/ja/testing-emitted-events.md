@@ -1,4 +1,4 @@
-### 発生したイベントのテスト
+## 発生したイベントのテスト
 
 このページのテストのソースコードは[こちら](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Emitter.spec.js)にあります。
 
