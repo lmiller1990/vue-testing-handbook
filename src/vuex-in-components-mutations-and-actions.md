@@ -61,9 +61,6 @@ import ComponentWithButtons from "@/components/ComponentWithButtons.vue"
 const localVue = createLocalVue()
 localVue.use(Vuex)
 
-const localVue = createLocalVue()
-localVue.use(Vuex)
-
 const mutations = {
   testMutation: jest.fn()
 }
