@@ -127,7 +127,8 @@ const mockHttp = {
 
 There are a few interesting things going on here:
 
-- we create a `url` and `data` variable to save the `url` and `data` passed to `$http.get`. This is useful to assert the request is hitting the correct endpoint, with correct payload. After assigning the `url` and `data` arguments, we immediately resolve the Promise, to simulate a successful API response.
+- we create a `url` and `data` variable to save the `url` and `data` passed to `$http.get`. This is useful to assert the request is hitting the correct endpoint, with correct payload.
+- after assigning the `url` and `data` arguments, we immediately resolve the Promise, to simulate a successful API response.
 
 Before seeing the test, here is the new `handleSubmitAsync` function:
 

@@ -87,3 +87,82 @@ describe("FormSubmitter", () => {
 ステップずつテストを分けるのが好きです。読みやすくなると思います。
 
 `yarn test:unit`で実行すると、パスするはずです。 
+
+`trigger`の使い方は簡単です。ただイベントを発生させたい要素を`find`で検証して、イベント名を`trigger`に渡して呼び出します。
+
+## 実例
+
+アプリにフォームが良くあります。フォームのデータをエンドポイントに送信します。`handleSubmit`の実装を更新して、`axios`というよく使われるHTTPクライエントで送信してみます。そしてそのコードのテストを書きます。
+
+`axios`を`Vue.prototype.$http`にアリアスすることもよくあります。詳しくは[こちら](https://jp.vuejs.org/v2/cookbook/adding-instance-properties.html)。こうすると、`this.$http.get`を呼び出すだけでデータをエンドポイントに送信できます。
+
+アリアスして、`this.$http`でフォームを送信する実装はこうです。
+
+```js
+handleSubmitAsync() {
+  return this.$http.get("/api/v1/register", { username: this.username })
+    .then(() => {
+      this.submitted = true
+    })
+    .catch(() => {
+      throw Error("Something went wrong")
+    })
+}
+```
+
+`this.$http`をモックしたら、上のコードを簡単にテストできます。モックするには`mocks`マウンティングオプションを使えます。`mocks`ついて詳しくは[こちら](https://vue-test-utils.vuejs.org/ja/api/options.html#mocks)。`http.get`のモック実装はこうです。
+
+```js
+let url = ''
+let data = ''
+
+const mockHttp = {
+  get: (_url, _data) => {
+    return new Promise((resolve, reject) => {
+      url = _url
+      data = _data
+      resolve()
+    })
+  }
+}
+```
+
+いくつかの面白い点があります。
+
+- `$http.get`に渡す`url`と`data`を保存するために`url`と`data`変数を作ります。そうすると、`handleSubmitAsync`を呼び出すとたたしいエンドポイントと正しいペイロードで動くか検証できます。- `url`と`data`をアサインしてから、`Promise`をすぐに`resolve`（解決）します。これは正解となったレスポンスのシミュレーションです。
+
+テストを書く前に、`handleSubmitAsync`を更新します：
+
+```js
+methods: {
+  handleSubmitAsync() {
+    return this.$http.get("/api/v1/register", { username: this.username })
+      .then(() => {
+        this.submitted = true
+      })
+      .catch((e) => {
+        throw Error("Something went wrong", e)
+      })
+  }
+}
+```
+
+そして`<template>`を更新して、新しい`handleSubmitAsync`を使います：
+
+```html
+<template>
+  <div>
+    <form @submit.prevent="handleSubmitAsync">
+      <input v-model="username" data-username>
+      <input type="submit">
+    </form>
+
+  <!-- ... -->
+  </div>
+</template>
+```
+
+テスを書きましょう。
+
+## AJAXコールをモックする
+
