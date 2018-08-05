@@ -31,7 +31,7 @@ describe("NumberRenderer", () => {
 
 Before running the test, let's set up `<NumberRenderer>`:
 
-```
+```js
 <template>
   <div>
   </div>
