@@ -13,8 +13,14 @@ module.exports = {
     }
   },
   themeConfig: {
+    repo: 'lmiller1990/vue-testing-handbook',
+    editLinks: true,
     locales: {
       '/': {
+        label: 'English',
+        selectText: 'Languages',
+        lastUpdated: 'Last Updated',
+        editLinkText: 'Edit this page on GitHub',
         sidebar: [
           ['/', 'Welcome'],
           ['/setting-up-for-tdd', 'Setting up for TDD'],
@@ -37,6 +43,10 @@ module.exports = {
         ]
       },
       '/ja/': {
+        label: '日本語',
+        selectText: '言語',
+        lastUpdated: '更新',
+        editLinkText: 'GitHub上で編集',
         sidebar: [
           ['/ja/', 'ようこそ'],
           ['/ja/setting-up-for-tdd', 'テスト駆動開発環境を準備'],
