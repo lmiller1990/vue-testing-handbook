@@ -13,8 +13,14 @@ module.exports = {
     }
   },
   themeConfig: {
+    repo: 'lmiller1990/vue-testing-handbook',
+    editLinks: true,
     locales: {
       '/': {
+        label: 'English',
+        selectText: 'Languages',
+        lastUpdated: 'Last Updated',
+        editLinkText: 'Edit this page on GitHub',
         sidebar: [
           ['/', 'Welcome'],
           ['/setting-up-for-tdd', 'Setting up for TDD'],
