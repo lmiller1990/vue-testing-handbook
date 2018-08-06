@@ -43,6 +43,10 @@ module.exports = {
         ]
       },
       '/ja/': {
+        label: '日本語',
+        selectText: '言語',
+        lastUpdated: '更新',
+        editLinkText: 'GitHub上で編集',
         sidebar: [
           ['/ja/', 'ようこそ'],
           ['/ja/setting-up-for-tdd', 'テスト駆動開発環境を準備'],
