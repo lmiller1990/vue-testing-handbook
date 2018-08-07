@@ -100,10 +100,10 @@ Often the http library is, `axios`, a popular HTTP client. In this case, `handle
 handleSubmitAsync() {
   return this.$http.get("/api/v1/register", { username: this.username })
     .then(() => {
-      this.submitted = true
+      // show success message, etc
     })
     .catch(() => {
-      throw Error("Something went wrong")
+      // handle error
     })
 }
 ```

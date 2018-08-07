@@ -28,7 +28,7 @@ Vueコンポーネントの中でよくやることの１つはユーザーが�
 </template>
 ```
 
-ユーザーはフォームを送信すると、メッセージを表示させます。フォームを同期的に送信するので、`@submit.prevent`で送信します。そうしないと、デフォルトアクションが走ります。フィームを送信するとデフォルトアクションはページをリフレッシュします。
+ユーザーはフォームを送信すると、メッセージを表示させます。フォームを非同期に送信するので、`@submit.prevent`で送信します。そうしないと、デフォルトアクションが走ります。フォームを送信するとデフォルトアクションはページを更新します。
 
 フォームを送信するロジックを追加します：
 
@@ -78,7 +78,7 @@ describe("FormSubmitter", () => {
 
 テストがわかりやすいです。コンポーネントをマウントして、`username`を`setValue`で入力して、そして`vue-test-utils`の`trigger`を使って送信することシミュレーションします。`trigger`をカスタムイベントにも使えるので`submit.prevent`や`myEvent.doSomething`でも問題ないです。
 
-このテストはユニットテストの３つのステップで分けました：
+このテストはユニットテストの３つの改行で分けました：
 
 1. `arrange` (初期設定) - テストの準備。この場合、コンポーネントをレンダーします
 2. `act` (実行) - システムを実行します。
@@ -92,20 +92,20 @@ describe("FormSubmitter", () => {
 
 ## 実例
 
-アプリにフォームが良くあります。フォームのデータをエンドポイントに送信します。`handleSubmit`の実装を更新して、`axios`というよく使われるHTTPクライエントで送信してみます。そしてそのコードのテストを書きます。
+アプリにフォームがよくあります。フォームのデータをエンドポイントに送信します。`handleSubmit`の実装を更新して、`axios`というよく使われるHTTPクライエントで送信してみます。そしてそのコードのテストを書きます。
 
-`axios`を`Vue.prototype.$http`にアリアスすることもよくあります。詳しくは[こちら](https://jp.vuejs.org/v2/cookbook/adding-instance-properties.html)。こうすると、`this.$http.get`を呼び出すだけでデータをエンドポイントに送信できます。
+`axios`を`Vue.prototype.$http`にエイリアスすることもよくあります。詳しくは[こちら](https://jp.vuejs.org/v2/cookbook/adding-instance-properties.html)。こうすると、`this.$http.get`を呼び出すだけでデータをエンドポイントに送信できます。
 
-アリアスして、`this.$http`でフォームを送信する実装はこうです。
+エイリアスして、`this.$http`でフォームを送信する実装はこうです。
 
 ```js
 handleSubmitAsync() {
   return this.$http.get("/api/v1/register", { username: this.username })
     .then(() => {
-      this.submitted = true
+      // メッセージを表示するなど
     })
     .catch(() => {
-      throw Error("Something went wrong")
+      // エラーをハンドル
     })
 }
 ```
