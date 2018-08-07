@@ -155,7 +155,7 @@ _Matchers_ are methods to compare values and objects. For example:
 expect(1).toBe(1)
 ```
 
-全ての matcher は [Jest documentation](http://jestjs.io/docs/en/expect) で見ることができます。`vue-test-utils` ライブラリには一切 matcher は含まれていません。Jest が提供する matcher が十分なものであるからです。`Greeting` の中のテキストを比較したいので次のように書いてみましょう。
+全ての matcher は [Jest documentation](https://jestjs.io/docs/ja/expect) で見ることができます。`vue-test-utils` ライブラリには一切 matcher は含まれていません。Jest が提供する matcher が十分なものであるからです。`Greeting` の中のテキストを比較したいので次のように書いてみましょう。
 
 A full list of matchers available in the [Jest documentation](http://jestjs.io/docs/en/expect). `vue-test-utils` doesn't include any matchers - the ones Jest provides are more than enough. We want to compare the text from `Greeting`. We could write:
 
