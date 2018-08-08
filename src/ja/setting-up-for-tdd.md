@@ -160,7 +160,7 @@ expect(1).toBe(1)
 A full list of matchers available in the [Jest documentation](http://jestjs.io/docs/en/expect). `vue-test-utils` doesn't include any matchers - the ones Jest provides are more than enough. We want to compare the text from `Greeting`. We could write:
 
 ```js
-expect(wrapper.html().includes("Vue and TDD").toBe(true)
+expect(wrapper.html().includes("Vue and TDD")).toBe(true)
 ```
 
 これでも機能しますが、`vue-test-utils` はマークアップを取得するための、よりよい方法を提供しています。`wrapper.text` です。ではこれを使ってテストを書く作業を終わりにしましょう。
