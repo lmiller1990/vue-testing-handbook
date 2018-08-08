@@ -110,7 +110,7 @@ TDD に用いられるシンタックスは様々ですが、 Jest において�
 
 There are differnet syntaxes used for TDD, we will use the commonly seen `describe` and `it` syntax that comes with Jest. `describe` generally outlines what the test is about, in this case `Greeting.vue`. `it` represents a single piece of responsility that the subject of the test should fulfil. As we add more features to the component, we add more `it` blocks.
 
-さて、コンポーンネントを `mount` を用いて render せねばなりません。この一般的な慣習として、これによって生じたコンポーネントを `wrapper` を呼ばれる変数に紐付けます。さらにその内容を画面に出力することにしましょう。これで正常に動作しているか確認できますね。
+さて、コンポーンネントを `mount` を用いて render せねばなりません。この一般的な慣習として、これによって生じたコンポーネントを `wrapper` という名前の変数に紐付けます。さらにその内容を画面に出力することにしましょう。これで正常に動作しているか確認できますね。
 
 Now we should render the component with `mount`. The standard practice it to assign the component to a variable called `wrapper`. We will also print the output, to make sure everything is running correctly:
 
