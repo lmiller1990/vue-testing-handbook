@@ -8,7 +8,7 @@ Generally components will interact with Vuex by
 
 1. committing a mutation
 2. dispatching an action
-3. acesss the state via `$store.state` or getters
+3. access the state via `$store.state` or getters
 
 These tests are to assert that the component behaves correctly based on the current state of the Vuex store. They do not need to know about the implmentation of the mutators, actions or getters.
 
