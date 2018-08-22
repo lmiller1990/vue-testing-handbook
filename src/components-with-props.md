@@ -156,7 +156,7 @@ const factory = (propsData) => {
 }
 ```
 
-The aboce is a function that will `shallowMount` a `SubmitButton` component. We can pass any props to change as the first argument to `factory`. Let's DRY up the test with the factory function.
+The above is a function that will `shallowMount` a `SubmitButton` component. We can pass any props to change as the first argument to `factory`. Let's DRY up the test with the factory function.
 
 ```js
 describe("SubmitButton", () => {
