@@ -65,6 +65,8 @@ const mutations = {
   testMutation: jest.fn()
 }
 
+const store = new Vuex.Store({ mutations })
+
 describe("ComponentWithButtons", () => {
 
   it("commits a mutation when a button is clicked", () => {
