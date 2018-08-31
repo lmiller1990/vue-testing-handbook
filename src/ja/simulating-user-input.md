@@ -129,7 +129,7 @@ const mockHttp = {
 
 いくつかの面白い点があります。
 
-- `$http.get`に渡す`url`と`data`を保存するために`url`と`data`変数を作ります。そうすると、`handleSubmitAsync`を呼び出すとたたしいエンドポイントと正しいペイロードで動くか検証できます。- `url`と`data`をアサインしてから、`Promise`をすぐに`resolve`（解決）します。これは正解となったレスポンスのシミュレーションです。
+- `$http.get`に渡す`url`と`data`を保存するために`url`と`data`変数を作ります。そうすると、`handleSubmitAsync`を呼び出すとただしいエンドポイントと正しいペイロードで動くか検証できます。- `url`と`data`をアサインしてから、`Promise`をすぐに`resolve`（解決）します。これは正解となったレスポンスのシミュレーションです。
 
 テストを書く前に、`handleSubmitAsync`を更新します：
 
