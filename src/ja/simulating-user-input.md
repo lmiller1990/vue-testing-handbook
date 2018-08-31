@@ -226,7 +226,7 @@ it("フォームを更新するとお知らせを表示", async () => {
 import flushPromises from "flush-promises"
 // ... 
 
-it("フォームを更新するとお知らせを表示", () => {
+it("フォームを更新するとお知らせを表示", async () => {
   const wrapper = shallowMount(FormSubmitter, {
     mocks: {
       $http: mockHttp
