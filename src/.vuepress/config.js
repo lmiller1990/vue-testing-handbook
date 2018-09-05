@@ -3,12 +3,12 @@ module.exports = {
   title: "Vue testing handbook",
   ga: "UA-122389064-1",
   head: [
-    ['link', { rel: 'icon', href: `/img/favicon.png` }],
-    ['meta',{ name:"og:title", content:"Vue testing handbook"}],
-    ['meta',{ name:"og:description", content:"Vue testing handbook"}],
-    ['meta',{ name:"og:type", content:"website"}],
-    ['meta',{ name:"og:url", content:"https://lmiller1990.github.io/vue-testing-handbook/"}],
-    ['meta',{ name:"og:image", content: '/img/og.png' }],
+    ['link', { rel: 'icon', href: '/img/favicon.png' }],
+    ['meta',{ property:"og:title", content:"Vue testing handbook"}],
+    ['meta',{ property:"og:description", content:"Vue testing handbook"}],
+    ['meta',{ property:"og:type", content:"website"}],
+    ['meta',{ property:"og:url", content:"https://lmiller1990.github.io/vue-testing-handbook/"}],
+    ['meta',{ property:"og:image", content: "/img/og.png" }],
   ],
   locales: {
     '/': {
