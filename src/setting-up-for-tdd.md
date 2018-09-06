@@ -29,11 +29,11 @@ Snapshots:   0 total
 Time:        2.074s
 ```
 
-Congradulations, you just ran your first passing test!
+Congratulations, you just ran your first passing test!
 
 ## Writing your first test
 
-We ran an existing test that came with the project. Let's get our handy dirty, writing our own component, and a test. Traditionally when doing TDD, you write the failing test first, then implement the code which allows the test to pass. For now, we will write the component first.
+We ran an existing test that came with the project. Let's get our hands dirty, writing our own component, and a test. Traditionally when doing TDD, you write the failing test first, then implement the code which allows the test to pass. For now, we will write the component first.
 
 We don't need `src/components/HelloWorld.vue` or `tests/unit/HelloWorld.spec.js` anymore, so you can delete those.
 
@@ -81,7 +81,7 @@ describe('Greeting.vue', () => {
 })
 ```
 
-There are differnet syntaxes used for TDD, we will use the commonly seen `describe` and `it` syntax that comes with Jest. `describe` generally outlines what the test is about, in this case `Greeting.vue`. `it` represents a single piece of responsility that the subject of the test should fulfil. As we add more features to the component, we add more `it` blocks.
+There are different syntaxes used for TDD, we will use the commonly seen `describe` and `it` syntax that comes with Jest. `describe` generally outlines what the test is about, in this case `Greeting.vue`. `it` represents a single piece of responsibility that the subject of the test should fullfil. As we add more features to the component, we add more `it` blocks.
 
 Now we should render the component with `mount`. The standard practice it to assign the component to a variable called `wrapper`. We will also print the output, to make sure everything is running correctly:
 
@@ -110,7 +110,7 @@ We can see the markup is correct, and the test passes. The test is passing becau
 
 ## Making assertions
 
-We need to make an assertion to ensure the component is behaving correctly. We can do that using Jest's `epxect` API. It looks like this: `expect(result).to [matcher] (actual)`. 
+We need to make an assertion to ensure the component is behaving correctly. We can do that using Jest's `expect` API. It looks like this: `expect(result).to [matcher] (actual)`. 
 
 _Matchers_ are methods to compare values and objects. For example:
 
