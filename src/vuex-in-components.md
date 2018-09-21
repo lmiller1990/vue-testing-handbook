@@ -154,7 +154,7 @@ We can make the test even more concise though, using the `computed` mounting opt
 
 ## Mocking getters using `computed`
 
-Getters are generally wrapped in `computed` properties. Remember, this test is all about making sure the component behaves correctly given the current state of the store. We are not testing the implementation of `fullname`, or to see if `getters` work. Thism eans we can simply replace real store, or the mock store, using the `computed` mounting option. The test can be rewritten like this:
+Getters are generally wrapped in `computed` properties. Remember, this test is all about making sure the component behaves correctly given the current state of the store. We are not testing the implementation of `fullname`, or to see if `getters` work. This means we can simply replace real store, or the mock store, using the `computed` mounting option. The test can be rewritten like this:
 
 ```js
 it("renders a username using computed mounting options", () => {
