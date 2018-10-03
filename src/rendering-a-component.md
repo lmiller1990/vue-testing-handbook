@@ -50,7 +50,7 @@ console.log(mountWrapper.html())
 <div><div>Child component</div></div>
 ```
 
-Which is the completely rendered markup of `Parent` and `Child`. `mountWrapper.html()`, on the other hand, produces this:
+Which is the completely rendered markup of `Parent` and `Child`. `shallowWrapper.html()`, on the other hand, produces this:
 
 ```html
 <div><vuecomponent-stub></vuecomponent-stub></div>
