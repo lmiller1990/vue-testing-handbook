@@ -81,9 +81,9 @@ describe('Greeting.vue', () => {
 })
 ```
 
-There are different syntaxes used for TDD, we will use the commonly seen `describe` and `it` syntax that comes with Jest. `describe` generally outlines what the test is about, in this case `Greeting.vue`. `it` represents a single piece of responsibility that the subject of the test should fullfil. As we add more features to the component, we add more `it` blocks.
+There are different syntaxes used for TDD, we will use the commonly seen `describe` and `it` syntax that comes with Jest. `describe` generally outlines what the test is about, in this case `Greeting.vue`. `it` represents a single piece of responsibility that the subject of the test should fulfill. As we add more features to the component, we add more `it` blocks.
 
-Now we should render the component with `mount`. The standard practice it to assign the component to a variable called `wrapper`. We will also print the output, to make sure everything is running correctly:
+Now we should render the component with `mount`. The standard practice is to assign the component to a variable called `wrapper`. We will also print the output, to make sure everything is running correctly:
 
 ```js
 const wrapper = mount(Greeting)
@@ -105,8 +105,9 @@ console.log tests/unit/Greeting.spec.js:7
     Vue and TDD
   </div>
 ```
-
-We can see the markup is correct, and the test passes. The test is passing because there was no failure - this test can never fail, so it is very useful yet. Even if we change `Greeting.vue` and delete the `{{ message }}`, it will still pass. Let's change that.
+:::v-pre
+We can see the markup is correct, and the test passes. The test is passing because there was no failure - this test can never fail, so it is not very useful yet. Even if we change `Greeting.vue` and delete the `{{ greeting }}`, it will still pass. Let's change that.
+:::
 
 ## Making assertions
 
@@ -118,7 +119,7 @@ _Matchers_ are methods to compare values and objects. For example:
 expect(1).toBe(1)
 ```
 
-A full list of matchers available in the [Jest documentation](http://jestjs.io/docs/en/expect). `vue-test-utils` doesn't include any matchers - the ones Jest provides are more than enough. We want to compare the text from `Greeting`. We could write:
+A full list of matchers is available in the [Jest documentation](http://jestjs.io/docs/en/expect). `vue-test-utils` doesn't include any matchers - the ones Jest provides are more than enough. We want to compare the text from `Greeting`. We could write:
 
 ```js
 expect(wrapper.html().includes("Vue and TDD").toBe(true)
@@ -152,7 +153,7 @@ Snapshots:   0 total
 Time:        1.477s, estimated 2s
 ```
 
-Looking good. But you should always see a test fail, then pass, to make sure it's really working. In traditional TDD, you would write the test before the actual implementation, see if fail, the use the failing errors to guide your code. Let's make sure this test is really working. Update `Greeting.vue`:
+Looking good. But you should always see a test fail, then pass, to make sure it's really working. In traditional TDD, you would write the test before the actual implementation, see it fail, then use the failing errors to guide your code. Let's make sure this test is really working. Update `Greeting.vue`:
 
 ```vue
 <template>
@@ -203,4 +204,4 @@ Greeting.vue
 
 Jest gives us good feedback. We can see the expected and actual result, as well as on which line the expectation failed. The test did fail, as expected. Revert `Greeting.vue` and make sure the test is passing again.
 
-Next we will look at the two methods `vue-test-utils` provides to render components - `mount` and `shallowMount`. 
+Next we will look at the two methods `vue-test-utils` provides to render components: `mount` and `shallowMount`. 
