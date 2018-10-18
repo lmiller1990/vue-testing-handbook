@@ -71,7 +71,7 @@ emitted().myEvent //=>  [ [ 'name', 'password' ] ]
 Let's try calling `emitEvent` twice.
 
 ```js
-it("２つの引数があるイベントを発火する", () => {
+it("emits an event with two arguments", () => {
   const wrapper = shallowMount(Emitter)
 
   wrapper.vm.emitEvent()
