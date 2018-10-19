@@ -105,9 +105,8 @@ console.log tests/unit/Greeting.spec.js:7
     Vue and TDD
   </div>
 ```
-:::v-pre
-We can see the markup is correct, and the test passes. The test is passing because there was no failure - this test can never fail, so it is not very useful yet. Even if we change `Greeting.vue` and delete the `{{ greeting }}`, it will still pass. Let's change that.
-:::
+
+We can see the markup is correct, and the test passes. The test is passing because there was no failure - this test can never fail, so it is not very useful yet. Even if we change `Greeting.vue` and delete the `greeting` from the template, it will still pass. Let's change that.
 
 ## Making assertions
 
