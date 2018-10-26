@@ -40,9 +40,11 @@ export default {
 Nothing too exciting - remember that getters receive other gettes as the second argument. Since we already have a `poodles` getter, we can use that in `poodlesByAge`. By returning a function in `poodlesByAge` that takes an argument, we can pass arguments to getters. The `poodlesByAge` getter can be used like this:
 
 ```js
-computed: {
-  puppies() {
-    return this.$store.getters.poodlesByAge(1)
+export default {
+  computed: {
+    puppies() {
+      return this.$store.getters.poodlesByAge(1)
+    }
   }
 }
 ```

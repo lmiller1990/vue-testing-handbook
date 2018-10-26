@@ -65,17 +65,19 @@ export default {
 `numbers`の算出プロパティを書いてみます。
 
 ```js
-computed: {
-  numbers() {
-    const evens = []
+export default {
+  computed: {
+    numbers() {
+      const evens = []
 
-    for (let i = 1; i < 10; i++) {
-      if (i % 2 === 0) {
-        evens.push(i)
+      for (let i = 1; i < 10; i++) {
+        if (i % 2 === 0) {
+          evens.push(i)
+        }
       }
-    }
 
-    return evens
+      return evens
+    }
   }
 }
 ```
@@ -146,19 +148,23 @@ FAIL  tests/unit/NumberRenderer.spec.js
 `numbers`を更新します：
 
 ```js
-numbers() {
-  const evens = []
-  const odds = []
+export default {
+  computed: {
+    numbers() {
+      const evens = []
+      const odds = []
 
-  for (let i = 1; i < 10; i++) {
-    if (i % 2 === 0) {
-      evens.push(i)
-    } else {
-      odds.push(i)
+      for (let i = 1; i < 10; i++) {
+        if (i % 2 === 0) {
+          evens.push(i)
+        } else {
+          odds.push(i)
+        }
+      }
+
+      return this.even === true ? evens.join(", ") : odds.join(", ")
     }
   }
-
-  return this.even === true ? evens.join(", ") : odds.join(", ")
 }
 ```
 

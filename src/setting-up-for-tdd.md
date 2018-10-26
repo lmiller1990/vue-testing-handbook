@@ -70,7 +70,7 @@ export default {
 
 Create a `Greeting.spec.js` inside `tests/unit`. Inside, import `Greeting.vue`, as well as `mount`, and add the outline of the test:
 
-```
+```js
 import { mount } from '@vue/test-utils'
 import Greeting from '@/components/Greeting.vue'
 
@@ -86,6 +86,7 @@ There are different syntaxes used for TDD, we will use the commonly seen `descri
 Now we should render the component with `mount`. The standard practice is to assign the component to a variable called `wrapper`. We will also print the output, to make sure everything is running correctly:
 
 ```js
+import Greeting from '@/components/Greeting.vue'
 const wrapper = mount(Greeting)
 
 console.log(wrapper.html())

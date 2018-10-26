@@ -244,7 +244,7 @@ export default router
 In your unit test, you __could__ import the router instance, and attempt to call `beforeEach` by typing `router.beforeHooks[0]()`. This will throw an error about `next` - since you didn't pass the correct arguments. Instead of this, one strategy is to decouple and independently export the `beforeEach` navigation hook, before coupling it to the router. How about:
 
 ```js
-export function beforeEach((to, from, next) {
+export function beforeEach(to, from, next) {
   if (to.matched.some(record => record.meta.shouldBustCache)) {
     bustCache()
   }

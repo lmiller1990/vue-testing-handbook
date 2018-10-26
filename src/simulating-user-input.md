@@ -97,14 +97,18 @@ Forms are usually submitted to some endpoint. Let's see how we might test this c
 Often the http library is, `axios`, a popular HTTP client. In this case, `handleSubmit` would likely look something like this:
 
 ```js
-handleSubmitAsync() {
-  return this.$http.get("/api/v1/register", { username: this.username })
-    .then(() => {
-      // show success message, etc
-    })
-    .catch(() => {
-      // handle error
-    })
+export default {
+  methods: {
+    handleSubmitAsync() {
+      return this.$http.get("/api/v1/register", { username: this.username })
+        .then(() => {
+          // show success message, etc
+        })
+        .catch(() => {
+          // handle error
+        })
+    }
+  }
 }
 ```
 
@@ -133,15 +137,17 @@ There are a few interesting things going on here:
 Before seeing the test, here is the new `handleSubmitAsync` function:
 
 ```js
-methods: {
-  handleSubmitAsync() {
-    return this.$http.get("/api/v1/register", { username: this.username })
-      .then(() => {
-        this.submitted = true
-      })
-      .catch((e) => {
-        throw Error("Something went wrong", e)
-      })
+export default {
+  methods: {
+    handleSubmitAsync() {
+      return this.$http.get("/api/v1/register", { username: this.username })
+        .then(() => {
+          this.submitted = true
+        })
+        .catch((e) => {
+          throw Error("Something went wrong", e)
+        })
+    }
   }
 }
 ```

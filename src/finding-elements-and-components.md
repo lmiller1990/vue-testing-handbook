@@ -126,7 +126,7 @@ It passes! Using the `name` property can be a little unintuitive, so importing t
 
 There is often cases when you want to assert a number of elements is rendered. A common case is a list of items rendered with `v-for`. Here is a `<ParentWithManyChildren>` that renders several `<Child>` components.
 
-```js
+```vue
 <template>
   <div>
     <Child v-for="id in [1, 2 ,3]" :key="id" />

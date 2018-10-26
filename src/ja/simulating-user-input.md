@@ -99,14 +99,18 @@ describe("FormSubmitter", () => {
 エイリアスして、`this.$http`でフォームを送信する実装はこうです。
 
 ```js
-handleSubmitAsync() {
-  return this.$http.get("/api/v1/register", { username: this.username })
-    .then(() => {
-      // メッセージを表示するなど
-    })
-    .catch(() => {
-      // エラーをハンドル
-    })
+export default {
+  methods: {
+    handleSubmitAsync() {
+      return this.$http.get("/api/v1/register", { username: this.username })
+        .then(() => {
+          // メッセージを表示するなど
+        })
+        .catch(() => {
+          // エラーをハンドル
+        })
+    }
+  }
 }
 ```
 
@@ -134,15 +138,17 @@ const mockHttp = {
 テストを書く前に、`handleSubmitAsync`を更新します：
 
 ```js
-methods: {
-  handleSubmitAsync() {
-    return this.$http.get("/api/v1/register", { username: this.username })
-      .then(() => {
-        this.submitted = true
-      })
-      .catch((e) => {
-        throw Error("Something went wrong", e)
-      })
+export default {
+  methods: {
+    handleSubmitAsync() {
+      return this.$http.get("/api/v1/register", { username: this.username })
+        .then(() => {
+          this.submitted = true
+        })
+        .catch((e) => {
+          throw Error("Something went wrong", e)
+        })
+    }
   }
 }
 ```

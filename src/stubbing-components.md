@@ -15,8 +15,10 @@ When writing unit tests, often we want to _stub_ parts of the code we are not in
 `<UsersDisplay>` has a `created` lifecycle method like this:
 
 ```js
-created() {
-  axios.get("/users")
+export default {
+  created() {
+    axios.get("/users")
+  }
 }
 ```
 

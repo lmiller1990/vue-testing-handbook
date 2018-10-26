@@ -31,7 +31,7 @@ describe("NumberRenderer", () => {
 
 Before running the test, let's set up `<NumberRenderer>`:
 
-```js
+```vue
 <template>
   <div>
   </div>
@@ -65,17 +65,19 @@ Now we start development, and let the error messages guide our implementation. `
 It looks like everything is hooked up correctly. Let's start implementing `numbers`:
 
 ```js
-computed: {
-  numbers() {
-    const evens = []
+export default {
+  computed: {
+    numbers() {
+      const evens = []
 
-    for (let i = 1; i < 10; i++) {
-      if (i % 2 === 0) {
-        evens.push(i)
+      for (let i = 1; i < 10; i++) {
+        if (i % 2 === 0) {
+          evens.push(i)
+        }
       }
-    }
 
-    return evens
+      return evens
+    }
   }
 }
 ```
@@ -147,19 +149,23 @@ Update `numbers`:
 
 
 ```js
-numbers() {
-  const evens = []
-  const odds = []
+export default {
+  computed: {
+    numbers() {
+      const evens = []
+      const odds = []
 
-  for (let i = 1; i < 10; i++) {
-    if (i % 2 === 0) {
-      evens.push(i)
-    } else {
-      odds.push(i)
+      for (let i = 1; i < 10; i++) {
+        if (i % 2 === 0) {
+          evens.push(i)
+        } else {
+          odds.push(i)
+        }
+      }
+
+      return this.even === true ? evens.join(", ") : odds.join(", ")
     }
   }
-
-  return this.even === true ? evens.join(", ") : odds.join(", ")
 }
 ```
 
