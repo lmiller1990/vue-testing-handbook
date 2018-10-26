@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vuepress dev src",
     "docs:build": "vuepress build src",
+    "docs:lint": "yarn eslint --ext md .",
     "lint": "yarn eslint --ext js,vue ."
   },
   "dependencies": {
@@ -14,6 +15,7 @@
   "devDependencies": {
     "babel-eslint": "^8.2.6",
     "eslint": "^5.1.0",
+    "eslint-plugin-markdown": "^1.0.0-beta.6",
     "eslint-plugin-vue": "^4.5.0",
     "markdown-it-include": "^1.0.0"
   }

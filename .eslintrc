@@ -6,8 +6,8 @@
     "jest": true,
     "afterEach": true
   },
-  env: {
-    node: true
+  "env": {
+    "node": true
   },
   "parserOptions": {
     "parser": "babel-eslint",
@@ -22,9 +22,22 @@
     "indent": ["error", 2],
     "no-multi-spaces": "error"
   },
-   extends: [
-    'eslint:recommended',
-    'plugin:vue/base',
-    'plugin:vue/essential'
+  "extends": [
+    "eslint:recommended",
+    "plugin:vue/base",
+    "plugin:vue/essential"
+  ],
+  "overrides": [
+    {
+      "files": "*.md",
+      "plugins": [
+        "markdown"
+      ],
+      "rules": {
+        "no-unused-vars": "off",
+        "no-console": "off",
+        "no-undef": "off"
+      }
+    }
   ]
 }
