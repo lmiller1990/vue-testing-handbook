@@ -1,6 +1,6 @@
 ## Mocking global objects
 
-`vue-test-utils` provides a simple way to global objects attached to `Vue.prototype`, both on test by test basis and to set a default mock for all tests.
+`vue-test-utils` provides a simple way to mock global objects attached to `Vue.prototype`, both on test by test basis and to set a default mock for all tests.
 
 The test used in the following example can be found [here](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app/tests/unit/Bilingual.spec.js).
 
