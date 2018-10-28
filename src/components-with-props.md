@@ -2,7 +2,7 @@
 
 `propsData` can be used with both `mount` and `shallowMount`. It is often used to test components that receive props from their parent component.
 
-`propsData` is passed into the second argument of the either `shallowMount` or `mount`, in the following form:
+`propsData` is passed into the second argument of either `shallowMount` or `mount`, in the following form:
 
 ```js
 const wrapper = shallowMount(Foo, {
@@ -12,9 +12,12 @@ const wrapper = shallowMount(Foo, {
 })
 ```
 
-## Creating the component and test
+## Creating the component
 
-Create a simple `<SubmitButton>` component that has two `props`:
+Create a simple `<SubmitButton>` component that has two `props`: `msg` and `isAdmin`. Depending on the value of the `isAdmin` prop this component will contain a `<span>` in one of two states:
+
+* `Not Authorized` if `isAdmin` is false (or not passed as a prop)
+* `Admin Privledges` if `isAdmin` is true
 
 ```html
 <template>
@@ -93,7 +96,7 @@ We can see the `msg` prop is processed and the resulting markup is correctly ren
 
 ## A Second Test
 
-Let's make an assertion on the other possible state: when `isAdmin` is `true`:
+Let's make an assertion on the other possible state, when `isAdmin` is `true`:
 
 ```js
 import { shallowMount } from '@vue/test-utils'
@@ -134,15 +137,15 @@ We also outputted the markup with `console.log(wrapper.html())`:
   </button>
 </div>
 ```
-We can see the `isAdmin` prop was used to render correct `<span>` element.
+We can see the `isAdmin` prop was used to render the correct `<span>` element.
 
 ## Refactoring the tests
 
-Let's refactor the tests adhering to the principal "Don't repeat yourself". Since all the tests are passing, we can confidentally refactor. As long are they all still passing after the refactor, we can be sure we did not break anything.
+Let's refactor the tests adhering to the principle "Don't Repeat Yourself" (DRY). Since all the tests are passing, we can confidently refactor. As long as the tests all still pass after the refactor, we can be sure we did not break anything.
 
-## Refactor with a Factory Functions
+## Refactor with a Factory Function
 
-In both tests we call `shallowMount` then pass a similar `propsData` object. We can refactor this using a factory function. A factory function simply a function that returns an object - it _makes_ objects, thus the name "factory" function.
+In both tests we call `shallowMount` then pass a similar `propsData` object. We can refactor this using a factory function. A factory function is simply a function that returns an object - it _makes_ objects, thus the name "factory" function.
 
 ```js
 const msg = "submit"
@@ -195,6 +198,6 @@ Since we have a good test suite, we can now easily and confidently refactor.
 
 ## Conclusion
 
-- By passing a `propsData` when mounting a component, you can set the `props` to be used in the test
-- Factory functions can be used to DRY you tests
+- By passing `propsData` when mounting a component, you can set the `props` to be used in the test
+- Factory functions can be used to DRY your tests
 - Intead of `propsData`, you can also use [`setProps`](https://vue-test-utils.vuejs.org/api/wrapper-array/#setprops-props) to set prop values during tests
