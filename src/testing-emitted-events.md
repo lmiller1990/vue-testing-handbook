@@ -1,14 +1,14 @@
 ## Testing Emitted Events
 
-As applications grow larger, the number of components grows as well. When these components need to share data, the child components emits an event, and the parent component responds.
+As applications grow larger, the number of components grows as well. When these components need to share data, child components can [emit](https://vuejs.org/v2/api/#vm-emit) an event, and the parent component responds.
 
-`vue-test-utils` provides an `emitted` API which allows us to make assertions on emitted events. The documentation for `emitted` is found [here](https://vue-test-utils.vuejs.org/ja/api/wrapper/emitted.html).
+`vue-test-utils` provides an `emitted` API which allows us to make assertions on emitted events. The documentation for `emitted` is found [here](https://vue-test-utils.vuejs.org/api/wrapper/emitted.html).
 
 The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Emitter.spec.js).
 
 ## Write a Component and Test
 
-Let's build a simple component. Create a `<Emitter>` component, and add the following code.
+Let's build a simple component. Create an `<Emitter>` component, and add the following code.
 
 ```html
 <template>
@@ -32,7 +32,7 @@ Let's build a simple component. Create a `<Emitter>` component, and add the foll
 </style>
 ```
 
-Add create a test that called `emitEvent`:
+Add a test called `emitEvent`:
 
 ```js
 import Emitter from "@/components/Emitter.vue"
@@ -48,7 +48,7 @@ describe("Emitter", () => {
   })
 })
 ```
-Using the [emitted API](https://vue-test-utils.vuejs.org/ja/api/wrapper/emitted.html) provided by `vue-test-utils`, we can easily see the the emitted events.
+Using the [emitted API](https://vue-test-utils.vuejs.org/ja/api/wrapper/emitted.html) provided by `vue-test-utils`, we can easily see the emitted events.
 
 Run the test with `yarn test:unit`.
 
@@ -107,7 +107,7 @@ The test passes.
 
 ## Testing events without mounting the component
 
-Sometiems you might want to test emitted events without actually mounting the component. You can do this by using `call`. Let's write another test.
+Some times you might want to test emitted events without actually mounting the component. You can do this by using `call`. Let's write another test.
 
 ```js
 it("emits an event without mounting the component", () => {
@@ -122,7 +122,7 @@ it("emits an event without mounting the component", () => {
 
 Since `$emit` is just a JavaScript object, you can mock `$emit`, and by using `call` to attach it to the `this` context of `emitEvent`. By using `call`, you can call a method without mounting the component. 
 
-Using `call` can be useful in situations where you have some heavy processing in lifecycle methods like `created` and `mounted` that you don't want to execute. Since you don't mount the component, the lifecycle methods are never called. It can also be useful when you want to manipulate ths `this` context in a specific manner.
+Using `call` can be useful in situations where you have some heavy processing in lifecycle methods like `created` and `mounted` that you don't want to execute. Since you don't mount the component, the lifecycle methods are never called. It can also be useful when you want to manipulate the `this` context in a specific manner.
 
 ## Conclusion
 
@@ -130,6 +130,6 @@ Using `call` can be useful in situations where you have some heavy processing in
 - `emitted` is a method. It returns an object with properties corresponding to the emitted events
 - each property of `emitted` is an array. You can access each instance of an emitted event by using the `[0]`, `[1]` array syntax
 - the arguments of emitted events are also saved as arrays, and can accessed using the `[0]`, `[1]` array syntax
-- `$emit` can be mocked call using `call`, assertions can be made without rendering the component
+- `$emit` can be mocked using `call`, assertions can be made without rendering the component
 
 The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Emitter.spec.js).
