@@ -1,8 +1,17 @@
-## Testing Vuex
+## Vuex のテスト
 
-Intro page to testing vuex. Brief intro. Talk about two different ways to test Vuex and their benefits.
+これ以降しばらくは、Vuex のテストについて解説していきます。
 
-1. testing the store separately
+## Vuex のテストにおける二つの側面
 
-2. testing in a component (either mocking vuex or using a real store with `localVue`
+一般的にいってコンポーネントは Vuex と以下の方法でやりとりをしています。
 
+1. mutation へ commit する
+2. action を dispatching する
+3. `$store.state` もしくは getters 用いて state にアクセスする
+
+コンポーネントについてのテストを書く場合には、コンポーネントが Vuex store の現在の state に基づいて正しく動作していてることを assert すればいいわけです。ですから mutation や action や getter がどのように実装されているかを知る必要はありません。(訳注: コンポーネントのテストを書く際に、mutation 等々のテストを含める必要はないということ。)
+
+それにたいして、store が遂行するロジック、例えば mutation や getter に関しては、それ自体を単独でテストをすることができます。なぜなら Vuex の store は通常の JavaScript の関数によって構成されているからで、それゆえユニットテスをするのも簡単です。
+
+まずは Vuex 単独のテストについて説明していきます。後半では、Vuex store を使ったコンポーネントのテスト技法を取り上げます。

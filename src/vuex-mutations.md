@@ -12,7 +12,7 @@ We will develop it using TDD. The start of the mutation is as follows:
 
 ```js
 export default {
-  SET_USER(state, { post }) {
+  SET_POST(state, { post }) {
 
   }
 }

@@ -6,14 +6,14 @@ Welcome to the Vue Testing Handbook!
 
 ## What is this?
 
-This is a collection of short, focused examples on how to test Vue components. It uses `vue-test-utils`, the official library for testing Vue components, and Jest, a modern testing framework. It covers the `vue-test-utils` API, as well as best practises and useful parts of the Jest API for testing Vue components, as well an a demo project with all the example code.
+This is a collection of short, focused examples on how to test Vue components. It uses `vue-test-utils`, the official library for testing Vue components, and Jest, a modern testing framework. It covers the `vue-test-utils` API, as well as best practises and useful parts of the Jest API for testing Vue components, as well as a demo project with all the example code.
 
 ## Style
 
 Most sections have have a simple component or two, some tests, and the related code. Here is an example
 
 - [Setting up for TDD](https://github.com/lmiller1990/vue-testing-handbook/blob/master/docs/setting-up-for-tdd.md). This is a guide about setting up an environment for TDD.
-- [Component](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app/src/components/Greeting.vue). This is the component usd in the guide.
+- [Component](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app/src/components/Greeting.vue). This is the component used in the guide.
 - [Test](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app/tests/unit/Greeting.spec.js). This is the test used in the guide.
 
 Guides should be short, concise, and focused on a single concept. The relevant code should be linked in the article, and easily reproduced by the reader.
@@ -36,9 +36,11 @@ Clone the repo and run `yarn` to install the dependencies. Then run `yarn dev` t
 
 There is an example project to run tests and examples used in the guides. To run it the demo app, run `cd demo-app` to navigate into the project, then run `yarn` to install the dependencies. Run `yarn test:unit` to execute the test suite.
 
-### Updates existing guides
+### Updates to existing guides
 
 Make an issue regarding what you think can be improved, or just make a PR. 
+
+Source files for guides can be found in the `src` folder, written in Markdown (ending with `.md`). For example, to propose a change in the [Setting up for TDD](https://github.com/lmiller1990/vue-testing-handbook/blob/master/docs/setting-up-for-tdd.md) guide, you will need to edit `src/setting-up-for-tdd.md`.
 
 ### Adding a new page
 

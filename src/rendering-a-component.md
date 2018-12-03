@@ -50,15 +50,15 @@ console.log(mountWrapper.html())
 <div><div>Child component</div></div>
 ```
 
-Which is the completely rendered markup of `Parent` and `Child`. `mountWrapper.html()`, on the other hand, produces this:
+Which is the completely rendered markup of `Parent` and `Child`. `shallowWrapper.html()`, on the other hand, produces this:
 
 ```html
 <div><vuecomponent-stub></vuecomponent-stub></div>
 ```
 
-The place where `<Child />` should be has been replaced by `vuecomponent-stub />`. `shallowMount` renders regular html elements, but replaces Vue components with a stub.
+The place where `<Child />` should be has been replaced by `<vuecomponent-stub />`. `shallowMount` renders regular html elements, but replaces Vue components with a stub.
 
-> A stub is kind of "fake" an object that stands in for a real one.
+> A stub is kind of a "fake" object that stands in for a real one.
 
 This can be useful. Imagine you want to test your `App.vue` component, that looks like this:
 
@@ -69,6 +69,6 @@ This can be useful. Imagine you want to test your `App.vue` component, that look
 </template>
 ```
 
-And we want to test `<h1>My Vue App</h1>`  is rendered correctly. We also have a `<fetch-data>` component, that makes a request to an external API in it's `mounted` lifecycle hook. 
+And we want to test `<h1>My Vue App</h1>`  is rendered correctly. We also have a `<fetch-data>` component, that makes a request to an external API in its `mounted` lifecycle hook. 
 
-If we use `mount`, although all we want to do is asset some text is rendered, `<fetch-data />` will make an API request. This will make out test slow and prone to failure. So, stub out external dependencies. By using `shallowMount`, `<fetch-data />` will be replaced with a `<vuecomponent-stub />`, and the API call will not be initiated.
+If we use `mount`, although all we want to do is assert some text is rendered, `<fetch-data />` will make an API request. This will make our test slow and prone to failure. So, we stub out external dependencies. By using `shallowMount`, `<fetch-data />` will be replaced with a `<vuecomponent-stub />`, and the API call will not be initiated.

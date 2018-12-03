@@ -190,7 +190,7 @@ FAIL  tests/unit/NumberRenderer.spec.js
 { numbers: [Function: numbers] }
 ```
 
-それで`call`を使うと別の`this`値を渡せます。上のテストで`even`ポロパティがある`this`オブジェクトを渡しました。
+それで`call`を使うと別の`this`値を渡せます。上のテストで`even`プロパティがある`this`オブジェクトを渡しました。
 
 ## `call`か`shallowMount`?
 

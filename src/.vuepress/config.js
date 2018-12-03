@@ -2,6 +2,14 @@ module.exports = {
   base: "/vue-testing-handbook/",
   title: "Vue testing handbook",
   ga: "UA-122389064-1",
+  head: [
+    ['link', { rel: 'icon', href: 'https://lmiller1990.github.io/vue-testing-handbook/img/favicon.png' }],
+    ['meta',{ property:"og:title", content:"Vue testing handbook"}],
+    ['meta',{ property:"og:description", content:"Vue testing handbook"}],
+    ['meta',{ property:"og:type", content:"website"}],
+    ['meta',{ property:"og:url", content:"https://lmiller1990.github.io/vue-testing-handbook/"}],
+    ['meta',{ property:"og:image", content: "https://lmiller1990.github.io/vue-testing-handbook/img/og.png" }],
+  ],
   locales: {
     '/': {
       lang: 'en-US',
@@ -65,7 +73,7 @@ module.exports = {
           ['/ja/vuex-in-components', 'コンポーネントの中でVuexのテスト'],
           ['/ja/vuex-in-components-mutations-and-actions.md', 'Vuex in components - mutations and actions'],
           ['/ja/jest-mocking-modules', 'Jestでモジュールをモック'],
-          ['/ja/vue-router', 'Vueルーター'],                 
+          ['/ja/vue-router', 'Vueルーター'],
         ]
       }
     }

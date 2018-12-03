@@ -2,7 +2,7 @@
 
 このページのテストのソースコードは[こちら](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Emitter.spec.js)にあります。
 
-アプリケーションが大きくなれば大きくなるほど、コンポーネントも増えていきます。親と子のコンポーネントをデータを共通するとき、子のコンポーネントがイベントを発火させて、親は反応します。
+アプリケーションが大きくなれば大きくなるほど、コンポーネントも増えていきます。親と子のコンポーネントでデータを共有するとき、子のコンポーネントがイベントを発火させて、親は反応します。
 
 `vue-test-utils`の`wrapper`APIの`emitted`メソッドで発火したイベントを簡単に検証できます。ドキュメンテーションは[こちら](https://vue-test-utils.vuejs.org/ja/api/wrapper/emitted.html)です。
 
