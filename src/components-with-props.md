@@ -50,7 +50,7 @@ export default {
 
 ## The First Test
 
-We will make an assertion on the message in the case the user does not have admin privledges.
+We will make an assertion on the message in the case the user does not have admin privileges.
 
 ```js
 import { shallowMount } from '@vue/test-utils'
@@ -103,7 +103,7 @@ import { shallowMount } from '@vue/test-utils'
 import SubmitButton from '@/components/SubmitButton.vue'
 
 describe('SubmitButton.vue', () => {
-  it('displays a admin privledges message', () => {
+  it('displays a admin privileges message', () => {
     const msg = "submit"
     const isAdmin = true
     const wrapper = shallowMount(SubmitButton,{
@@ -113,7 +113,7 @@ describe('SubmitButton.vue', () => {
       }
     })
 
-    expect(wrapper.find("span").text()).toBe("Admin Privledges")
+    expect(wrapper.find("span").text()).toBe("Admin Privileges")
     expect(wrapper.find("button").text()).toBe("submit")
   })
 })
@@ -124,14 +124,14 @@ Run the test with `yarn test:unit` and check the results:
 ```shell
 PASS  tests/unit/SubmitButton.spec.js
   SubmitButton.vue
-    ✓ displays a admin privledges message (4ms)
+    ✓ displays a admin privileges message (4ms)
 ```
 
 We also outputted the markup with `console.log(wrapper.html())`:
 
 ```html
 <div>
-  <span>Admin Privledges</span>
+  <span>Admin Privileges</span>
   <button>
     submit
   </button>
@@ -163,7 +163,7 @@ The above is a function that will `shallowMount` a `SubmitButton` component. We 
 
 ```js
 describe("SubmitButton", () => {
-  describe("has admin privledges", ()=> {
+  describe("has admin privileges", ()=> {
     it("renders a message", () => {
       const wrapper = factory()
 
@@ -172,11 +172,11 @@ describe("SubmitButton", () => {
     })
   })
 
-  describe("does not have admin privledges", ()=> {
+  describe("does not have admin privileges", ()=> {
     it("renders a message", () => {
       const wrapper = factory({ isAdmin: true })
 
-      expect(wrapper.find("span").text()).toBe("Admin Privledges")
+      expect(wrapper.find("span").text()).toBe("Admin Privileges")
       expect(wrapper.find("button").text()).toBe("submit")
     })
   })
@@ -188,9 +188,9 @@ Let's run the tests again. Everything is still passing.
 ```sh
 PASS  tests/unit/SubmitButton.spec.js
  SubmitButton
-   has admin privledges
+   has admin privileges
      ✓ renders a message (26ms)
-   does not have admin privledges
+   does not have admin privileges
      ✓ renders a message (3ms)
 ```
 
