@@ -17,12 +17,12 @@ const wrapper = shallowMount(Foo, {
 Create a simple `<SubmitButton>` component that has two `props`: `msg` and `isAdmin`. Depending on the value of the `isAdmin` prop this component will contain a `<span>` in one of two states:
 
 * `Not Authorized` if `isAdmin` is false (or not passed as a prop)
-* `Admin Privledges` if `isAdmin` is true
+* `Admin Privileges` if `isAdmin` is true
 
 ```html
 <template>
   <div>
-    <span v-if="isAdmin">Admin Privledges</span>
+    <span v-if="isAdmin">Admin Privileges</span>
     <span v-else>Not Authorized</span>
     <button>
       {{ msg }}
