@@ -321,7 +321,7 @@ We can test this in exactly the same way as the global guard:
 
 ```js
 // ...
-import NestedRoute from "@/compoents/NestedRoute.vue"
+import NestedRoute from "@/components/NestedRoute.vue"
 import mockModule from "@/bust-cache.js"
 
 jest.mock("@/bust-cache.js", () => ({ bustCache: jest.fn() }))
