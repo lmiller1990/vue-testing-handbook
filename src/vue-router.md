@@ -192,14 +192,14 @@ Now the test passes. In this case, we don't do any navigation or anything that r
 
 Often the server will provide the routing, as opposed to client side routing with Vue Router. In such cases, using `mocks` to set the query string in a test is a good alternative to using a real instance of Vue Router.
 
-## Stategies for Testing Router Hooks
+## Strategies for Testing Router Hooks
 
 Vue Router provides several types of router hooks, called ["navigation guards"](https://router.vuejs.org/guide/advanced/navigation-guards.html). Two such examples are:
 
 1. Global guards (`router.beforeEach`). Declared on the router instance.
 2. In component guards, such as `beforeRouteEnter`. Declared in components.
 
-Making sure these behavae correctly is usually a job for an integration test, since you need to have a user navigate from one route to another. However, you can also use unit tests to see if the functions called in the navigation guards are working correctly and get faster feedback about potential bugs. Here are some strategies on decouple logic from nagivation guards, and writing unit tests around them.
+Making sure these behave correctly is usually a job for an integration test, since you need to have a user navigate from one route to another. However, you can also use unit tests to see if the functions called in the navigation guards are working correctly and get faster feedback about potential bugs. Here are some strategies on decoupling logic from nagivation guards, and writing unit tests around them.
 
 ## Global Guards
 
