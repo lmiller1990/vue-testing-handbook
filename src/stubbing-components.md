@@ -24,7 +24,7 @@ We want to write a test that asserts `<UsersDisplay>` is rendered.
 
 `axios` is making an ajax request to an external service in the `created` hook. That means when you do `mount(UserContainer)`, `<UsersDisplay>` is also mounted, and `created` initiates an ajax request. Since this is a unit test, we only are interested in whether `<UserContainer>` correctly renders `<UsersDisplay>` - verifying the ajax request is triggered with the correct endpoint, etc, is the responsibility of `<UsersDisplay>`, which should be tested in the `<UsersDisplay>` test file.
 
-One way to prevent the `<UsersDisplay>` from initiating the ajax request is by _stubbing_ the component out. Let's write our own components and test, to get a better understanding how the different ways and benefits of using stubs.
+One way to prevent the `<UsersDisplay>` from initiating the ajax request is by _stubbing_ the component out. Let's write our own components and test, to get a better understanding of the different ways and benefits of using stubs.
 
 ## Creating the components
 
