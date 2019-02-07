@@ -64,8 +64,10 @@ This can be useful. Imagine you want to test your `App.vue` component, that look
 
 ```vue
 <template>
-  <h1>My Vue App</h1>
-  <fetch-data />
+  <div>
+    <h1>My Vue App</h1>
+    <fetch-data />
+  </div>
 </template>
 ```
 
