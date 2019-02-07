@@ -7,7 +7,7 @@ Much like previous sections discuss, there are two ways to test components that 
 1. Using an real router instance
 2. Mocking the `$route` and `$router` global objects
 
-Since most Vue applications use the official Vue Router, this guide will focus that.
+Since most Vue applications use the official Vue Router, this guide will focus on that.
 
 The source code for the tests described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/App.spec.js) and [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/NestedRoute.spec.js).
 
