@@ -19,7 +19,7 @@ and so forth. We then move on to more interesting cases, such as:
 - testing Vue router
 - testing involving third party components
 
-We wil also explore how to use the Jest API to make our tests more robust, such as:
+We will also explore how to use the Jest API to make our tests more robust, such as:
 
 - mocking API responses
 - mocking and spying on modules
