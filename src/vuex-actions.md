@@ -6,7 +6,7 @@ The source code for the test described on this page can be found [here](https://
 
 ## Creating the Action
 
-We will write a action that follows a common Vuex pattern:
+We will write an action that follows a common Vuex pattern:
 
 1. make an asynchronous call to an API
 2. do some proccessing on the data (optional)
