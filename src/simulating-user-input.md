@@ -20,7 +20,7 @@ Create a `<FormSubmitter>` and enter the template:
 
     <div 
       class="message" 
-      v-show="submitted"
+      v-if="submitted"
     >
       Thank you for your submission, {{ username }}.
     </div>

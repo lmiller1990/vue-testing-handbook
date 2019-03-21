@@ -20,7 +20,7 @@ Vueコンポーネントの中でよくやることの１つはユーザーが�
 
     <div 
       class="message" 
-      v-show="submitted"
+      v-if="submitted"
     >
       {{ username }}さん、お問い合わせ、ありがとうございます。
     </div>
