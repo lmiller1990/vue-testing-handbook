@@ -104,7 +104,7 @@ it("does not render a Child component", () => {
 })
 ```
 
-The implementation for `find` is quite complex, since it works with the `querySelector` syntax, as well as several other syntaxes. You can see the part of the source that finds children Vue components [here](https://github.com/vuejs/vue-test-utils/blob/dev/packages/test-utils/src/find-vue-components.js). It basically checks the component's `name` against each child rendered, and then checks the `constructor`, and some other properties. 
+The implementation for `find` is quite complex, since it works with the `querySelector` syntax, as well as several other syntaxes. You can see the part of the source that finds children Vue components [here](https://github.com/vuejs/vue-test-utils/blob/dev/packages/test-utils/src/find.js). It basically checks the component's `name` against each child rendered, and then checks the `constructor`, and some other properties. 
 
 As mentioned in the previous paragraph, the `name` property is one of the checks done by `find` when you pass a component. Instead of passing the component, you can simply pass an object with the correct `name` property. This means you do not need to `import` the component. Let's test the case when `<Child>` should be rendered:
 
