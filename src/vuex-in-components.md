@@ -198,6 +198,6 @@ This guide discussed:
 - using the `mocks` mounting option to mock `$store.state` and `getters`
 - using the `computed` mounting option to set the desired value of a Vuex getter
 
-Techniques to test the implentation of Vuex getters in isolation can be found in [this guide](http://localhost:8080/vue-testing-handbook/vuex-getters.html).
+Techniques to test the implentation of Vuex getters in isolation can be found in [this guide](https://lmiller1990.github.io/vue-testing-handbook/vuex-getters.html).
 
 The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ComponentWithGetters.spec.js).
