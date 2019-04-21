@@ -1,6 +1,6 @@
 ## Testing Vuex in components
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ComponentWithGetters.spec.js).
+The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ComponentWithVuex.spec.js).
 
 ## Using `createLocalVue` to test `$store.state`
 
@@ -200,4 +200,4 @@ This guide discussed:
 
 Techniques to test the implentation of Vuex getters in isolation can be found in [this guide](https://lmiller1990.github.io/vue-testing-handbook/vuex-getters.html).
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ComponentWithGetters.spec.js).
+The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ComponentWithVuex.spec.js).
