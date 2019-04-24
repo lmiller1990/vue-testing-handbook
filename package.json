@@ -4,8 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "vuepress dev src",
-    "docs:build": "vuepress build src",
+    "dev": "yarn vuepress dev src",
+    "docs:build": "yarn vuepress build src",
     "lint": "yarn eslint --ext js,vue ."
   },
   "dependencies": {
