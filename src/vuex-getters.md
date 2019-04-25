@@ -93,8 +93,8 @@ It is possible to have `async` getters. They can be tested using the same techni
 
 ## Conclusion
 
-- `getters` are just plain JavaScript functions
-- when testing `getters` in isolation, you need to pass the state manually
-- if a getter uses another getter, you should stub the expected return result of the first getter. This will give you more fine grained control over the test, and let you focus on testing the getter in question
+- `getters` are just plain JavaScript functions.
+- When testing `getters` in isolation, you need to pass the state manually.
+- If a getter uses another getter, you should stub the expected return result of the first getter. This will give you more fine grained control over the test, and let you focus on testing the getter in question
 
 The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/getters.spec.js).
