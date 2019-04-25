@@ -89,7 +89,7 @@ describe("poodlesByAge", () => {
 
 Instead of actually passing the real `poodles` getter, we pass in the result it would return. We already know it is working, since we wrote a test for it. This allows us to focus on testing the logic unique to `poodlesByAge`.
 
-It is possible to have `async` getters. They can be tested using the same technique are `async` actions, which you can read about [here](https://lmiller1990.github.io/vue-testing-handbook/vuex-actions.html).
+It is possible to have `async` getters. They can be tested using the same technique as `async` actions, which you can read about [here](https://lmiller1990.github.io/vue-testing-handbook/vuex-actions.html).
 
 ## Conclusion
 
