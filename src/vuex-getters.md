@@ -19,7 +19,7 @@ const state = {
 The getters we will test are:
 
 1. `poodles`: gets all `poodles`
-2. `poodlesByAge`: getters all poodles, and accepts an age argument
+2. `poodlesByAge`: gets all poodles, and accepts an age argument
 
 ## Creating the Getters
 
@@ -37,7 +37,7 @@ export default {
 }
 ```
 
-Nothing too exciting - remember that getters receive other gettes as the second argument. Since we already have a `poodles` getter, we can use that in `poodlesByAge`. By returning a function in `poodlesByAge` that takes an argument, we can pass arguments to getters. The `poodlesByAge` getter can be used like this:
+Nothing too exciting - remember that getters receive other getters as the second argument. Since we already have a `poodles` getter, we can use that in `poodlesByAge`. By returning a function in `poodlesByAge` that takes an argument, we can pass arguments to getters. The `poodlesByAge` getter can be used like this:
 
 ```js
 computed: {
@@ -89,12 +89,12 @@ describe("poodlesByAge", () => {
 
 Instead of actually passing the real `poodles` getter, we pass in the result it would return. We already know it is working, since we wrote a test for it. This allows us to focus on testing the logic unique to `poodlesByAge`.
 
-It is possible to have `async` getters. They can be tested using the same technique are `async` actions, which you can read about [here](https://lmiller1990.github.io/vue-testing-handbook/vuex-actions.html).
+It is possible to have `async` getters. They can be tested using the same technique as `async` actions, which you can read about [here](https://lmiller1990.github.io/vue-testing-handbook/vuex-actions.html).
 
 ## Conclusion
 
-- `getters` are just plain JavaScript functions
-- when testing `getters` in isolation, you need to pass the state manually
-- if a getter uses another getter, you should stub the expected return result of the first getter. This will give you more fine grained control over the test, and let you focus on testing the getter in question
+- `getters` are just plain JavaScript functions.
+- When testing `getters` in isolation, you need to pass the state manually.
+- If a getter uses another getter, you should stub the expected return result of the first getter. This will give you more fine grained control over the test, and let you focus on testing the getter in question
 
 The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/getters.spec.js).
