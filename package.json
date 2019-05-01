@@ -9,7 +9,7 @@
     "lint": "yarn eslint --ext js,vue ."
   },
   "dependencies": {
-    "vuepress": "^0.10.2"
+    "vuepress": "^0.14.11"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.6",
