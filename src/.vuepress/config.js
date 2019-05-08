@@ -62,7 +62,7 @@ module.exports = {
           ['/ja/components-with-props', 'プロップスのテスト'],
           ['/ja/computed-properties', '算出プロパティ'],
           ['/ja/simulating-user-input', 'ユーザー入力をシミュレーション'],
-          ['/ja/testing-emitted-events', '発生してイベントのテスト'],
+          ['/ja/testing-emitted-events', '発生したイベントのテスト'],
           ['/ja/mocking-global-objects', 'グローバルオブジェクトのモック'],
           ['/ja/stubbing-components', 'コンポーネントをスタブする'],
           ['/ja/finding-elements-and-components', '要素とコンポーネントを検索する'],
