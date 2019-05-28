@@ -87,7 +87,7 @@ The result of `console.log(wrapper.html())` is also printed:
 <div>
   <span>Not Authorized</span>
   <button>
-    send
+    submit
   </button>
 </div>
 ```
