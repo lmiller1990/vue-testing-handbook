@@ -8,7 +8,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "flush-promises": "^1.0.0",
     "vue": "^2.6.10",
     "vue-router": "^3.0.6"
