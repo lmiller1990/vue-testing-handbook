@@ -12,7 +12,7 @@ const factory = (propsData) => {
 }
 
 describe("SubmitButton", () => {
-  describe("does not have admin privledges", ()=> {
+  describe("does not have admin privileges", ()=> {
     it("renders a message", () => {
       const wrapper = factory()
 
@@ -21,11 +21,11 @@ describe("SubmitButton", () => {
     })
   })
 
-  describe("has admin privledges", ()=> {
+  describe("has admin privileges", ()=> {
     it("renders a message", () => {
       const wrapper = factory({ isAdmin: true })
 
-      expect(wrapper.find("span").text()).toBe("Admin Privledges")
+      expect(wrapper.find("span").text()).toBe("Admin Privileges")
       expect(wrapper.find("button").text()).toBe("submit")
     })
   })

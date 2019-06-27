@@ -1,6 +1,6 @@
 <template>
 <div>
-  <span v-if="isAdmin">Admin Privledges</span>
+  <span v-if="isAdmin">Admin Privileges</span>
   <span v-else>Not Authorized</span>
   <button>
     {{ msg }}
