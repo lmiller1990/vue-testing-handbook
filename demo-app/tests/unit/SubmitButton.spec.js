@@ -12,7 +12,7 @@ const factory = (propsData) => {
 }
 
 describe("SubmitButton", () => {
-  describe("has admin privledges", ()=> {
+  describe("does not have admin privledges", ()=> {
     it("renders a message", () => {
       const wrapper = factory()
 
@@ -21,7 +21,7 @@ describe("SubmitButton", () => {
     })
   })
 
-  describe("does not have admin privledges", ()=> {
+  describe("has admin privledges", ()=> {
     it("renders a message", () => {
       const wrapper = factory({ isAdmin: true })
 
