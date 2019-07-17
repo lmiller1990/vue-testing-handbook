@@ -11,6 +11,12 @@
       @click="handleDispatch">
       Dispatch
     </button>
+
+    <button 
+      class="namespaced-dispatch" 
+      @click="handleNamespacedDispatch">
+      Namespaced Dispatch
+    </button>
   </div>
 </template>
 
@@ -25,6 +31,10 @@ export default {
 
     handleDispatch() {
       this.$store.dispatch("testAction", { msg: "Test Dispatch" })
+    },
+
+    handleNamespacedDispatch() {
+      this.$store.dispatch("namespaced/testAction", { msg: "Test Namespaced Dispatch" })
     }
   }
 }

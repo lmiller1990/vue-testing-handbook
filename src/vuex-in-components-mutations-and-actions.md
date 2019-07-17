@@ -24,6 +24,12 @@ For these examples, we will test a `<ComponentWithButtons>` component:
       @click="handleDispatch">
       Dispatch
     </button>
+
+    <button 
+      class="namespaced-dispatch" 
+      @click="handleNamespacedDispatch">
+      Namespaced Dispatch
+    </button>
   </div>
 </template>
 
@@ -38,6 +44,10 @@ export default {
 
     handleDispatch() {
       this.$store.dispatch("testAction", { msg: "Test Dispatch" })
+    },
+
+    handleNamespacedDispatch() {
+      this.$store.dispatch("namespaced/testAction", { msg: "Test Namespaced Dispatch" })
     }
   }
 }
@@ -115,11 +125,48 @@ This is a lot more compact than the previous example. No `localVue`, no `Vuex` -
 
 Whether you use a real store or a mock store is your tests is down to personal preference. Both are correct. The important thing is you are testing your components.
 
+## Testing a Namespaced Action (or Mutation)
+
+The third and final example shows another way to test that an action was dispatched (or mutation committed) with the correct arguments. This combined both techniques discussed above - a real `Vuex` store, and a mocked `dispatch` method.
+
+
+```js
+it("dispatch a namespaced action when button is clicked", () => {
+  const store = new Vuex.Store({
+    modules: {
+      namespacedModule: {
+        namespaced: true,
+        actions: {
+          testAction: (context, payload) => {
+            // ...
+          }
+        }
+      }
+    }
+  })
+  store.dispatch = jest.fn()
+
+  const wrapper = shallowMount(ComponentWithButtons, {
+    store, localVue
+  })
+
+  wrapper.find(".namespaced-dispatch").trigger("click")
+
+  expect(store.dispatch).toHaveBeenCalledWith(
+    'namespaced/testAction',
+    { msg: "Test Namespaced Dispatch" }
+  )
+})
+```
+
+We start by creating a Vuex store, with the module(s) we are interested in. I declare the module `namespacedModule` inside the test, but in a real world app, you would just import the modules your component depends on. We then replace the `dispatch` method with a `jest.fn` mock, and make assertions against that.
+
 ## Conclusion
 
 In this section we covered:
 
 1. Using Vuex with a `localVue` and mocking a mutation
 2. Mocking the Vuex API (`dispatch` and `commit`)
+3. Using a real Vuex store with a mock `dispatch` function
 
 The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ComponentWithButtons.spec.js).
