@@ -9,10 +9,6 @@ const mutations = {
   testMutation: jest.fn()
 }
 
-const actions = {
-  testAction: jest.fn()
-}
-
 const store = new Vuex.Store({
   mutations,
 })
