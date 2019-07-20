@@ -47,7 +47,7 @@ export default {
     },
 
     handleNamespacedDispatch() {
-      this.$store.dispatch("namespaced/testAction", { msg: "Test Namespaced Dispatch" })
+      this.$store.dispatch("namespaced/very/deeply/testAction", { msg: "Test Namespaced Dispatch" })
     }
   }
 }
@@ -132,18 +132,7 @@ The third and final example shows another way to test that an action was dispatc
 
 ```js
 it("dispatch a namespaced action when button is clicked", () => {
-  const store = new Vuex.Store({
-    modules: {
-      namespacedModule: {
-        namespaced: true,
-        actions: {
-          testAction: (context, payload) => {
-            // ...
-          }
-        }
-      }
-    }
-  })
+  const store = new Vuex.Store()
   store.dispatch = jest.fn()
 
   const wrapper = shallowMount(ComponentWithButtons, {
@@ -153,7 +142,7 @@ it("dispatch a namespaced action when button is clicked", () => {
   wrapper.find(".namespaced-dispatch").trigger("click")
 
   expect(store.dispatch).toHaveBeenCalledWith(
-    'namespaced/testAction',
+    'namespaced/very/deeply/testAction',
     { msg: "Test Namespaced Dispatch" }
   )
 })
