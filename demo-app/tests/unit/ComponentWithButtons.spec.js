@@ -9,7 +9,9 @@ const mutations = {
   testMutation: jest.fn()
 }
 
-const store = new Vuex.Store({ mutations })
+const store = new Vuex.Store({
+  mutations,
+})
 
 describe("ComponentWithButtons", () => {
 
@@ -26,6 +28,23 @@ describe("ComponentWithButtons", () => {
     )
   })
 
+  it("dispatch a namespaced action when button is clicked", () => {
+    const store = new Vuex.Store()
+    store.dispatch = jest.fn()
+
+    const wrapper = shallowMount(ComponentWithButtons, {
+      store, localVue
+    })
+
+    wrapper.find(".namespaced-dispatch").trigger("click")
+
+    expect(store.dispatch).toHaveBeenCalledWith(
+      'namespaced/very/deeply/testAction',
+      { msg: "Test Namespaced Dispatch" }
+    )
+  })
+
+
   it("dispatches an action when a button is clicked", () => {
     const mockStore = { dispatch: jest.fn() }
     const wrapper = shallowMount(ComponentWithButtons, {
@@ -39,4 +58,5 @@ describe("ComponentWithButtons", () => {
     expect(mockStore.dispatch).toHaveBeenCalledWith(
       "testAction" , { msg: "Test Dispatch" })
   })
+
 })

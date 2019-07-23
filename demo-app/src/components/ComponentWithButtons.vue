@@ -1,15 +1,21 @@
 <template>
   <div>
-    <button 
-      class="commit" 
+    <button
+      class="commit"
       @click="handleCommit">
       Commit
     </button>
 
-    <button 
-      class="dispatch" 
+    <button
+      class="dispatch"
       @click="handleDispatch">
       Dispatch
+    </button>
+
+    <button
+      class="namespaced-dispatch"
+      @click="handleNamespacedDispatch">
+      Namespaced Dispatch
     </button>
   </div>
 </template>
@@ -25,6 +31,13 @@ export default {
 
     handleDispatch() {
       this.$store.dispatch("testAction", { msg: "Test Dispatch" })
+    },
+
+    handleNamespacedDispatch() {
+      this.$store.dispatch(
+        "namespaced/very/deeply/testAction",
+        { msg: "Test Namespaced Dispatch" }
+      )
     }
   }
 }
