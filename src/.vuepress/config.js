@@ -18,7 +18,11 @@ module.exports = {
     '/ja/': {
       lang: 'ja-JP',
       title: 'Vueテストハンドブック',
-    }
+    },
+    '/ru/': {
+      lang: 'ru-RU',
+      title: 'Руководство по тестированию Vue-компонентов',
+    },
   },
   themeConfig: {
     repo: 'lmiller1990/vue-testing-handbook',
@@ -74,6 +78,32 @@ module.exports = {
           ['/ja/vuex-in-components-mutations-and-actions.md', 'Vuex in components - mutations and actions'],
           ['/ja/jest-mocking-modules', 'Jestでモジュールをモック'],
           ['/ja/vue-router', 'Vueルーター'],
+        ]
+      },
+      '/ru/': {
+        label: 'Русский',
+        selectText: 'Переводы',
+        lastUpdated: 'Последнее обновление',
+        editLinkText: 'Редактировать эту страницу на GitHub',
+        sidebar: [
+          ['/ru/', 'Введение'],
+          ['/ru/setting-up-for-tdd', 'Подготовка к TDD'],
+          ['/ru/rendering-a-component', 'Отрисовка компонентов'],
+          ['/ru/components-with-props', 'Тестирование входных параметров'],
+          ['/ru/computed-properties', 'Вычисляемые свойства'],
+          ['/ru/simulating-user-input', 'Симулирование пользовательского ввода'],
+          ['/ru/testing-emitted-events', 'Тестирование пользовательских событий'],
+          ['/ru/mocking-global-objects', 'Мокаем глобальный объекты'],
+          ['/ru/stubbing-components', 'Стабы для компонентов'],
+          ['/ru/finding-elements-and-components', 'Поиск элементов и компонентов'],
+          ['/ru/testing-vuex', 'Тестирование Vuex'],
+          ['/ru/vuex-mutations', 'Vuex - Мутации'],
+          ['/ru/vuex-actions', 'Vuex - Действия'],
+          ['/ru/vuex-getters', 'Vuex - Геттеры'],
+          ['/ru/vuex-in-components', 'Vuex в компонентах - $state и геттеры'],
+          ['/ru/vuex-in-components-mutations-and-actions', 'Vuex в компонентах - мутации и действия'],
+          ['/ru/jest-mocking-modules', 'Jest - мокаем модули'],
+          ['/ru/vue-router', 'Vue Router'],
         ]
       }
     }
