@@ -1,30 +1,30 @@
-## What is this guide?
+## О чём это руководство?
 
-Welcome to the Vue.js testing handbook!
+Добро пожаловать в руководство по тестированию Vue-компонентов!
 
-This is a collection of short, focused examples on how to test Vue components. It uses `vue-test-utils`, the official library for testing Vue components, and Jest, a modern testing framework. It covers the `vue-test-utils` API, as well as best practises for testing components.
+Здесь собрана коллекция коротких примеров тестирования компонентов с использованием `vue-test-utils` – официальной библиотекой для тестированию vue-компонентов. Также используется `Jest` – современный тестовый фреймворк. Рассматривается `vue-test-utils` API, а также лучшие практики тестирования.
 
-Each section is independent from the others. We start of by setting up an environment with `vue-cli` and writing a simple test. Next, two ways to render a component are discussed - `mount` and `shallowMount`. The differences will be demonstrated and explained.
+Руководство написано так, что его главы независимы одна от другой. Мы начнём с настройки окружения с помощью `vue-cli` и написания простейших тестов. Затем изучим два способа отрисовки компонентов – `mount` и `shallowMount`, поймём разницу между ними.
 
-From then on, we cover how to test various scenarios that arise when testing components, such as testing components that:
+Затем разберем несколько сценариев, которые возникают при тестировании компонентов:
 
-- receive props
-- use computed properties
-- render other components
-- emit events
+- принятие входных параметров
+- использование вычисляемых свойств
+- отрисовка других компонентов
+- пользовательские события
 
-and so forth. We then move on to more interesting cases, such as:
+и так далее. Потренируемся на таких интересных кейсах, как:
 
-- best practises for testing Vuex (in components, and independently)
-- testing Vue router
-- testing involving third party components
+- тестирование Vuex в компонентах и изоляции
+- тестирование Vue router
+- тестирование сторонних компонентов
 
-We will also explore how to use the Jest API to make our tests more robust, such as:
+Также поработаем с Jest API, сделаем наши тесты более надежными:
 
-- mocking API responses
-- mocking and spying on modules
-- using snapshots
+- замокаем API ответы
+- замокаем модули и добавим spies (шпионы)
+- используем снимки
 
-## Languages
+## Переводы
 
-For now, the guide is in English, Japanese and Russian.
+На данный момент руководство доступно на Английском, Японском и Русском языках.
