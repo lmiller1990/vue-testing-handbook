@@ -1,8 +1,8 @@
-## Two ways to render
+## Два способа отрисовки
 
-`vue-test-utils` provides two ways to render, or __mount__ a component - `mount` and `shallowMount`. A component mounted using either of these methods returns a `wrapper`, which is an object containing the Vue component, plus some useful methods for testing.
+`vue-test-utils` позволяет отрисовывать компонент двумя способами – `mount` and `shallowMount`. В любом из этих случаев, метод вернёт так называемый `wrapper`, который содержит объект с Vue-компонентом и некоторыми полезными методами для тестирования.
 
-Let's start off with two simple components:
+Давайте разберёмся на двух простых компонентах:
 
 ```js
 const Child = Vue.component("Child", {
@@ -14,11 +14,11 @@ const Child = Vue.component("Child", {
 const Parent = Vue.component("Parent", {
   name: "Parent",
 
-  template: "<div><child /></div>"
+  template: "<div><child/></div>"
 })
 ```
 
-Let's start off by rendering `Child` and calling the `html` method `vue-test-utils` provides to inspect the markup.
+Начнём с отрисовки `Child`, а затем вызовем метод `html`, который предоставляет `vue-test-utils` для тестирования разметки. 
 
 ```js
 const shallowWrapper = shallowMount(Child)
@@ -28,13 +28,14 @@ console.log(shallowWrapper.html())
 console.log(mountWrapper.html())
 ```
 
-Both `mountWrapper.html()` and `shallowWrapper.html()` yield the following output:
+
+Оба `mountWrapper.html()` и `shallowWrapper.html()` дают одинаковый результат:
 
 ```html
 <div>Child component</div>
 ```
 
-No difference here. How about with `Parent`?
+Разницы нет. Но что насчёт `Parent`?
 
 ```js
 const shallowWrapper = shallowMount(Parent)
@@ -44,23 +45,23 @@ console.log(shallowWrapper.html())
 console.log(mountWrapper.html())
 ```
 
-`mountWrapper.html()` now yields:
+`mountWrapper.html()` теперь выводит:
 
 ```html
 <div><div>Child component</div></div>
 ```
 
-Which is the completely rendered markup of `Parent` and `Child`. `shallowWrapper.html()`, on the other hand, produces this:
+Полностью повторяется разметка `Parent` и `Child`. `shallowWrapper.html()` же выводит следующее:
 
 ```html
 <div><vuecomponent-stub></vuecomponent-stub></div>
 ```
 
-The place where `<Child />` should be has been replaced by `<vuecomponent-stub />`. `shallowMount` renders regular html elements, but replaces Vue components with a stub.
+То место, где должен быть `<Child />` теперь занимает `<vuecomponent-stub />`. `shallowMount` отрисовывает обычный html, но заменяет Vue-компоненты на заглушки.
 
-> A stub is kind of a "fake" object that stands in for a real one.
+> Под заглушкой(stub) понимают фейковый объект, который помещается вместо настоящего.
 
-This can be useful. Imagine you want to test your `App.vue` component, that looks like this:
+Это может быть полезно. Представьте, вы хотите протестировать компонент `App.vue`, который выглядит так:
 
 ```vue
 <template>
@@ -71,6 +72,6 @@ This can be useful. Imagine you want to test your `App.vue` component, that look
 </template>
 ```
 
-And we want to test `<h1>My Vue App</h1>`  is rendered correctly. We also have a `<fetch-data>` component, that makes a request to an external API in its `mounted` lifecycle hook. 
+И мы хотим протестировать, что `<h1>My Vue App</h1>` выводится правильно. У нас также есть компонент `<fetch-data/>`, который делаем запросы к стороннему API в своём `mounted`  хуке.
 
-If we use `mount`, although all we want to do is assert some text is rendered, `<fetch-data />` will make an API request. This will make our test slow and prone to failure. So, we stub out external dependencies. By using `shallowMount`, `<fetch-data />` will be replaced with a `<vuecomponent-stub />`, and the API call will not be initiated.
+Если мы используем `mount`, то `<fetch-data/>` сделает запрос к API, хотя мы хотим всего лишь проверить отрисовку текста. Это сделаем наши тесты медленными и неустойчивыми. Поэтому мы применяем заглушки для сторонних зависимостей. Используя `shallowMount`, компонент `<fetch-data/>` заменится на `<vuecomponent-stub />` и запроса к API не произойдёт.
