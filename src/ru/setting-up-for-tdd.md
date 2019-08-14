@@ -1,45 +1,45 @@
-## Installing vue-cli
+## Установка vue-cli
 
-`vue-test-utils` is the official testing library for Vue, and will be used throughout the guide. It runs in both a browser and Node.js environment, and works with any test runner. We will be running our tests in a Node.js environment throughout this guide.
+`vue-test-utils` – официальная библиотека для тестированию vue-компонентов. Она работает как в браузере, так и в среде Node.js, также позволяет работать в связке с любым тест-ранером. Мы будем запускать тесты через Node.js.
 
-`vue-cli` is the easiest way to get started. It will set up a project, as well as configure Jest, a popular testing framework. Install it by running:
+`vue-cli` – самый простой способ начать работу. Он установит всё необходимое для проекта, сконфигурирует Jest – популярный фреймворк для тестирования. Установим cli, написав в консоле:
 
 ```sh
 yarn global add @vue/cli
 ```
 
-or with npm:
+или через npm:
 
 ```sh
 npm install -g @vue/cli
 ```
 
-Create a new project by running `vue create [project-name]`. Choose "Manually select features" and "Unit Testing", and "Jest" for the test runner.
+Создадим новый проект, написав `vue create [project-name]`. Выберем "Manually select features" и для "Unit Testing" указываем Jest.
 
-Once the installation finishes, `cd` into the project and run `yarn test:unit`. If everything went well, you should see:
+Как только установка закончится, переходим в проект через `cd` и запускаем `yarn test:unit`. Если всё сделано правильно, вы увидите:
 
 ```
- PASS  tests/unit/HelloWorld.spec.js
+ PASS  tests/unit/example.spec.js
   HelloWorld.vue
-    ✓ renders props.msg when passed (26ms)
+    ✓ renders props.msg when passed (14ms)
 
 Test Suites: 1 passed, 1 total
 Tests:       1 passed, 1 total
 Snapshots:   0 total
-Time:        2.074s
+Time:        1.79s
 ```
 
-Congratulations, you just ran your first passing test!
+Поздравляю, вы только что запустили свой первый тест!
 
-## Writing your first test
+## Пишем первый тест
 
-We ran an existing test that came with the project. Let's get our hands dirty, writing our own component, and a test. Traditionally when doing TDD, you write the failing test first, then implement the code which allows the test to pass. For now, we will write the component first.
+Мы запускали тест, который установился вместе с проектом. Теперь давайте напишем собственный компонент и тест к нему. По традиции, когда работают по TDD, вы сначала пишите тесты, которые не пройдут проверку, затем пишите код, который позволит тестам пройти её. Для начала, создадим наш компонент.
 
-We don't need `src/components/HelloWorld.vue` or `tests/unit/HelloWorld.spec.js` anymore, so you can delete those.
+Нам больше не нужен `src/components/HelloWorld.vue` и `tests/unit/example.spec.js`, поэтому удалим их.
 
-## Creating the `Greeting` component
+## Создаём компонент `Greeting`
 
-Create a `Greeting.vue` file in `src/components`. Inside `Greeting.vue`, add the following:
+Создадим `Greeting.vue` в `src/components`. Внутри `Greeting.vue`, добавим следующее:
 
 ```vue
 <template>
@@ -61,14 +61,14 @@ export default {
 </script>
 ```
 
-## Writing the test
+## Написание теста
 
-`Greeting` has only one responsibility - to render the `greeting` value. The strategy will be:
+`Greeting` делает только одну вещь - выводит значение `greeting`. Стратегия будет такая:
 
-1. render the component with `mount`
-2. assert that the component's text contains "Vue and TDD"
+1. отрисовываем компонент через `mount`
+2. проверяем, что `component` содержит в себе значение "Vue and TDD"
 
-Create a `Greeting.spec.js` inside `tests/unit`. Inside, import `Greeting.vue`, as well as `mount`, and add the outline of the test:
+Создадим `Greeting.spec.js` внутри `tests/unit`. Затем импортируем `Greeting.vue` и `mount`, добавим разметку для теста:
 
 ```
 import { mount } from '@vue/test-utils'
@@ -80,10 +80,9 @@ describe('Greeting.vue', () => {
   })
 })
 ```
+Существует несколько различных синтаксисов, используемых при TDD. Мы будем использовать `describe` и `it` – синтаксис, который используется в Jest. В `describe` обычно пишут что именно тестируют, в нашем случае `Greeting.vue`. В `it` содержится функция, которая проверяет конкретную часть кода. Для каждой функции компонента, мы добавляем свой блок с `it`.
 
-There are different syntaxes used for TDD, we will use the commonly seen `describe` and `it` syntax that comes with Jest. `describe` generally outlines what the test is about, in this case `Greeting.vue`. `it` represents a single piece of responsibility that the subject of the test should fulfill. As we add more features to the component, we add more `it` blocks.
-
-Now we should render the component with `mount`. The standard practice is to assign the component to a variable called `wrapper`. We will also print the output, to make sure everything is running correctly:
+Теперь нам нужно отрисовать компонент с помощью `mount`. Обычно компонент присваивают какой-либо переменной, которую называют `wrapper`. Также выведем содержание компонента, убедимся, что всё запускается правильно.
 
 ```js
 const wrapper = mount(Greeting)
@@ -91,9 +90,9 @@ const wrapper = mount(Greeting)
 console.log(wrapper.html())
 ```
 
-## Running the test
+## Запускаем тест
 
-Run the test by typing `yarn test:unit` into your terminal. Any file in the `tests` directory ending with `.spec.js` is automatically executed. If everything went well, you should see:
+Запустим тест, написав в консоле `yarn test:unit`. Все файлы из папки `tests` c расширением `.spec.js` автоматически выполнятся. Если всё сделано правильно, вы увидите:
 
 ```
 PASS  tests/unit/Greeting.spec.js
@@ -106,25 +105,25 @@ console.log tests/unit/Greeting.spec.js:7
   </div>
 ```
 
-We can see the markup is correct, and the test passes. The test is passing because there was no failure - this test can never fail, so it is not very useful yet. Even if we change `Greeting.vue` and delete the `greeting` from the template, it will still pass. Let's change that.
+Как мы видим, разметка компонента правильная, тест прошёл. Такой тест никогда не упадёт, поэтому он не очень полезный. Даже если мы удалим `greeting` из `Greeting.vue`, тест всё равно пройдёт. Давайте поправим это.
 
-## Making assertions
+## Добавление проверки
 
-We need to make an assertion to ensure the component is behaving correctly. We can do that using Jest's `expect` API. It looks like this: `expect(result).to [matcher] (actual)`. 
+Нам нужно сделать проверку, чтобы убедиться, что компонент ведёт себя так, как нужно. Мы можем сделать это через Jest's `expect` API. Оно выглядит так: `expect(текущий результат).to [матчер] (ожидаемый результат)`
 
-_Matchers_ are methods to compare values and objects. For example:
+_Матчер_ – это функция, которая сравнивает значения. Например:
 
 ```js
 expect(1).toBe(1)
 ```
 
-A full list of matchers is available in the [Jest documentation](http://jestjs.io/docs/en/expect). `vue-test-utils` doesn't include any matchers - the ones Jest provides are more than enough. We want to compare the text from `Greeting`. We could write:
+Полный список матчеров можно посмотреть в [документации Jest](http://jestjs.io/docs/en/expect). Во `vue-test-utils` нет матчеров, но нам достаточно тех, что предоставляет Jest. Нам нужно сравнить текст в `Greeting`. Мы можем написать:
 
 ```js
 expect(wrapper.html().includes("Vue and TDD")).toBe(true)
 ```
 
-but `vue-test-utils` has an even better way to get the markup - `wrapper.text`. Let's finish the test off:
+но `vue-test-utils` предоставляет еще лучший способ - `wrapper.text`. Давайте допишем нам тест:
 
 ```js
 import { mount } from '@vue/test-utils'
@@ -139,7 +138,7 @@ describe('Greeting.vue', () => {
 })
 ```
 
-We don't need the `console.log` anymore, so you can delete that. Run the tests with `yarn unit:test`, and if everything went well you should get:
+Нам больше не нужен `console.log`, удалим его. Запустим тесты `yarn unit:test` и если всё сделано правильно, у вас должно получиться:
 
 ```
 PASS  tests/unit/Greeting.spec.js
@@ -152,7 +151,7 @@ Snapshots:   0 total
 Time:        1.477s, estimated 2s
 ```
 
-Looking good. But you should always see a test fail, then pass, to make sure it's really working. In traditional TDD, you would write the test before the actual implementation, see it fail, then use the failing errors to guide your code. Let's make sure this test is really working. Update `Greeting.vue`:
+Выглядит отлично. Но вы должно всегда видеть, что тест сначала не проходит проверку, а затем проходит, чтобы убедиться, что всё работает правильно. В традиционном TDD, вы сначала пишите не работающие тесты, затем используете полученные ошибки при написании кода. Давайте убедимся, что всё работает правильно. Обновим Greeting.vue`:
 
 ```vue
 <template>
@@ -174,7 +173,7 @@ export default {
 </script>
 ```
 
-And now run the test with `yarn test:unit`:
+Запустим тесты через `yarn test:unit`:
 
 ```
 FAIL  tests/unit/Greeting.spec.js
@@ -201,6 +200,6 @@ Greeting.vue
     at Object.<anonymous> (tests/unit/Greeting.spec.js:8:28)
 ```
 
-Jest gives us good feedback. We can see the expected and actual result, as well as on which line the expectation failed. The test did fail, as expected. Revert `Greeting.vue` and make sure the test is passing again.
+Jest даёт нам хороший фидбек. Мы видим ожидаемый и полученный результат, а также строку, в которой произошла ошибка. Тест не прошел проверку, как и ожидалось. Вернем прежнее значение в Greeting.vue` и убедимся, что тест снова проходит проверку.
 
-Next we will look at the two methods `vue-test-utils` provides to render components: `mount` and `shallowMount`. 
+В следующих блоках мы рассмотрим два метода отрисовки, которые предоставляет `vue-test-utils` – это `mount` и `shallowMount`.
