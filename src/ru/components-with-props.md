@@ -1,8 +1,8 @@
-## Setting props with propsData
+## Добавляем входящие данные через propsData
 
-`propsData` can be used with both `mount` and `shallowMount`. It is often used to test components that receive props from their parent component.
+`propsData` может использоваться как с `mount`, так и с `shallowMount`. Данный метод часто используют при тестировании входящих данных, который получает компонент от своего родителя.
 
-`propsData` is passed into the second argument of either `shallowMount` or `mount`, in the following form:
+`propsData` передаётся вторым аргуметов в `shallowMount` или `mount`, в следующем виде:
 
 ```js
 const wrapper = shallowMount(Foo, {
@@ -12,12 +12,12 @@ const wrapper = shallowMount(Foo, {
 })
 ```
 
-## Creating the component
+## Создаём компонент
 
-Create a simple `<SubmitButton>` component that has two `props`: `msg` and `isAdmin`. Depending on the value of the `isAdmin` prop this component will contain a `<span>` in one of two states:
+Добавим новый простенький компонент `<SubmitButton>`, который принимает на вход `msg` and `isAdmin`. В зависимости от `isAdmin` компонент будет содержать `<span>` в одном из двух состояний:
 
-* `Not Authorized` if `isAdmin` is false (or not passed as a prop)
-* `Admin Privileges` if `isAdmin` is true
+* `Not Authorized`, если `isAdmin` в значении false (или не передан)
+* `Admin Privileges`, если `isAdmin` в значении true
 
 ```html
 <template>
@@ -48,9 +48,9 @@ export default {
 </script>
 ```
 
-## The First Test
+## Первый тест
 
-We will make an assertion on the message in the case the user does not have admin privileges.
+Добавим проверку сообщения, в случае, когда у пользователя нет привилегий администратора.
 
 ```js
 import { shallowMount } from '@vue/test-utils'
@@ -73,7 +73,7 @@ describe('SubmitButton.vue', () => {
 })
 ```
 
-Run the tests with `yarn test:unit`. The result is:
+Запустим тесты через `yarn test:unit`. Результат будет следующий:
 
 ```
 PASS  tests/unit/SubmitButton.spec.js
@@ -81,7 +81,7 @@ PASS  tests/unit/SubmitButton.spec.js
     ✓ displays a non authorized message (15ms)
 ```
 
-The result of `console.log(wrapper.html())` is also printed:
+Также выведется результат `console.log(wrapper.html())`
 
 ```html
 <div>
@@ -92,11 +92,11 @@ The result of `console.log(wrapper.html())` is also printed:
 </div>
 ```
 
-We can see the `msg` prop is processed and the resulting markup is correctly rendered.
+Как мы видим, `msg` обработался и результирующая разметка отрисовалась правильно.
 
-## A Second Test
+## Второй тест
 
-Let's make an assertion on the other possible state, when `isAdmin` is `true`:
+Давайте также добавим проверку еще одного возможного случая, когда `isAdmin` в значении `true`
 
 ```js
 import { shallowMount } from '@vue/test-utils'
@@ -119,15 +119,14 @@ describe('SubmitButton.vue', () => {
 })
 ```
 
-Run the test with `yarn test:unit` and check the results:
+Запустим тесты через `yarn test:unit` и посмотрим на результаты:
 
 ```shell
 PASS  tests/unit/SubmitButton.spec.js
   SubmitButton.vue
     ✓ displays a admin privileges message (4ms)
 ```
-
-We also outputted the markup with `console.log(wrapper.html())`:
+Мы также вывели разметку через `console.log(wrapper.html())`:
 
 ```html
 <div>
@@ -137,15 +136,16 @@ We also outputted the markup with `console.log(wrapper.html())`:
   </button>
 </div>
 ```
-We can see the `isAdmin` prop was used to render the correct `<span>` element.
 
-## Refactoring the tests
+Как мы видим `isAdmin` был использован, чтобы отрисовать правильный `<span>`
 
-Let's refactor the tests adhering to the principle "Don't Repeat Yourself" (DRY). Since all the tests are passing, we can confidently refactor. As long as the tests all still pass after the refactor, we can be sure we did not break anything.
+## Рефакторинг тестов
 
-## Refactor with a Factory Function
+Давайте перепишем наши тесты, придерживаясь прицина "Don't Repeat Yourself" (не повторяйся). Так как все тесты проходят проверку, мы можем их уверенно изменять. После рефакторинга нам также нужно убедиться, что ничего не сломалось.
 
-In both tests we call `shallowMount` then pass a similar `propsData` object. We can refactor this using a factory function. A factory function is simply a function that returns an object - it _makes_ objects, thus the name "factory" function.
+## Рефактор через фабрику (factory function)
+
+В обоих тестах мы вызываем `shallowMount`, затем передаём похожий объект `propsData`. Мы можем это изменить, используя фабрику. Под фабрикой понимают функцию, которая возвращает объект, отсюда и её название.
 
 ```js
 const msg = "submit"
@@ -159,7 +159,7 @@ const factory = (propsData) => {
 }
 ```
 
-The above is a function that will `shallowMount` a `SubmitButton` component. We can pass any props to change as the first argument to `factory`. Let's DRY up the test with the factory function.
+Выше приведена функция, которая отрисовывать `SubmitButton` компонент через `shallowMount`. Мы можем передавать любые данные первым аргументом в функцию `factory`. Давайте перепишем тесты, придерживаясь принципа DRY.
 
 ```js
 describe("SubmitButton", () => {
@@ -183,7 +183,7 @@ describe("SubmitButton", () => {
 })
 ```
 
-Let's run the tests again. Everything is still passing.
+Давайте запустим тесты еще раз. Они всё еще работают.
 
 ```sh
 PASS  tests/unit/SubmitButton.spec.js
@@ -194,10 +194,10 @@ PASS  tests/unit/SubmitButton.spec.js
      ✓ renders a message (3ms)
 ```
 
-Since we have a good test suite, we can now easily and confidently refactor.
+Поскольку у нас есть хороший набор тестов, мы можем легко и уверенно проводить рефакторинг.
 
-## Conclusion
+## Заключение
 
-- By passing `propsData` when mounting a component, you can set the `props` to be used in the test
-- Factory functions can be used to DRY your tests
-- Intead of `propsData`, you can also use [`setProps`](https://vue-test-utils.vuejs.org/api/wrapper-array/#setprops-props) to set prop values during tests
+- Передавая `propsData` во время отрисовки компонента, вы можете устанавливать входящие данные, которые будут применены в тесте
+- Функции-фабрики могут быть использованы, чтобы достичь DRY в тестах
+- Вместо `propsData`, вы также можете использовать [`setProps`](https://vue-test-utils.vuejs.org/api/wrapper-array/#setprops-props) для того чтобы передавать входящие данные в тесты.
