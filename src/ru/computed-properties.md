@@ -1,18 +1,18 @@
-## Testing Computed Properties
+## Тестирование вычисляемых свойств
 
-You can find the test described on this page [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/NumberRenderer.spec.js).
+Тест, описанный на этой странице, вы можете найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/NumberRenderer.spec.js).
 
-Testing computed properties are especially simple, since they are just plain old JavaScript functions.
+Тестировать вычисляемые свойства обычно просто, так как это старые добрые JavaScript функции.
 
-Let's start with looking at two different ways to test a `computed` property. We will develop a `<NumberRenderer>` component, that renders either odd or even numbers, based on a `numbers` computed property. 
+Давайте рассмотрив два разных способа тестирования вычисляемых свойств. Создадим компонент `<NumberRenderer>`, который выводит чётные и нечётные числа, в зависимости от вычисляемого свойства `numbers`. 
 
-## Writing the test
+## Написание теста
 
-The `<NumberRenderer>` component will receive an `even` prop, that is a boolean. If `even` is `true`, the component should render 2, 4, 6, and 8. If `false`, it should render 1, 3, 5, 7 and 9. The list of values will be calculated in a `computed` property called `numbers`.
+Компонент `<NumberRenderer>` получает на вход параметр `even` типа boolean. Если `even` в значении `true`, тогда компонент должен отрисовать 2, 4, 6 и 8. Если же в значении `false`, тогда 1, 3, 5, 7 и 9. Список значений будет высчитываться в вычисляемом свойстве `numbers`.
 
-## Testing by rendering the value
+## Тестирование отрисовки значений
 
-The test:
+Тест выглядит так:
 
 ```js
 import { shallowMount } from "@vue/test-utils"
@@ -30,8 +30,7 @@ describe("NumberRenderer", () => {
   })
 })
 ```
-
-Before running the test, let's set up `<NumberRenderer>`:
+Перед запуском теста, давайте добавим компонент `<NumberRenderer>`:
 
 ```js
 <template>
@@ -53,7 +52,7 @@ export default {
 </script>
 ```
 
-Now we start development, and let the error messages guide our implementation. `yarn test:unit` yields:
+Теперь можем начинать разработку, пускай ошибки подсказывают нам, что делать. `yarn test:unit` выведет:
 
 ```
 ● NumberRenderer › renders even numbers
@@ -64,7 +63,7 @@ Now we start development, and let the error messages guide our implementation. `
   Received: ""
 ```
 
-It looks like everything is hooked up correctly. Let's start implementing `numbers`:
+Выглядит так, что всё работает правильно. Давайте реализуем `numbers`:
 
 ```js
 computed: {
@@ -82,7 +81,7 @@ computed: {
 }
 ```
 
-And update the template to use the new computed property:
+И обновим шаблон, чтобы использовать новое вычисляемое свойство:
 
 ```html
 <template>
@@ -92,7 +91,7 @@ And update the template to use the new computed property:
 </template>
 ```
 
-`yarn test:unit` now yields:
+`yarn test:unit` теперь выводит:
 
 ```
 FAIL  tests/unit/NumberRenderer.spec.js
@@ -109,19 +108,19 @@ FAIL  tests/unit/NumberRenderer.spec.js
   ]"
 ```
 
-The numbers are correct, but we want to render the list formatted nicely. Let's update the `return` value:
+Цифры правильные, но мы хотим выводить их отформатированными. Давайте обновим значение `return`.
 
 ```js
 return evens.join(", ")
 ```
 
-Now `yarn test:unit` passes! 
+Теперь `yarn test:unit` проходит проверку! 
 
-## Testing with `call` 
+## Тестирование через `call` 
 
-We will now add a test for the case of `even: false`. This time, we will see an alternative way to test a computed property, without actually rendering the component.
+Теперь добавим тесты для случая, когда `even: false`. В этот раз мы попробуем альтернативный способ тестирования вычисляемых свойств без отрисовки компонента.
 
-The test, first:
+Первым делом напишем тест:
 
 ```js
 it("renders odd numbers", () => {
@@ -131,9 +130,9 @@ it("renders odd numbers", () => {
 })
 ```
 
-Instead of rendering the component and making an assertion on `wrapper.text()`, we are using `call` to provide alternative `this` context to `numbers`. We will see what happens if we don't use `call` after we get the test to pass.
+Вместо того, чтобы отрисовывать компонент и делать проверку через `wrapper.text()`, мы используем `call`, чтобы передать другой контекст `this` в `numbers`. Также посмотрим, что случится, если мы не будем использовать `call`, но после того, как все тесты пройдут проверку.
 
-Running the current test yields:
+Запуск текущего теста выведет:
 
 ```
 FAIL  tests/unit/NumberRenderer.spec.js
@@ -145,7 +144,7 @@ FAIL  tests/unit/NumberRenderer.spec.js
   Received: "2, 4, 6, 8"
 ```
 
-Update `numbers`:
+Обновим `numbers`:
 
 
 ```js
@@ -165,7 +164,7 @@ numbers() {
 }
 ```
 
-Now both tests pass! But what if we hadn't used `call` in the second test? Try updating it like so:
+Теперь оба теста проходят проверку. Но что, если мы не будем использовать `call` во втором тесте? Попробуйте обновить тест вот так:
 
 ```js
 it("renders odd numbers", () => {
@@ -175,7 +174,7 @@ it("renders odd numbers", () => {
 })
 ```
 
-The test now fails:
+Теперь тест падает:
 
 ```
 FAIL  tests/unit/NumberRenderer.spec.js
@@ -186,25 +185,24 @@ FAIL  tests/unit/NumberRenderer.spec.js
   Expected: "1, 3, 5, 7, 9"
   Received: "2, 4, 6, 8"
 ```
-
-`vue` automatically binds `props` to `this`. We are not rendering the component with `mount`, though, so Vue isn't binding anything to `this`. If you do `console.log(this)`, you can see the context is simply the `computed` object:
+`vue` автоматически связывает `props` и `this`. Мы не отрисовываем компонент через `mount`, поэтому Vue не привязывает что-либо к `this`. Если вы сделаете `console.log(this)`, то увидите, что контекст это просто объект `computed`.
 
 ```
 { numbers: [Function: numbers] }
 ```
 
-So we need to use `call`, which lets us bind an alternative `this` object, in our case, one with a `even` property.
+Поэтому нам нужно использовать `call`, который позволяет нам связывать контекст `this`, в нашем случае со свойством `even`.
 
-## To `call` or to `shallowMount`?
+## Использовать `call` или `shallowMount`?
 
-Both techniques presented are useful for testing computed properties. Call can be useful when:
+Оба способа полезны при тестировании вычисляемых свойств. Call может быть полезен, когда:
 
-- You are testing a component that does some time consuming operations in a lifecycle methods you would like to avoid executing in your computed unit test.
-- You want to stub out some values on `this`. Using `call` and passing a custom context can be useful. 
+- Вы тестируете компонент, который выполняет какие-либо действия в хуках жизненного цикла и вы хотите их избежать.
+- Вы хотите использовать заглушки для некоторых значений в `this`. Использовать `call` и передавать свой контекст может быть полезным.
 
-Of course, you want to make sure the value is correctly rendered as well, so make sure you choose the correct technique when testing your computed properties, and test all the edge cases.
+Конечно вы хотите убедиться, что значения отрисовываются верно, поэтому убедитесь, что вы выбрали правильный способ и тест покрывает все возможные случаи.
 
-## Conclusion
+## Заключение
 
-- computed properties can be using `shallowMount` making assertions on the rendered markup
-- complex computed properties can be independently tested by using `call`
+- вычисляемые свойства могут тестироваться с использованием `shallowMount`, проводя проверку и отрисовывая разметку
+- сложные вычисляемые свойства могут тестироваться независимо используя `call`
