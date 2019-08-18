@@ -1,6 +1,6 @@
-## Добавляем входящие данные через propsData
+## Добавляем входные параметры через propsData
 
-`propsData` может использоваться как с `mount`, так и с `shallowMount`. Данный метод часто используют при тестировании входящих параметров, который получает компонент от своего родителя.
+`propsData` может использоваться как с `mount`, так и с `shallowMount`. Данный метод часто используют при тестировании входных параметров, который получает компонент от своего родителя.
 
 `propsData` передаётся вторым аргуметов в `shallowMount` или `mount`, в следующем виде:
 
@@ -14,7 +14,7 @@ const wrapper = shallowMount(Foo, {
 
 ## Создаём компонент
 
-Добавим новый простенький компонент `<SubmitButton>`, который принимает на вход `msg` and `isAdmin`. В зависимости от `isAdmin` компонент будет содержать `<span>` в одном из двух состояний:
+Добавим новый простенький компонент `<SubmitButton>`, который принимает на вход параметры `msg` и `isAdmin`. В зависимости от `isAdmin` компонент будет содержать `<span>` в одном из двух состояний:
 
 * `Не авторизован`, если `isAdmin` в значении false (или не передан)
 * `Привилегии администратора`, если `isAdmin` в значении true
@@ -124,15 +124,15 @@ describe('SubmitButton.vue', () => {
 ```shell
 PASS  tests/unit/SubmitButton.spec.js
   SubmitButton.vue
-    ✓ displays a admin privileges message (4ms)
+    ✓ Отображает сообщение для администратора (4ms)
 ```
 Мы также вывели разметку через `console.log(wrapper.html())`:
 
 ```html
 <div>
-  <span>Admin Privileges</span>
+  <span>Привилегии администратора</span>
   <button>
-    submit
+    Войти
   </button>
 </div>
 ```
@@ -148,7 +148,7 @@ PASS  tests/unit/SubmitButton.spec.js
 В обоих тестах мы вызываем `shallowMount`, затем передаём похожий объект `propsData`. Мы можем это изменить, используя фабрику. Под фабрикой понимают функцию, которая возвращает объект, отсюда и её название.
 
 ```js
-const msg = "submit"
+const msg = "Войти"
 const factory = (propsData) => {
   return shallowMount(SubmitButton, {
     propsData: {
@@ -163,21 +163,21 @@ const factory = (propsData) => {
 
 ```js
 describe("SubmitButton.vue", () => {
-  describe("has admin privileges", ()=> {
-    it("renders a message", () => {
+  describe("Нет привилегий администратора", ()=> {
+    it("Выводит верное сообщение", () => {
       const wrapper = factory()
 
-      expect(wrapper.find("span").text()).toBe("Not Authorized")
-      expect(wrapper.find("button").text()).toBe("submit")
+      expect(wrapper.find("span").text()).toBe("Не авторизован")
+      expect(wrapper.find("button").text()).toBe("Войти")
     })
   })
 
-  describe("does not have admin privileges", ()=> {
-    it("renders a message", () => {
+  describe("Есть привилегий администратора", ()=> {
+    it("Выводит верное сообщение", () => {
       const wrapper = factory({ isAdmin: true })
 
-      expect(wrapper.find("span").text()).toBe("Admin Privileges")
-      expect(wrapper.find("button").text()).toBe("submit")
+      expect(wrapper.find("span").text()).toBe("Привилегии администратора")
+      expect(wrapper.find("button").text()).toBe("Войти")
     })
   })
 })
@@ -185,19 +185,19 @@ describe("SubmitButton.vue", () => {
 
 Давайте запустим тесты еще раз. Они всё еще работают.
 
-```sh
+```bash
 PASS  tests/unit/SubmitButton.spec.js
  SubmitButton
-   has admin privileges
-     ✓ renders a message (26ms)
-   does not have admin privileges
-     ✓ renders a message (3ms)
+   Нет привилегий администратора
+     ✓ Выводит верное сообщение (26ms)
+   Есть привилегий администратора
+     ✓ Выводит верное сообщение (3ms)
 ```
 
 Поскольку у нас есть хороший набор тестов, мы можем легко и уверенно проводить рефакторинг.
 
 ## Заключение
 
-- Передавая `propsData` во время отрисовки компонента, вы можете устанавливать входящие данные, которые будут применены в тесте
+- Передавая `propsData` во время отрисовки компонента, вы можете устанавливать входные параметры, которые будут применены в тесте
 - Функции-фабрики могут быть использованы, чтобы достичь DRY в тестах
-- Вместо `propsData`, вы также можете использовать [`setProps`](https://vue-test-utils.vuejs.org/api/wrapper-array/#setprops-props) для того чтобы передавать входящие данные в тесты.
+- Вместо `propsData`, вы также можете использовать [`setProps`](https://vue-test-utils.vuejs.org/api/wrapper-array/#setprops-props) для того чтобы передавать входные параметры в тесты.
