@@ -1,6 +1,6 @@
 ## Добавляем входящие данные через propsData
 
-`propsData` может использоваться как с `mount`, так и с `shallowMount`. Данный метод часто используют при тестировании входящих данных, который получает компонент от своего родителя.
+`propsData` может использоваться как с `mount`, так и с `shallowMount`. Данный метод часто используют при тестировании входящих параметров, который получает компонент от своего родителя.
 
 `propsData` передаётся вторым аргуметов в `shallowMount` или `mount`, в следующем виде:
 
@@ -16,14 +16,14 @@ const wrapper = shallowMount(Foo, {
 
 Добавим новый простенький компонент `<SubmitButton>`, который принимает на вход `msg` and `isAdmin`. В зависимости от `isAdmin` компонент будет содержать `<span>` в одном из двух состояний:
 
-* `Not Authorized`, если `isAdmin` в значении false (или не передан)
-* `Admin Privileges`, если `isAdmin` в значении true
+* `Не авторизован`, если `isAdmin` в значении false (или не передан)
+* `Привилегии администратора`, если `isAdmin` в значении true
 
 ```html
 <template>
   <div>
-    <span v-if="isAdmin">Admin Privileges</span>
-    <span v-else>Not Authorized</span>
+    <span v-if="isAdmin">Привилегии администратора</span>
+    <span v-else>Не авторизован</span>
     <button>
       {{ msg }}
     </button>
@@ -57,8 +57,8 @@ import { shallowMount } from '@vue/test-utils'
 import SubmitButton from '@/components/SubmitButton.vue'
 
 describe('SubmitButton.vue', () => {
-  it("displays a non authorized message", () => {
-    const msg = "submit"
+  it("Отображает сообщение для неавторизованного пользователя", () => {
+    const msg = "Войти"
     const wrapper = shallowMount(SubmitButton,{
       propsData: {
         msg: msg
@@ -67,27 +67,27 @@ describe('SubmitButton.vue', () => {
 
     console.log(wrapper.html())
 
-    expect(wrapper.find("span").text()).toBe("Not Authorized")
-    expect(wrapper.find("button").text()).toBe("submit")
+    expect(wrapper.find("span").text()).toBe("Не авторизован")
+    expect(wrapper.find("button").text()).toBe("Войти")
   })
 })
 ```
 
 Запустим тесты через `yarn test:unit`. Результат будет следующий:
 
-```
+```bash
 PASS  tests/unit/SubmitButton.spec.js
   SubmitButton.vue
-    ✓ displays a non authorized message (15ms)
+    ✓ Отображает сообщение для неавторизованного пользователя (15ms)
 ```
 
 Также выведется результат `console.log(wrapper.html())`
 
 ```html
 <div>
-  <span>Not Authorized</span>
+  <span>Не авторизован</span>
   <button>
-    submit
+    Войти
   </button>
 </div>
 ```
@@ -103,8 +103,8 @@ import { shallowMount } from '@vue/test-utils'
 import SubmitButton from '@/components/SubmitButton.vue'
 
 describe('SubmitButton.vue', () => {
-  it('displays a admin privileges message', () => {
-    const msg = "submit"
+  it('Отображает сообщение для администратора', () => {
+    const msg = "Войти"
     const isAdmin = true
     const wrapper = shallowMount(SubmitButton,{
       propsData: {
@@ -113,8 +113,8 @@ describe('SubmitButton.vue', () => {
       }
     })
 
-    expect(wrapper.find("span").text()).toBe("Admin Privileges")
-    expect(wrapper.find("button").text()).toBe("submit")
+    expect(wrapper.find("span").text()).toBe("Привилегии администратора")
+    expect(wrapper.find("button").text()).toBe("Войти")
   })
 })
 ```
@@ -162,7 +162,7 @@ const factory = (propsData) => {
 Выше приведена функция, которая отрисовывать `SubmitButton` компонент через `shallowMount`. Мы можем передавать любые данные первым аргументом в функцию `factory`. Давайте перепишем тесты, придерживаясь принципа DRY.
 
 ```js
-describe("SubmitButton", () => {
+describe("SubmitButton.vue", () => {
   describe("has admin privileges", ()=> {
     it("renders a message", () => {
       const wrapper = factory()

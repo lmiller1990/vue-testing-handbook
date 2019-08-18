@@ -8,7 +8,7 @@
 const Child = Vue.component("Child", {
   name: "Child",
 
-  template: "<div>Child component</div>"
+  template: "<div>Дочерний компонент</div>"
 })
 
 const Parent = Vue.component("Parent", {
@@ -32,7 +32,7 @@ console.log(mountWrapper.html())
 Оба `mountWrapper.html()` и `shallowWrapper.html()` дают одинаковый результат:
 
 ```html
-<div>Child component</div>
+<div>Дочерний компонент</div>
 ```
 
 Разницы нет. Но что насчёт `Parent`?
@@ -48,7 +48,7 @@ console.log(mountWrapper.html())
 `mountWrapper.html()` теперь выводит:
 
 ```html
-<div><div>Child component</div></div>
+<div><div>Дочерний компонент</div></div>
 ```
 
 Полностью повторяется разметка `Parent` и `Child`. `shallowWrapper.html()` же выводит следующее:
@@ -59,19 +59,19 @@ console.log(mountWrapper.html())
 
 То место, где должен быть `<Child />` теперь занимает `<vuecomponent-stub />`. `shallowMount` отрисовывает обычный html, но заменяет Vue-компоненты на заглушки.
 
-> Под заглушкой(stub) понимают фейковый объект, который помещается вместо настоящего.
+> Под заглушкой(stub) понимают поддельный объект, который помещается вместо настоящего.
 
 Это может быть полезно. Представьте, вы хотите протестировать компонент `App.vue`, который выглядит так:
 
 ```vue
 <template>
   <div>
-    <h1>My Vue App</h1>
+    <h1>Моё Vue-приложение</h1>
     <fetch-data />
   </div>
 </template>
 ```
 
-И мы хотим протестировать, что `<h1>My Vue App</h1>` выводится правильно. У нас также есть компонент `<fetch-data/>`, который делаем запросы к стороннему API в своём `mounted`  хуке.
+И мы хотим протестировать, что `<h1>Моё Vue-приложение</h1>` выводится правильно. У нас также есть компонент `<fetch-data/>`, который делаем запросы к стороннему API в своём `mounted`  хуке.
 
 Если мы используем `mount`, то `<fetch-data/>` сделает запрос к API, хотя мы хотим всего лишь проверить отрисовку текста. Это сделаем наши тесты медленными и неустойчивыми. Поэтому мы применяем заглушки для сторонних зависимостей. Используя `shallowMount`, компонент `<fetch-data/>` заменится на `<vuecomponent-stub />` и запроса к API не произойдёт.

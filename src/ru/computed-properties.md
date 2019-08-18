@@ -19,7 +19,7 @@ import { shallowMount } from "@vue/test-utils"
 import NumberRenderer from "@/components/NumberRenderer.vue"
 
 describe("NumberRenderer", () => {
-  it("renders even numbers", () => {
+  it("выводит чётные числа", () => {
     const wrapper = shallowMount(NumberRenderer, {
       propsData: {
         even: true
@@ -54,8 +54,8 @@ export default {
 
 Теперь можем начинать разработку, пускай ошибки подсказывают нам, что делать. `yarn test:unit` выведет:
 
-```
-● NumberRenderer › renders even numbers
+```bash
+● NumberRenderer › выводит чётные числа
 
   expect(received).toBe(expected) // Object.is equality
 
@@ -93,9 +93,9 @@ computed: {
 
 `yarn test:unit` теперь выводит:
 
-```
+```bash
 FAIL  tests/unit/NumberRenderer.spec.js
-● NumberRenderer › renders even numbers
+● NumberRenderer › выводит чётные числа
 
   expect(received).toBe(expected) // Object.is equality
 
@@ -108,7 +108,7 @@ FAIL  tests/unit/NumberRenderer.spec.js
   ]"
 ```
 
-Цифры правильные, но мы хотим выводить их отформатированными. Давайте обновим значение `return`.
+Числа правильные, но мы хотим выводить их отформатированными. Давайте обновим значение `return`.
 
 ```js
 return evens.join(", ")
@@ -123,7 +123,7 @@ return evens.join(", ")
 Первым делом напишем тест:
 
 ```js
-it("renders odd numbers", () => {
+it("выводит нечётные числа", () => {
   const localThis = { even: false }
 
   expect(NumberRenderer.computed.numbers.call(localThis)).toBe("1, 3, 5, 7, 9")
@@ -134,9 +134,9 @@ it("renders odd numbers", () => {
 
 Запуск текущего теста выведет:
 
-```
+```bash
 FAIL  tests/unit/NumberRenderer.spec.js
-● NumberRenderer › renders odd numbers
+● NumberRenderer › выводит нечётные числа
 
   expect(received).toBe(expected) // Object.is equality
 
@@ -176,7 +176,7 @@ it("renders odd numbers", () => {
 
 Теперь тест падает:
 
-```
+```bash
 FAIL  tests/unit/NumberRenderer.spec.js
 ● NumberRenderer › renders odd numbers
 
@@ -187,7 +187,7 @@ FAIL  tests/unit/NumberRenderer.spec.js
 ```
 `vue` автоматически связывает `props` и `this`. Мы не отрисовываем компонент через `mount`, поэтому Vue не привязывает что-либо к `this`. Если вы сделаете `console.log(this)`, то увидите, что контекст это просто объект `computed`.
 
-```
+```js
 { numbers: [Function: numbers] }
 ```
 
