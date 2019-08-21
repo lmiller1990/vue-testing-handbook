@@ -172,7 +172,7 @@ describe("SubmitButton.vue", () => {
     })
   })
 
-  describe("Есть привилегий администратора", ()=> {
+  describe("Есть привилегии администратора", ()=> {
     it("Выводит верное сообщение", () => {
       const wrapper = factory({ isAdmin: true })
 
