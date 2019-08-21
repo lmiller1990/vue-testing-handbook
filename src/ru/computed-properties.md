@@ -185,7 +185,7 @@ FAIL  tests/unit/NumberRenderer.spec.js
   Expected: "1, 3, 5, 7, 9"
   Received: "2, 4, 6, 8"
 ```
-`vue` автоматически связывает `props` и `this`. Мы не отрисовываем компонент через `mount`, поэтому Vue не привязывает что-либо к `this`. Если вы сделаете `console.log(this)`, то увидите, что контекст это просто объект `computed`.
+`vue` автоматически связывает `props` и `this`. Мы не отрисовываем компонент через `mount`, поэтому Vue не привязывает что-либо к `this`. Если вы сделаете `console.log(this)`, то увидите, что контекст - это просто объект `computed`.
 
 ```js
 { numbers: [Function: numbers] }
