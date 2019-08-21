@@ -281,7 +281,7 @@ describe("beforeEach", () => {
     expect(next).toHaveBeenCalled()
   })
 
-  it("busts the cache when going to /user", () => {
+  it("does not bust the cache when going to /user", () => {
     const to = {
       matched: [{ meta: { shouldBustCache: false } }]
     }
