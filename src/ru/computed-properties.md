@@ -167,7 +167,7 @@ numbers() {
 Теперь оба теста проходят проверку. Но что, если мы не будем использовать `call` во втором тесте? Попробуйте обновить тест вот так:
 
 ```js
-it("renders odd numbers", () => {
+it("выводит нечётные числа", () => {
   const localThis = { even: false }
 
   expect(NumberRenderer.computed.numbers()).toBe("1, 3, 5, 7, 9")
@@ -178,7 +178,7 @@ it("renders odd numbers", () => {
 
 ```bash
 FAIL  tests/unit/NumberRenderer.spec.js
-● NumberRenderer › renders odd numbers
+● NumberRenderer › выводит нечётные числа
 
   expect(received).toBe(expected) // Object.is equality
 

@@ -1,14 +1,15 @@
-## Triggering Events
+## Инициирование событий
 
-One of the most common things your Vue components will be doing is listening for inputs from the user. `vue-test-utils` and Jest make it easy to test inputs. Let's take a look at how to use `trigger` and Jest mocks to verify our components are working correctly.
+Обработка пользовательского ввода – одна из самых распространенных задач во Vue-компонентах. `vue-test-utils` и Jest позволяют с легкостью тестировать ввод данных. Давайте посмотрим, как можно использовать `trigger` и моки Jest, чтобы убедиться в правильности работы компонента.
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/FormSubmitter.spec.js).
+Исходный код для теста можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/FormSubmitter.spec.js).
 
-## Creating the component
+## Создание компонента
 
-We will create a simple form component, `<FormSubmitter>`, that contains an `<input>` and a `<button>`. When the button is clicked, something should happen. The first example will simply reveal a success message, then we will move on to a more interesting example that submits the form to an external endpoint.
+Мы создадим простой компонент с формой `<FormSubmitter>`, содержащий `<input>` и `<button>`. Когда проиходит клик по кнопке, что-то должно произойти. Сначала будем выводить сообщение об успешной отправке формы, затем разберем более интересные примеры, в которых отправка будет происходить к некоторому endpoint.
 
-Create a `<FormSubmitter>` and enter the template:
+
+Создадим `<FormSubmitter>` и добавим следующий шаблон:
 
 ```html
 <template>
@@ -22,15 +23,14 @@ Create a `<FormSubmitter>` and enter the template:
       class="message" 
       v-if="submitted"
     >
-      Thank you for your submission, {{ username }}.
+      Спасибо за ваше сообщение, {{ username }}.
     </div>
   </div>
 </template>
 ```
+Когда пользователь отправляет форму, мы показываем сообщение, в котором благодарим его. Мы хотим отправлять форму асинхронно, для этого используется `@submit.prevent`, который предотвращает обычное поведение формы, а именно обновление страницы после отправления.
 
-When the user submits the form, we will reveal a message thanking them for their submission. We want to submit the form asynchronously, so we are using `@submit.prevent` to prevent the default action, which is to refresh the page when the form is submitted.
-
-Now add the form submission logic:
+Теперь добавим логику для отправки формы:
 
 ```html
 <script>
@@ -53,62 +53,64 @@ Now add the form submission logic:
 </script>
 ```
 
-Pretty simple, we just set `submitted` to be `true` when the form is submitted, which in turn reveals the `<div>` containing the success message.
+Всё достаточно просто, мы устанавливаем `submitted` в значение `true`, когда форма отправлена. После чего появляется `<div>` c благодарственным сообщением. 
 
-## Writing the test
+## Написание теста
 
-Let's see a test:
+Давайте посмотрим на тест:
 
 ```js
 import { shallowMount } from "@vue/test-utils"
 import FormSubmitter from "@/components/FormSubmitter.vue"
 
 describe("FormSubmitter", () => {
-  it("reveals a notification when submitted", () => {
+  it("Показывает сообщение после отправки", () => {
     const wrapper = shallowMount(FormSubmitter)
 
-    wrapper.find("[data-username]").setValue("alice")
+    wrapper.find("[data-username]").setValue("Алиса")
     wrapper.find("form").trigger("submit.prevent")
 
     expect(wrapper.find(".message").text())
-      .toBe("Thank you for your submission, alice.")
+      .toBe("Спасибо за ваше сообщение, Алиса.")
   })
 })
 ```
 
-This test is fairly self explanatory. We `shallowMount` the component, set the username and use the `trigger` method `vue-test-utils` provides to simulate user input. `trigger` works on custom events, as well as events that use modifiers, like `submit.prevent`, `keydown.enter`, and so on.
+Этот тест достаточно понятен. Мы используем `shallowMount` для компонента, устанавливаем имя и применяем `trigger` метод из `vue-test-utils`, который симулирует пользовательский ввод. `trigger` также работает с пользовательскими событиями и с их модификаторами, например `submit.prevent`, `keydown.enter` и так далее.
 
-This test also follows the three steps of unit testing:
+Этот тест также следует 3 этапам юнит-тестирования:
 
-1. arrange (set up for the test. In our case, we render the component).
-2. act (execute actions on the system)
-3. assert (ensure the actual result matches your expectations)
+1. Предусловие(arrange) – подготовка к тестированию. В нашем случае это отрисовка компонента.
+2. Действие(act) – выполнение действий системы
+3. Утверждение(assert) – убеждение в соответствии ожидаемого и полученного результата 
 
-We separate each step with a newline as it makes tests more readable.
+Мы разделили каждый этап пустой строчкой, что делает наши тесты более понятными.
 
-Run this test with `yarn test:unit`. It should pass.
+Запустим тест через `yarn test:unit`. Он должен пройти.
 
-Trigger is very simple - use `find` to get the element you want to simulate some input, and call `trigger` with the name of the event, and any modifiers.
+Триггер достаточно простой – используем `find`, чтобы получить элемент, в котором будем симулировать ввод, затем вызываем `trigger` c названием события и модификатора.
 
-## A real world example
+## Реальный пример
 
-Forms are usually submitted to some endpoint. Let's see how we might test this component with a different implementation of `handleSubmit`. One common practise is to alias your HTTP library to `Vue.prototype.$http`. This allows us to make an ajax request by simply calling `this.$http.get(...)`. Learn more about this practice [here](https://vuejs.org/v2/cookbook/adding-instance-properties.html). 
+Формы обычно отправляют к некому endpoint. Давайте разберемся, как тестировать компонент с разными реализациями `handleSubmit`. Обычной практикой является добавления алиаса `Vue.prototype.$http` для вашей HTTP-библиотеки. Это позволяет нам делать ajax-запросы просто вызывая `this.$http.get(...)`. Подробнее об этом можно почитать [тут](https://ru.vuejs.org/v2/cookbook/adding-instance-properties.html)
 
-Often the http library is, `axios`, a popular HTTP client. In this case, our `handleSubmit` would likely look something like this:
+Чаще всего http-библиотекой является `axios`, популярный HTTP клиент. В этом случае `handleSubmit` выглядел бы примерно так:
+
 
 ```js
 handleSubmitAsync() {
   return this.$http.get("/api/v1/register", { username: this.username })
     .then(() => {
-      // show success message, etc
+      // показывем собщение об успешной отправке
     })
     .catch(() => {
-      // handle error
+      // обрабатываем ошибки
     })
 }
 ```
 
-In this case, one technique is to _mock_ `this.$http` to create the desired testing environment. You can read about the `mocks` mounting option [here](https://vue-test-utils.vuejs.org/api/options.html#mocks). Let's see a mock implemtation of a `http.get` method:
+В этом случае, одним из способов тестирования является _мок_ для `this.$http`, чтобы создать желанную среду для тестирования. Подробнее об опциях `mocks` можно почитать [здесь](https://vue-test-utils.vuejs.org/api/options.html#mocks). Давайте посмотрим на мок реализацию `http.get` метода:
+
 
 ```js
 let url = ''
@@ -125,12 +127,12 @@ const mockHttp = {
 }
 ```
 
-There are a few interesting things going on here:
+Здесь есть несколько интересных вещей:
 
-- we create a `url` and `data` variable to save the `url` and `data` passed to `$http.get`. This is useful to assert the request is hitting the correct endpoint, with correct payload.
-- after assigning the `url` and `data` arguments, we immediately resolve the Promise, to simulate a successful API response.
+- мы создаём переменные `url` и `data`, чтобы сохранить `url` и `data`, переданные в `$http.get`. Это позволяет убедиться в том, что запрос достигает своего endpoint c правильными данными.
+- после присваивания `url` и `data` мы немедленно резолвим промис, тем самым симулируя успешный ответ от API.
 
-Before seeing the test, here is the new `handleSubmitAsync` function:
+Перед тем, как посмотрим на тест, добавим новую функцию `handleSubmitAsync`:
 
 ```js
 methods: {
@@ -140,13 +142,13 @@ methods: {
         this.submitted = true
       })
       .catch((e) => {
-        throw Error("Something went wrong", e)
+        throw Error("Что-то пошло не так", e)
       })
   }
 }
 ```
 
-Also, update `<template>` to use the new `handleSubmitAsync` method:
+Также обновим `<template>`, используя новый метод `handleSubmitAsync` 
 
 ```html
 <template>
@@ -161,11 +163,11 @@ Also, update `<template>` to use the new `handleSubmitAsync` method:
 </template>
 ```
 
-Now, only the test.
+Теперь тестируем.
 
-## Mocking an ajax call
+## Мокаем ajax вызов
 
-First, include the mock implementation of `this.$http` at the top, before the `describe` block:
+Сперва, добавим наверху мок реализацию `this.$http`, прямо перед блоком `describe`:
 
 ```js
 let url = ''
@@ -182,86 +184,87 @@ const mockHttp = {
 }
 ```
 
-Now, add the test, passing the mock `$http` to the `mocks` mounting option:
+Теперь добавим тест, передавая мок `$http` в `mocks` при монтировании:
 
 ```js
-it("reveals a notification when submitted", () => {
+it("Показывает сообщение после отправки", () => {
   const wrapper = shallowMount(FormSubmitter, {
     mocks: {
       $http: mockHttp
     }
   })
 
-  wrapper.find("[data-username]").setValue("alice")
+  wrapper.find("[data-username]").setValue("Алиса")
   wrapper.find("form").trigger("submit.prevent")
 
   expect(wrapper.find(".message").text())
-    .toBe("Thank you for your submission, alice.")
+    .toBe("Спасибо за ваше сообщение, Алиса.")
 })
 ```
 
-Now, instead of using whatever real http library is attached to `Vue.prototype.$http`, the mock implementation will be used instead. This is good - we can control the environment of the test and get consistent results.
+Теперь, вместо того, чтобы использовать реальную http-библиотеку, присвоенную в `Vue.prototype.$http`, будет взята наша мок реализация. Это хорошо тем, что мы может контролировать окружение теста и получать одинаковый результат.
 
-Running `yarn test:unit` actually yields a failing test:
+Запустив `yarn test:unit`, наш тест не пройдёт проверку: 
 
-```sh
+
+```bash
 FAIL  tests/unit/FormSubmitter.spec.js
-  ● FormSubmitter › reveals a notification when submitted
+  ● FormSubmitter › Показывает сообщение после отправки
 
     [vue-test-utils]: find did not return .message, cannot call text() on empty Wrapper
 ```
 
-What is happening is that the test is finishing _before_ the promise returned by `mockHttp` resolves. We can make the test async like this:
+Получилось так, что тест завершился _перед_ тем, как вернулся промис от `mockHttp`. Мы можем сделать наш тест асинхронным следующим способом:
 
 ```js
-it("reveals a notification when submitted", async () => {
+it("Показывает сообщение после отправки", async () => {
   // ...
 })
 ```
 
-However, the test will still finish before the promise resolves. One way to work around this is to use [flush-promises](https://www.npmjs.com/package/flush-promises), a simple Node.js module that will immediately resolve all pending promises. Install it with `yarn add flush-promises`, and update the test as follows:
+Тем не менее, тест всё еще завершается перед тем, как промис зарезолвился. Один из способов решения данной проблемы – это использование [flush-promises](https://www.npmjs.com/package/flush-promises), небольшого Node.js модуля, который немедленно резолвит все промисы в режиме ожидания(pending).
+Уставим модуль, написав `yarn add flush-promises` и обновим наш тест следующим образом:
 
 ```js
 import flushPromises from "flush-promises"
 // ...
 
-it("reveals a notification when submitted", async () => {
+it("Показывает сообщение после отправки", async () => {
   const wrapper = shallowMount(FormSubmitter, {
     mocks: {
       $http: mockHttp
     }
   })
 
-  wrapper.find("[data-username]").setValue("alice")
+  wrapper.find("[data-username]").setValue("Алиса")
   wrapper.find("form").trigger("submit.prevent")
 
   await flushPromises()
 
   expect(wrapper.find(".message").text())
-    .toBe("Thank you for your submission, alice.")
+    .toBe("Спасибо за ваше сообщение, Алиса.")
 })
 ```
 
-Now the test passes. The source code for `flush-promises` is only about 10 lines long, if you are interested in Node.js it is worth reading and understanding how it works.
+Теперь тест проходит проверку. Исходный код `flush-promises` занимает около 10 строчек, если вам интересен Node.js, то обязательно ознакомьтесь с тем, как это работает.
 
-We should also make sure the endpoint and payload are correct. Add two more assertions to the test:
+Нам также нужно убедиться, что endpoint и переданные данные переданый правильно. Добавим еще две проверки в тест:
 
 ```js
 // ...
 expect(url).toBe("/api/v1/register")
-expect(data).toEqual({ username: "alice" })
+expect(data).toEqual({ username: "Алиса" })
 ```
 
-The test still passes.
+Тест все еще проходит проверки.
 
-## Conclusion
+## Заключение
 
-In this section, we saw how to:
+В этой секции, мы научились как:
+- использовать `trigger` для событий, даже если используются такие модификаторы, как `prevent`
+- использовать `setValue`, чтобы устанавливать значение для `<input>`, который используют `v-model`
+- писать тесты, придерживаясь трех ступеней юнит-тестирования
+- мокать методы из `Vue.prototype`, используя `mocks` при монтировании
+- использовать `flush-promises`, чтобы немедленно резолвить все промисы в режиме ожидания. Полезная техника в юнит-тестировании
 
-- use `trigger` on events, even ones that use modifiers like `prevent`
-- use `setValue` to set a value of an `<input>` using `v-model`
-- write tests using the three steps of unit testing
-- mock a method attached to `Vue.prototype` using the `mocks` mounting option
-- how to use `flush-promises` to immediately resolve all promises, a useful technique in unit testing
-
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/FormSubmitter.spec.js).
+Исходный код для тестов на этой страниц можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/FormSubmitter.spec.js).
