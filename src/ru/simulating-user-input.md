@@ -101,7 +101,7 @@ describe("FormSubmitter", () => {
 handleSubmitAsync() {
   return this.$http.get("/api/v1/register", { username: this.username })
     .then(() => {
-      // показывем собщение об успешной отправке
+      // показываем собщение об успешной отправке
     })
     .catch(() => {
       // обрабатываем ошибки

@@ -1,14 +1,14 @@
-## Testing Emitted Events
+## Тестирования пользовательских событий
 
-As applications grow larger, the number of components grows as well. When these components need to share data, child components can [emit](https://vuejs.org/v2/api/#vm-emit) an event, and the parent component responds.
+С ростом приложения растёт количество компонентов. Когда им нужно общаться между собой, дочерний компонент может [породить событие](https://ru.vuejs.org/v2/api/index.html#vm-emit), а родитель ответить на него.
 
-`vue-test-utils` provides an `emitted` API which allows us to make assertions on emitted events. The documentation for `emitted` is found [here](https://vue-test-utils.vuejs.org/api/wrapper/emitted.html).
+`vue-test-utils` предоставляет `emitted` API, который позволит нам сделать проверку на пользовательские события. Документацию для `emitted` можно найти [здесь](https://vue-test-utils.vuejs.org/ru/api/wrapper/emitted.html).
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Emitter.spec.js).
+Исходный код для тестов на этой странице можно взять [тут](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Emitter.spec.js).
 
-## Write a Component and Test
+## Написание компонента и теста к нему
 
-Let's build a simple component. Create an `<Emitter>` component, and add the following code.
+Давайте сделаем простой компонент. Назовём его `<Emitter>` и добавим следующий код:
 
 ```html
 <template>
@@ -32,14 +32,14 @@ Let's build a simple component. Create an `<Emitter>` component, and add the fol
 </style>
 ```
 
-Add a test called `emitEvent`:
+Тест назовём `emitEvent`:
 
 ```js
 import Emitter from "@/components/Emitter.vue"
 import { shallowMount } from "@vue/test-utils"
 
 describe("Emitter", () => {
-  it("emits an event with two arguments", () => {
+  it("Порождает события с двумя аргументами", () => {
     const wrapper = shallowMount(Emitter)
 
     wrapper.vm.emitEvent()
@@ -48,11 +48,12 @@ describe("Emitter", () => {
   })
 })
 ```
-Using the [emitted API](https://vue-test-utils.vuejs.org/ja/api/wrapper/emitted.html) provided by `vue-test-utils`, we can easily see the emitted events.
 
-Run the test with `yarn test:unit`.
+Используя [emitted API](https://vue-test-utils.vuejs.org/ru/api/wrapper/emitted.html), предоставленный нам `vue-test-utils`, мы можем с легкостью посмотреть все порожденные события.
 
-```
+Запустим тест, написав `yarn test:unit`.
+
+```bash
 PASS  tests/unit/Emitter.spec.js
 ● Console
 
@@ -60,18 +61,18 @@ PASS  tests/unit/Emitter.spec.js
     { myEvent: [ [ 'name', 'password' ] ] }
 ```
 
-## emitted syntax
+## Синтаксис emmited
 
-`emitted` returns an object. The emitted events are saved as properties on the object. You can inspect the events using `emitted().[event]`:
+`emitted` возвращает объект. Порожденные события сохраняются как свойства объекта. Вы можете проверять события, используя `emitted().[event]`:
 
 ```js
 emitted().myEvent //=>  [ [ 'name', 'password' ] ]
 ```
 
-Let's try calling `emitEvent` twice.
+Давайте попробуем вызвать `emitEvent` дважды:
 
 ```js
-it("emits an event with two arguments", () => {
+it("Порождает события с двумя аргументами", () => {
   const wrapper = shallowMount(Emitter)
 
   wrapper.vm.emitEvent()
@@ -81,20 +82,19 @@ it("emits an event with two arguments", () => {
 })
 ```
 
-Run the test with `yarn test:unit`:
+Запустим тест, написав `yarn test:unit`.
 
-```
+```bash
 console.log tests/unit/Emitter.spec.js:11
   [ [ 'name', 'password' ], [ 'name', 'password' ] ]
 ```
 
-`emitted().emitEvent` returns an array. The first instance of `emitEvent` is accessible using with `emitted().emitEvent[0]`. The arguments are accessible using a similar syntax, `emitted().emitEvent[0][0]` and so forth. 
+`emitted().emitEvent` возвращает массив. Первый экземпляр `emitEvent` можно достать через `emitted().emitEvent[0]`. Аргументы получают похожим синтаксисом: `emitted().emitEvent[0][0]` и так далее.
 
-Let's make an actual assertion against the emitted event.
-
+Давайте сделаем реальную проверку для порожденных событий:
 
 ```js
-it("emits an event with two arguments", () => {
+it("Порождает события с двумя аргументами", () => {
   const wrapper = shallowMount(Emitter)
 
   wrapper.vm.emitEvent()
@@ -103,14 +103,14 @@ it("emits an event with two arguments", () => {
 })
 ```
 
-The test passes.
+Тест проходит проверку.
 
-## Testing events without mounting the component
+## Тестирование события без монтирования компонента
 
-Some times you might want to test emitted events without actually mounting the component. You can do this by using `call`. Let's write another test.
+Иногда может потребоваться протестировать пользовательские события без монтирования компонента. Этого можно достичь, используя `call`. Давайте напишем ещё один тест.
 
 ```js
-it("emits an event without mounting the component", () => {
+it("Порождает события без монтирования компонента", () => {
   const events = {}
   const $emit = (event, ...args) => { events[event] = [...args] }
 
@@ -120,16 +120,17 @@ it("emits an event without mounting the component", () => {
 })
 ```
 
-Since `$emit` is just a JavaScript object, you can mock `$emit`, and by using `call` to attach it to the `this` context of `emitEvent`. By using `call`, you can call a method without mounting the component. 
+Так как `$emit` – обычный JavaScript объект, мы может замокать `$emit` и использовать `call`, чтобы прикрепить его к контексту `this` из `emitEvent`. Используя `call`, вы также можете вызывать методы без монтирования компонента.
 
-Using `call` can be useful in situations where you have some heavy processing in lifecycle methods like `created` and `mounted` that you don't want to execute. Since you don't mount the component, the lifecycle methods are never called. It can also be useful when you want to manipulate the `this` context in a specific manner.
+Использовать `call` может быть полезно в ситуациях, где есть несколько тяжелых функций в хуках жизненного цикла `created` или `mounted`, и вы не хотите их выполнять. Так как вы не монтируете компонент, функции из хуков никогда не выполнятся. 
+Также `call` полезен при манипулировании контекстом `this`.
 
-## Conclusion
+## Заключение
 
-- the `emitted` API from `vue-test-utils` is used to make assertions against emitted events
-- `emitted` is a method. It returns an object with properties corresponding to the emitted events
-- each property of `emitted` is an array. You can access each instance of an emitted event by using the `[0]`, `[1]` array syntax
-- the arguments of emitted events are also saved as arrays, and can accessed using the `[0]`, `[1]` array syntax
-- `$emit` can be mocked using `call`, assertions can be made without rendering the component
+- `emitted` API из `vue-test-utils` используется, чтобы проверять пользовательские события
+- `emitted` это метод, который возвращает объект, у которого в свойствах находятся порожденные события.
+- каждое свойство из `emitted` является массивом. Чтобы достать экземляр пользовательских событий, можно использовать синтаксис массивов `[0]`, `[1]`.
+- аргументы для пользовательских событий также сохраняются в виде массивов, который можно взять используя `[0]`, `[1]`.
+- `$emit` можно замокать, используя `call`. Проверки можно делать без монтирования компонента.
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Emitter.spec.js).
+Исходный код для тестов на этой странице можно взять [тут](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Emitter.spec.js).
