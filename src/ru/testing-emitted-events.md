@@ -94,7 +94,7 @@ console.log tests/unit/Emitter.spec.js:11
 Давайте сделаем реальную проверку для порожденных событий:
 
 ```js
-it("Порождает события с двумя аргументами", () => {
+it("Порождает событие с двумя аргументами", () => {
   const wrapper = shallowMount(Emitter)
 
   wrapper.vm.emitEvent()
