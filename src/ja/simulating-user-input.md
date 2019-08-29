@@ -203,7 +203,7 @@ it("フォームを更新するとお知らせを表示", () => {
 
 こうすると、`Vue.prototype.$http`の本当のAJAXライブラリーを使う代わりに、モックを使います。これがいいことです。テスト環境を簡単に扱います。
 
-`yarn test:unit`を実行すると、テストが失敗すます。
+`yarn test:unit`を実行すると、テストが失敗します。
 
 ```sh
 FAIL  tests/unit/FormSubmitter.spec.js
