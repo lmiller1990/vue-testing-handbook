@@ -39,7 +39,7 @@ import Emitter from "@/components/Emitter.vue"
 import { shallowMount } from "@vue/test-utils"
 
 describe("Emitter", () => {
-  it("Порождает события с двумя аргументами", () => {
+  it("Порождает событие с двумя аргументами", () => {
     const wrapper = shallowMount(Emitter)
 
     wrapper.vm.emitEvent()
