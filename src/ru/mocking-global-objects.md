@@ -1,24 +1,24 @@
-## Mocking global objects
+## Мокаем глобальные объекты
 
-`vue-test-utils` provides a simple way to mock global objects attached to `Vue.prototype`, both on test by test basis and to set a default mock for all tests.
+`vue-test-utils` позволяет с легкостью мокать глобальные объекты, прикрепленные к `Vue.prototype` внутри теста, а также устанавливать стандартные значения мока для всех тестов.
 
-The test used in the following example can be found [here](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app/tests/unit/Bilingual.spec.js).
+Тест, использованный в последующем примере можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app/tests/unit/Bilingual.spec.js).
 
-## The mocks mounting option
+## Моки опции монтирования
 
-The [mocks mounting option](https://vue-test-utils.vuejs.org/api/options.html#mocks) is one way to set the value of any properties attached to `Vue.prototype`. This commonly includes:
+Один из способов установить значение любого свойства из `Vue.prototype` – использовать [моки опции монтирования](https://vue-test-utils.vuejs.org/ru/api/options.html#mocks). Обычно прототип включает в себя:
+- `$store`, для Vuex
+- `$router`, для Vue Router
+- `$t`, для vue-i18n
 
-- `$store`, for Vuex
-- `$router`, for Vue Router
-- `$t`, for vue-i18n
+и множество других.
 
-and many others.
 
-## Example with vue-i18n
+## Пример с vue-i18n
 
-Use with Vuex and Vue Router are discussed in the respective sections, [here](https://lmiller1990.github.io/vue-testing-handbook/vuex-in-components.html) and [here](https://lmiller1990.github.io/vue-testing-handbook/vue-router.html). Let's see an example with [vue-i18n](https://github.com/kazupon/vue-i18n). While it would be possible to use `createLocalVue` and install `vue-i18n` for each test, that would quickly get cumbersome and introduce a lot of boilerplate. First, a `<Bilingual>` component that uses `vue-i18n`:
+Примеры использования с Vuex и Vue Router описаны в соответствующих секциях: [тут](https://lmiller1990.github.io/vue-testing-handbook/ru/vuex-in-components.html#testing-vuex-in-components) и [тут](https://lmiller1990.github.io/vue-testing-handbook/ru/vue-router.html#vue-router). Давайте посмотрим на пример с [vue-i18n](https://github.com/kazupon/vue-i18n). Использовать `createLocalVue` и устанавливать `vue-i18n` для каждого теста быстро надоест, а код будет шаблонный. Сперва сделаем компонент `<Bilingual>`, который использует `vue-i18n`:
 
-```html
+```vue
 <template>
   <div class="hello">
     {{ $t("helloWorld") }}
@@ -32,7 +32,7 @@ Use with Vuex and Vue Router are discussed in the respective sections, [here](ht
 </script>
 ```
 
-The way `vue-i18n` works is you declare your translation in another file, then reference them with `$t`. For the purpose of this test it doesn't really matter what the translation file looks like, but for this component it could look like this:
+`vue-i18n` работает следующим образом: вы пишите переводы в другом файле, а затем обращаетесь к ним через `$t`. Для данного теста не важно как выглядит файл с переводом, пусть будет примерно такой: 
 
 ```js
 export default {
@@ -45,33 +45,33 @@ export default {
 }
 ```
 
-Based on the locale, the correct translation is rendered. Let's try and render the component in a test, without any mocking.
+Основываясь на локали будет отрисовываться правильный перевод. Давайте попробуем отрендерить компонент, не используя моков в тесте.
 
 ```js
 import { shallowMount } from "@vue/test-utils"
 import Bilingual from "@/components/Bilingual.vue"
 
 describe("Bilingual", () => {
-  it("renders successfully", () => {
+  it("Успешно отрисовывается", () => {
     const wrapper = shallowMount(Bilingual)
   })
 })
 ```
 
-Running this test with `yarn test:unit` throws a huge stack trace. If you look through the output carefully, you can see:
+Запуск тестов через `yarn test:unit` выдаст нам огромную трассировку стека. Если посмотреть внимательно, вы увидите:
 
-```
+```bash
 [Vue warn]: Error in config.errorHandler: "TypeError: _vm.$t is not a function"
 ```
 
-This is because we did not install `vue-i18n`, so the global `$t` method does not exist. Let's mock it using the `mocks` mounting option:
+Это потому что мы не установили `vue-i18n`, поэтому глобального метода `$t` не существует. Давайте замокаем его, используя опцию монтирования `mocks`.
 
 ```js
 import { shallowMount } from "@vue/test-utils"
 import Bilingual from "@/components/Bilingual.vue"
 
 describe("Bilingual", () => {
-  it("renders successfully", () => {
+  it("Успешно отрисовывается", () => {
     const wrapper = shallowMount(Bilingual, {
       mocks: {
         $t: (msg) => msg
@@ -81,19 +81,19 @@ describe("Bilingual", () => {
 })
 ```
 
-Now the test passes! There are lots of uses for the `mocks` option. Most frequently I find myself mocking the global objects provided by the three packages mentioned above.
+Теперь тест проходит проверку! Есть еще много примеров использования опции `mocks`. Чаще всего я использую её для моков глобальных объектов, описаных выше.
 
-## Settings default mocks using config
+## Уставновка стандартных моков, используя конфигуации
 
-Sometimes you want to have a default value for the mock, so you don't create it on a test by test basis. You can do this using the [config](https://vue-test-utils.vuejs.org/api/#vue-test-utils-config-options) API provided by `vue-test-utils`. Let's expand the `vue-i18n` example. You can set default mocks anywhere by doing the following:
+Иногда вам может понадобиться стандартное значение для мока, в таком случае не придется создавать его для каждого теста. Вы можете сделать это, используя [конфигурацию](https://vue-test-utils.vuejs.org/ru/api/#%D0%BA%D0%BE%D0%BD%D1%84%D0%B8%D0%B3%D1%83%D1%80%D0%B0%D1%86%D0%B8%D1%8F) из `vue-test-utils`. Давайте расширим нам пример с `vue-i18n`. Вы можете устаналивать стандартные моки где угодно, сделав следующее:
 
 ```js
 import VueTestUtils from "@vue/test-utils"
 
-VueTestUtils.config.mocks["mock"] = "Default Mock Value"
+VueTestUtils.config.mocks["mock"] = "Стандартное значение мока"
 ```
 
-The demo project for this guide is using Jest, so I will declare the default mock in `jest.init.js`, which is loaded before the tests are run automatically. I will also import the example translations object from earlier, and use it in the mock implementation.
+Демо проект для этого руководства использует Jest, поэтому я установлю стандартные моки в `jest.init.js`, который подгружается перед запуском тестов. Я также импортирую объект с переводом, который мы делали ранее, и использую его для реализации мока.
 
 ```js
 import VueTestUtils from "@vue/test-utils"
@@ -104,31 +104,30 @@ const locale = "en"
 VueTestUtils.config.mocks["$t"] = (msg) => translations[locale][msg]
 ```
 
-Now a real translation will be rendered, despite using a mocked `$t` function. Run the test again, this time using `console.log` on `wrapper.html()` and removing the `mocks` mounting option:
+Теперь отрисуется настоящий перевод, несмотря на использования мока для функции `$t`. Запустит тест еще раз, используя в этот раз `console.log` на `wrapper.html()`, а также уберем `mocks` из опции монтирования.
 
 ```js
 describe("Bilingual", () => {
-  it("renders successfully", () => {
+  it("Успешно отрисовывается", () => {
     const wrapper = shallowMount(Bilingual)
 
     console.log(wrapper.html())
   })
 })
 ```
+Тест проходит проверку и отрисовывает следующую разметку:
 
-The test passes, and the following markup is rendered:
-
-```
+```html
 <div class="hello">
   Hello world!
 </div>
 ```
 
-You can read about using `mocks` to test Vuex [here](https://lmiller1990.github.io/vue-testing-handbook/vuex-in-components.html#using-a-mock-store). The technique is the same.
+Как использовать `mocks` при тестирования Vuex можно прочитать [здесь](https://lmiller1990.github.io/vue-testing-handbook/ru/vuex-in-components.html#testing-vuex-in-components). Техника одна и таже.
 
-## Conclusion
+## Заключение
 
-This guide discussed:
+В этом руководстве обсудили:
 
-- using `mocks` to mock a global object on a test by test basis
-- using `config.mocks` to set a default mock 
+- как использовать `mocks` для моков глобальных объектов внутри тестов
+- как использовать `config.mocks` для установки стандартных значений для мока
