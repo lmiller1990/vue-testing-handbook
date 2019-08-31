@@ -11,7 +11,7 @@
 
 Создадим `<FormSubmitter>` и добавим следующий шаблон:
 
-```html
+```vue
 <template>
   <div>
     <form @submit.prevent="handleSubmit">
@@ -32,7 +32,7 @@
 
 Теперь добавим логику для отправки формы:
 
-```html
+```vue
 <script>
   export default {
     name: "FormSubmitter",
@@ -150,7 +150,7 @@ methods: {
 
 Также обновим `<template>`, используя новый метод `handleSubmitAsync` 
 
-```html
+```vue
 <template>
   <div>
     <form @submit.prevent="handleSubmitAsync">

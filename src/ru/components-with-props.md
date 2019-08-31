@@ -19,7 +19,7 @@ const wrapper = shallowMount(Foo, {
 * `Не авторизован`, если `isAdmin` в значении false (или не передан)
 * `Привилегии администратора`, если `isAdmin` в значении true
 
-```html
+```vue
 <template>
   <div>
     <span v-if="isAdmin">Привилегии администратора</span>
