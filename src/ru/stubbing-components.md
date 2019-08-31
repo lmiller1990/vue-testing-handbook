@@ -1,18 +1,18 @@
-## Stubbing components
+## Заглушки для компонентов
 
-You can find the test described on this page [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ParentWithAPICallChild.spec.js).
+Тест, описанный на этой странице, можно найти найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ParentWithAPICallChild.spec.js).
 
-## Why stub?
+## Зачем нужны заглушки?
 
-When writing unit tests, often we want to _stub_ parts of the code we are not interested in. A stub is simply a piece of code that stands in for another. Let's say you are writing a test for a `<UserContainer>` component. It looks like this:
+При написании юнит тестов, мы зачастую хотим использовать _заглушку_ для части кода, которая нам не интересна. Обычно под заглушкой понимают небольшой код, который помещается вместо настоящего. Представим, что вы пишите тест для компонента `<UserContainer>`, который выглядит так:
 
-```html
+```vue
 <UserContainer>
   <UsersDisplay />
 </UserContainer>
 ```
 
-`<UsersDisplay>` has a `created` lifecycle method like this:
+У `<UsersDisplay>` есть хук жизненного цикла `created`:
 
 ```js
 created() {
@@ -20,17 +20,17 @@ created() {
 }
 ```
 
-We want to write a test that asserts `<UsersDisplay>` is rendered. 
+Мы хотим написать тест, который проверяет, что `<UsersDisplay>` отрисовался.
 
-`axios` is making an ajax request to an external service in the `created` hook. That means when you do `mount(UserContainer)`, `<UsersDisplay>` is also mounted, and `created` initiates an ajax request. Since this is a unit test, we only are interested in whether `<UserContainer>` correctly renders `<UsersDisplay>` - verifying the ajax request is triggered with the correct endpoint, etc, is the responsibility of `<UsersDisplay>`, which should be tested in the `<UsersDisplay>` test file.
+В хуке `created` `axios` делает ajax-запрос к внешнему сервису . Это значит, что когда вы делаете `mount(UserContainer)`, `<UsersDisplay>` также монтируется и в хуке `created`  выполняется ajax-запрос. Так как это юнит тест, мы должны тестировать только то, что `<UserContainer>` правильно отрисовывает `<UsersDisplay>`. Проверка, что ajax-запрос выполняется с правильным endpoint и т.д. – это задача `<UsersDisplay>`, которая должна быть протестирована в файле для `<UsersDisplay>`.
 
-One way to prevent the `<UsersDisplay>` from initiating the ajax request is by _stubbing_ the component out. Let's write our own components and test, to get a better understanding of the different ways and benefits of using stubs.
+Одним из способов предотвратить вызов ajax-запроса в `<UsersDisplay>` – использовать _заглушку_ для компонента. Давайте напишем наш собственный компонент и тест к нему, чтобы лучше понять способы использования заглушек и пользу от них.
 
-## Creating the components
+## Создание компонента
 
-This example will use two components. The first is `ParentWithAPICallChild`, which simply renders another component:
+В этом примере будем использовать два компонента. Первый это `ParentWithAPICallChild`, который просто отрисовывает другой компонент.
 
-```html
+```vue
 <template>
   <ComponentWithAsyncCall />
 </template>
@@ -48,9 +48,9 @@ export default {
 </script>
 ```
 
-`<ParentWithAPICallChild>` is a simple component. It's sole responsibility is to render `<ComponentWithAsyncCall>`. `<ComponentWithAsyncCall>`, as the name suggests, makes an ajax call using the `axios` http client:
+`<ParentWithAPICallChild>` – простой компонент, который отвечает только за отрисовку `<ComponentWithAsyncCall>`. `<ComponentWithAsyncCall>`, как следует из названия, делает ajax-запрос, используя http-клиент `axios`.
 
-```html
+```vue
 <template>
   <div></div>
 </template>
@@ -67,7 +67,7 @@ export default {
   
   methods: {
     async makeApiCall() {
-      console.log("Making api call")
+      console.log("Делаю запрос к API")
       await axios.get("https://jsonplaceholder.typicode.com/posts/1")
     }
   }
@@ -75,11 +75,11 @@ export default {
 </script>
 ```
 
-`<ComponentWithAsyncCall>` calls `makeApiCall` in the `created` lifecycle hook.
+`<ComponentWithAsyncCall>` вызывает `makeApiCall` в своём хуке жизненного цикла `created`.
 
-## Write a test using `mount`
+## Написание теста, используя `mount`
 
-Let's start off by writing a test to verify that `<ComponentWithAsyncCall>` is rendered:
+Давайте начнем с написания теста, в котором проверим, что `<ComponentWithAsyncCall>` отрисовался:
 
 ```js
 import { shallowMount, mount } from '@vue/test-utils'
@@ -87,7 +87,7 @@ import ParentWithAPICallChild from '@/components/ParentWithAPICallChild.vue'
 import ComponentWithAsyncCall from '@/components/ComponentWithAsyncCall.vue'
 
 describe('ParentWithAPICallChild.vue', () => {
-  it('renders with mount and does initialize API call', () => {
+  it('отрисовывается с помощью mount и делает вызов API', () => {
     const wrapper = mount(ParentWithAPICallChild)
 
     expect(wrapper.find(ComponentWithAsyncCall).exists()).toBe(true)
@@ -95,23 +95,23 @@ describe('ParentWithAPICallChild.vue', () => {
 })
 ```
 
-Running `yarn test:unit` yields:
+Запуск `yarn test:unit` выведет:
 
-```
+```bash
 PASS  tests/unit/ParentWithAPICallChild.spec.js
 
 console.log src/components/ComponentWithAsyncCall.vue:17
-  Making api call
+  Делаю запрос к API
 ```
 
-The test is passing - great! However, we can do better. Notice the `console.log` in the test output - this comes from the `makeApiCall` method. Ideally we don't want to make calls to external services in our unit tests, especially when it's from a component that is not the main focus of the current test. We can use the `stubs` mounting option, described in the `vue-test-utils` docs [here](https://vue-test-utils.vuejs.org/api/options.html#stubs).
+Тест прошел проверку – отлично! Тем не менее, мы можем сделать лучше. Как вы заметили, в тесте `console.log` вызывается из метода `makeApiCall`. В идеале, мы не хотим делать вызовы к стронним сервисам в наших юнит тестах, особенно когда они происходят в компоненте, который мы не тестируем. Мы можем использовать `stubs` в опции монтирования, как описано в [документации](https://vue-test-utils.vuejs.org/ru/api/options.html#stubs) `vue-test-utils`.
 
-## Using `stubs` to stub `<ComponentWithAsyncCall>`
+## Использования `stubs` для заглушки `<ComponentWithAsyncCall>`
 
-Let's update the test, this time stubbing `<ComponentWithAsyncCall>`:
+Давайте обновим тест, используя в этот раз заглушку для `<ComponentWithAsyncCall>`:
 
 ```js
-it('renders with mount and does initialize API call', () => {
+it('отрисовывается с помощью mount и делает вызов API', () => {
   const wrapper = mount(ParentWithAPICallChild, {
     stubs: {
       ComponentWithAsyncCall: true
@@ -122,9 +122,9 @@ it('renders with mount and does initialize API call', () => {
 })
 ```
 
-The test still passes when `yarn test:unit` is run, however the `console.log` is nowhere to be seen. That's because passing `[component]: true` to `stubs` replaced the original component with a _stub_. The external interface is still the same (we can still select is using `find`, since the `name` property, which is used internally by `find`, is still the same). The internal methods, such as `makeApiCall`, are replaced by dummy methods that don't do anything - they are "stubbed out".
+Тест все еще проходит проверку, если напишем `yarn test:unit`. Однако `console.log` больше не выводится. Это потому что передавая `[component]: true` в `stubs`, мы заменяем настоящий компонент _заглушкой_. Внешний интерфейс остался прежним (мы все также можем выбирать что-либо через `find`, так как свойство `name`, которое используется внутри `find`, осталось таким же). Внутренние методы, такие как `makeApiCall`, заменились на подставные, которые ничего не делают – они заглушились.
 
-You can also specify the markup to use for the stub, if you like:
+Вы также можете указать разметку, которая используется для заглушки, например:
 
 ```js
 const wrapper = mount(ParentWithAPICallChild, {
@@ -134,24 +134,25 @@ const wrapper = mount(ParentWithAPICallChild, {
 })
 ```
 
-## Automatically stubbing with `shallowMount`
+## Автоматические заглушки с помощью `shallowMount`
 
-Instead of using `mount` and manually stubbing `<ComponentWithAsyncCall>`, we can simply use `shallowMount`, which automatically stubs any other components by default. The test with `shallowMount` looks like this:
+Вместо того, чтобы использовать `mount` и вручную делать заглушку для `<ComponentWithAsyncCall>`, мы можем просто использовать `shallowMount`, который по умолчанию автоматически подставляет заглушки для других компонентов. Тест с `shallowMount` выглядит так:
 
 ```js
-it('renders with shallowMount and does not initialize API call', () => {
+it('отрисовывается с помощью mount и делает вызов API', () => {
   const wrapper = shallowMount(ParentWithAPICallChild)
 
   expect(wrapper.find(ComponentWithAsyncCall).exists()).toBe(true)
 })
 ```
 
-Running `yarn test:unit` doesn't show any `console.log`, and test passes. `shallowMount` automatically stubbed `<ComponentWithAsyncCall>`. `shallowMount` is useful for testing components that have a lot of child components, that might have behavior triggered in lifecycle hooks such as `created` or `mounted`, as so on. I tend to use `shallowMount` by default, unless I have a good reason to use `mount`. It depends on your use case, and what you are testing.
+Запуск `yarn test:unit` не выводит никаких `console.log`, а тесты проходят проверку. `shallowMount` автоматически подставил заглушку для `<ComponentWithAsyncCall>`. `shallowMount` полезен при тестировании компонентов, у которых много дочерних компонентов с различной логикой внутри хуков жизненного цикла `created`, `mounted` и т.д. Я, как правило, по умолчанию использую `shallowMount`, если у меня нет весомых причин использовать `mount`. Всё зависит от случая и того, что вы тестируете.
 
-## Conclusion
+## Заключение
 
-- `stubs` is useful for stubbing out the behavior of children that is unrelated to the current unit test
-- `shallowMount` stubs out child components by default
-- you can pass `true` to create a default stub, or pass your own custom implementation
+- `stubs` полезен, когда нужно использовать заглушки для логики дочерних компонентов, который не принадлежат текущему юнит тесту.
+- `shallowMount` по умолчанию подставляет заглушки для дочерних компонентов
+- вы можете передать `true`, чтобы создать стандартную заглушку или передать собственную реализацию
 
-You can find the test described on this page [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ParentWithAPICallChild.spec.js).
+
+Тест, описанный на этой странице, можно найти найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ParentWithAPICallChild.spec.js).
