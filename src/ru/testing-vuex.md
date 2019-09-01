@@ -1,17 +1,17 @@
-## Testing Vuex
+## Тестирование Vuex
 
-The next few guides discuss testing Vuex.
+В следующих статьях обсудим как тестировать Vuex. 
 
-## Two Sides of Testing Vuex
+## Две стороны тестирования Vuex
 
-Generally components will interact with Vuex by
+Обычно компоненты взаимодействую с Vuex так:
 
-1. committing a mutation
-2. dispatching an action
-3. access the state via `$store.state` or getters
+1. вызываем мутацию через commit
+2. запускаем действия через dispatch
+3. обращаемся к хранилищу через `$store.state` или геттеры
 
-These tests are to assert that the component behaves correctly based on the current state of the Vuex store. They do not need to know about the implementation of the mutators, actions or getters.
+В тестах проверяется, что компонент ведет себя правильно при текущем состоянии хранилища Vuex. Они не должны знать о реализациях мутаций, действий, геттеров.
 
-Any logic performed by the store, such as mutations and getters, can be tested in isolation. Since Vuex stores are comprised of regular JavaScript functions, they are easily unit tested.
+Любая логика хранилища, мутация или геттеров должна тестировать в изоляции. Для Vuex достаточно просто писать юнит тесты, так как он хранит в себе простые JavaScript функции.
 
-The next guide introduces some techniques to test components that use a Vuex store, and ensure they behave correctly based on the store's state. Later guides discuss testing Vuex in isolation.
+В следующей статье разберем некоторые техники тестирования компонентов с использованием Vuex, убедимся, что их поведение зависит от состояния хранилища. Чуть позже обсудим тестирование Vuex в изоляции.
