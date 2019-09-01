@@ -1,15 +1,15 @@
-## Mocking Modules
+## Мокаем модули
 
-Not directly related to Vue testing, more specific to Jest. Jest is used heavily throughout this handbook, though, and becoming widely adopted in the industry, so I think it deserves a section.
+Не совсем про Vue тестирование, больше направлено на Jest. Jest много применяется на протяжении всего руководства, становится популярнее в индустрии, поэтому я считаю, он заслужил отдельной секции.
 
-Some ideas:
+Некоторые идеи:
 
-1. reference the sections of the existing guide using Jest
-2. Talk about the different kind of mocks and their use cases for Vue testing
+1. Ссылки на секции руководства, где применяется Jest
+2. Поговорить о различных видах мок и их применении во Vue тестировании
 
-- Manual mocks
-- ES6 class mocks
-- automatic mock
-- calling `mockImplentation`?
+- создаваемые вручную моки
+- моки для ES6 классов
+- автоматические моки
+- вызов `mockImplentation`?
 
-Ref: https://jestjs.io/docs/en/es6-class-mocks#the-4-ways-to-create-an-es6-class-mock
+Источник: https://jestjs.io/docs/en/es6-class-mocks#the-4-ways-to-create-an-es6-class-mock
