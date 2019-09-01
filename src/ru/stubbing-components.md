@@ -106,7 +106,7 @@ console.log src/components/ComponentWithAsyncCall.vue:17
 
 Тест прошел проверку – отлично! Тем не менее, мы можем сделать лучше. Как вы заметили, в тесте `console.log` вызывается из метода `makeApiCall`. В идеале, мы не хотим делать вызовы к стронним сервисам в наших юнит тестах, особенно когда они происходят в компоненте, который мы не тестируем. Мы можем использовать `stubs` в опции монтирования, как описано в [документации](https://vue-test-utils.vuejs.org/ru/api/options.html#stubs) `vue-test-utils`.
 
-## Использования `stubs` для заглушки `<ComponentWithAsyncCall>`
+## Использование `stubs` для заглушки `<ComponentWithAsyncCall>`
 
 Давайте обновим тест, используя в этот раз заглушку для `<ComponentWithAsyncCall>`:
 

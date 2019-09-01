@@ -1,18 +1,18 @@
-## Finding Elements
+## Поиск элементов
 
-`vue-test-utils` provides a number of ways to find and assert the presence of html elements or other Vue components using the `find` method. The main use of `find` is asserting a component correctly renders an element or child component.
+`vue-test-utils` даёт возможность находить и проверять html-элементы или другие Vue-компоненты разными способами, используя метод `find`. Основной задачей `find` является проверка, что компонент правильно отрисовывает элемент или дочерений компонент.
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Parent.spec.js).
+Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Parent.spec.js).
 
-## Creating the Components
+## Создание компонентов
 
-For this example, we will create a `<Child>` and `<Parent>` and component.
+Для этого примера, мы создадим компоненты `<Child>` и `<Parent>`.
 
-Child: 
+`Child`: 
 
 ```vue
 <template>
-  <div>Child</div>
+  <div>Дочерний компонент</div>
 </template>
 
 <script>
@@ -22,13 +22,13 @@ export default {
 </script>
 ```
 
-Parent:
+`Parent`:
 
 ```vue
 <template>
   <div>
     <span v-show="showSpan">
-      Parent Component
+      Родительский компонент
     </span>
     <Child v-if="showChild" />
   </div>
@@ -52,16 +52,17 @@ export default {
 </script>
 ```
 
-## `find` with `querySelector` syntax
+## Синтаксис `find` и `querySelector`
 
-Regular elements can easily be selected using the syntax used with `document.querySelector`. `vue-test-utils` also provides a `isVisible` method to check if elements conditionally rendered with `v-show` are visible. Create a `Parent.spec.js`, and inside add the following test:
+Обычные элементы можно легко выбрать, используя синтаксис похожий на `document.querySelector`. `vue-test-utils` также предоставляет метод `isVisible`, чтобы проверять отрисовался ли элемент по условию с `v-show`. Создадим `Parent.spec.js` и внутри добавим следующий тест:
+
 
 ```js
 import { mount, shallowMount } from "@vue/test-utils"
 import Parent from "@/components/Parent.vue"
 
 describe("Parent", () => {
-  it("does not render a span", () => {
+  it("Не отрисовывает span", () => {
     const wrapper = shallowMount(Parent)
 
     expect(wrapper.find("span").isVisible()).toBe(false)
@@ -69,10 +70,11 @@ describe("Parent", () => {
 })
 ```
 
-Since `v-show="showSpan"` defaults to `false`, we expect the found `<span>` element's `isVisible` method to return `false`. The tests passes when run with `yarn test:unit`. Next, a test around the case when `showSpan` is `true`.
+Так как `v-show="showSpan"` по умолчанию в значении `false`, мы предполагает, что метод `isVisible` не найдёт `<span>` элемент и вернёт `false`. При запуске `yarn test:unit`, тесты проходят проверку, . Теперь нужно протестировать случай, когда `showSpan` в значении `true`.
+    
 
 ```js
-it("does render a span", () => {
+it("Отрисовывает span", () => {
   const wrapper = shallowMount(Parent, {
     data() {
       return { showSpan: true }
@@ -82,34 +84,34 @@ it("does render a span", () => {
   expect(wrapper.find("span").isVisible()).toBe(true)
 })
 ```
+ Это работает! `vue-test-utils` также предоставляет метод `exists`, похожий на `isVisible`. В нём проверяется условная отрисовка через `v-if`.
 
-It passes! Much like `isVisible` for `v-show`, `vue-test-utils` provides an `exists` method to be used when testing elements conditionally rendered using `v-if`.
+## Поиск компонентов через `name` и `Component`
 
-## Finding Components with `name` and `Component`
-
-Finding child components is a little different to finding regular HTML elements. There two main ways to assert the presence of child Vue components:
+Поиск дочерних компонентов немного отличается от поиска обычный HTML элементов. Есть два основных способа проверить наличие дочерних компонентов:
 
 1. `find(Component)`
 2. `find({ name: "ComponentName" })`
 
-These are a bit easier to understand in the context of an example test. Let's start with the `find(Component)` syntax. This requires us to `import` the component, and pass it to the `find` function.
+Это будет проще понять на примере. Давайте разберём синтаксис `find(Component)`. Нам нужно импортировать компонент через `import` и передать его в функцию `find`.
 
 ```js
 import Child from "@/components/Child.vue"
 
-it("does not render a Child component", () => {
+it("не отрисовывает компонент Child", () => {
   const wrapper = shallowMount(Parent)
 
   expect(wrapper.find(Child).exists()).toBe(false)
 })
 ```
 
-The implementation for `find` is quite complex, since it works with the `querySelector` syntax, as well as several other syntaxes. You can see the part of the source that finds children Vue components [here](https://github.com/vuejs/vue-test-utils/blob/dev/packages/test-utils/src/find.js). It basically checks the component's `name` against each child rendered, and then checks the `constructor`, and some other properties. 
+Реализация метода `find` довольно сложная, так как он работает с синтаксисом `querySelector` и некоторыми другими. [Здесь](https://github.com/vuejs/vue-test-utils/blob/dev/packages/test-utils/src/find.js) вы можете посмотреть на часть исходного кода, в котором ищутся дочерние компоненты. В основном там проверяется `name` всех отрисованных компонентов, а затем проверяется `constructor` и некоторые другие свойства. 
 
-As mentioned in the previous paragraph, the `name` property is one of the checks done by `find` when you pass a component. Instead of passing the component, you can simply pass an object with the correct `name` property. This means you do not need to `import` the component. Let's test the case when `<Child>` should be rendered:
+Как говорилось в предыдущем абзаце, когда вы передаете компонент в `find`, выполняется проверка свойства `name`.
+Вместо того чтобы передавать компонент, вы можете просто передать объект с правильным свойством `name`. Это значит, что вам не нужно использовать `import` для компонента. Давайте протестируем случай, когда `<Child>` должен отрисовываться:
 
 ```js
-it("renders a Child component", () => {
+it("отрисовывает компонент Child", () => {
   const wrapper = shallowMount(Parent, {
     data() {
       return { showChild: true }
@@ -120,13 +122,13 @@ it("renders a Child component", () => {
 })
 ```
 
-It passes! Using the `name` property can be a little unintuitive, so importing the actual component is an alternative. Another option is to simply add a `class` or `id` and query using the `querySelector` style syntax presented in the first two examples.
+Это работает! Использовать свойство `name` может быть немного не интуитивно, поэтому можно испортировать компонент как альтенатива. Также можно просто добавить `class` или `id`, а затем найти элемент синтаксисом `querySelector` как в первых двух примерах.
 
 ## `findAll`
 
-There are often cases when you want to assert that a number of elements are rendered. A common case is a list of items rendered with `v-for`. Here is a `<ParentWithManyChildren>` that renders several `<Child>` components.
+Часто бывают случаи, когда вы хотит проверить количество отрисованных элементов. Обычно список элементов отрисовывается через `v-for`. Вот компонент `<ParentWithManyChildren>`, который отрисовывает несколько компонентов `<Child>`.
 
-```js
+```vue
 <template>
   <div>
     <Child v-for="id in [1, 2 ,3]" :key="id" />
@@ -144,25 +146,25 @@ export default {
 </script>
 ```
 
-We can write a test using `findAll` to assert three `<Child>` components are rendered like this:
+Вот так мы можем написать тест, используя `findAll` для проверки отрисовки трёх компонентов `<Child>`.
 
 ```js
-it("renders many children", () => {
+it("отрисовывает несколько дочерних компонентов", () => {
   const wrapper = shallowMount(ParentWithManyChildren)
 
   expect(wrapper.findAll(Child).length).toBe(3)
 })
 ```
 
-Running `yarn test:unit` shows the test passes. You can use the `querySelector` syntax with `findAll` as well.
+Запуск `yarn test:unit` показывает, что тест проходят проверку. Вы также можете использовать `querySelector` с синтаксисом `findAll`.
 
-## Conclusion
+## Заключение
 
-This page covers:
+На этой странице рассматривалось, как:
 
-- using `find` and `findAll` with the `querySelector` syntax
-- `isVisible` and `exists`
-- using `find` and `findAll` with a component or name as the selector
+- использовать `find` и `findAll` с синтаксисом `querySelector
+- `isVisible` и `exists`
+- использовать `find` и `findAll` с компонентом или именем как селектором
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Parent.spec.js).
+Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Parent.spec.js).
 
