@@ -1,14 +1,15 @@
-## Testing Mutations
+## Тестирование мутаций
 
-Testing mutations in isolation is very straight forward, because mutations are just regular JavaScript functions. This page discusses testing mutations in isolation. If you want to test mutations in the context of a component committing a mutation, see [here](https://lmiller1990.github.io/vue-testing-handbook/vuex-in-components-mutations-and-actions.html).
+Тестировать мутации в изоляции достаточно просто, так как это обычные JavaScript функции. На этой странице обсудим тестирование мутаций в изоляции. Если вы хотите тестировать мутации в контексте компонента, то смотрите [здесь](https://lmiller1990.github.io/vue-testing-handbook/ru/vuex-in-components-mutations-and-actions.html).
 
-The test used in the following example can be found [here](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app/tests/unit/mutations.spec.js).
+Тест для полследующего примера можно найти [тут](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app/tests/unit/mutations.spec.js).
 
-## Creating the Mutation
+## Создание мутации
 
-Mutations tend to following a set pattern. Get some data, maybe do some processing, then assign the data to the state. Here is the outline of an `ADD_POST` mutation. Once implemented, it will receive a `post` object in the payload, and add the `post.id` to `state.postIds`. It will also add the post object to the `state.posts` object, where the key is the `post.id`. This is a common pattern in apps using Vuex.
+Мутации следует паттерну функции, которая записывает значение свойства. Получаем какую-либо информацию, возможно обрабатываем её, затем складываем в хранилище. Вот обёртка для мутации `ADD_POST`. Она будет получать объект `post` как нагрузку и 
+добавлять `post.id` в `state.postIds`. Она также будет добавлять объект `post` в `state.posts`, где ключом является `post.id`. Это обычнный паттерн, применяемый в приложениях с Vuex.
 
-We will develop it using TDD. The start of the mutation is as follows:
+Мы сделаем это по TDD. Начало мутации выглядит следующим образом:
 
 ```js
 export default {
@@ -18,13 +19,13 @@ export default {
 }
 ```
 
-Let's write the test, and let the error messages guide our development:
+Давайте напишем тест и пусть ошибки подсказывают нам, что делать дальше:
 
 ```js
 import mutations from "@/store/mutations.js"
 
 describe("SET_POST", () => {
-  it("adds a post to the state", () => {
+  it("добавляет пост в хранилище", () => {
     const post = { id: 1, title: "Post" }
     const state = {
       postIds: [],
@@ -41,11 +42,11 @@ describe("SET_POST", () => {
 })
 ```
 
-Running this test with `yarn test:unit` yields the following failure message:
+Запуск `yarn test:unit` выдаст нам следующую ошибку:
 
-```
+```bash
 FAIL  tests/unit/mutations.spec.js
-● SET_POST › adds a post to the state
+● SET_POST › добавляет пост в хранилище
 
   expect(received).toEqual(expected)
 
@@ -55,7 +56,7 @@ FAIL  tests/unit/mutations.spec.js
     {"postIds": [], "posts": {}}
 ```
 
-Let's start by adding the `post.id` to `state.postIds`:
+Давайте начнём с добавления `post.id` в `state.postIds`:
 
 ```js
 export default {
@@ -65,7 +66,7 @@ export default {
 }
 ```
 
-Now `yarn test:unit` yields:
+Теперь `yarn test:unit` выводит:
 
 ```
 Expected value to equal:
@@ -73,8 +74,7 @@ Expected value to equal:
 Received:
   {"postIds": [1], "posts": {}}
 ```
-
-`postIds` looks good. Now we just need to add the post to `state.posts`. Because of how the Vue reactivity system works we cannot simply write `post[post.id] = post` to add the post. More details can be found [here](https://vuejs.org/v2/guide/reactivity.html#Change-Detection-Caveats). Basically, you need to create a new object using `Object.assign` or the `...` operator. We will use the `...` operator to assign the post to `state.posts`:
+`postIds` выглядит отлично. Теперь нам нужно просто добавить пост в `state.posts`. При сегодняшнем состоянии системы Vue-реактивности, мы не может просто написать `post[post.id] = post`, чтобы добавить пост. Подробнее можно почитать [здесь](https://ru.vuejs.org/v2/guide/reactivity.html#%D0%9E%D1%81%D0%BE%D0%B1%D0%B5%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D0%B8-%D0%BE%D1%82%D1%81%D0%BB%D0%B5%D0%B6%D0%B8%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F-%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B5%D0%BD%D0%B8%D0%B9). По сути, вам нужно создать новый объект, используя `Object.assign` или оператор `...`. Мы используем оператор `...`, чтобы присвоить пост в `state.posts`.
 
 ```js
 export default {
@@ -85,15 +85,15 @@ export default {
 }
 ```
 
-Now the test passes!
+Теперь тест проходит проверку!
 
-## Conclusion
+## Заключение
 
-Testing Vuex mutations requires nothing specific to Vue or Vuex, since they are just regular JavaScript functions. Simply import them and test as needed. The only thing to be careful of is Vue's reactivity caveats, which apply to Vuex as well. You can read more about the reactivity system and common caveats [here](https://vuejs.org/v2/guide/reactivity.html#Change-Detection-Caveats).
+Тестирование Vuex мутации не требует ничего специфичного для Vue или Vuex, так как это обычные JavaScript функции. Просто импортируйте их и тестируйте, если необходимо. Важно помнить единственную вещь – как работает система реактивности Vue, которая также применяется и к Vuex. Подробнее о системе рективности и ограничениях можно почитать [здесь](https://ru.vuejs.org/v2/guide/reactivity.html#%D0%9E%D1%81%D0%BE%D0%B1%D0%B5%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D0%B8-%D0%BE%D1%82%D1%81%D0%BB%D0%B5%D0%B6%D0%B8%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F-%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B5%D0%BD%D0%B8%D0%B9).
 
-The page discussed:
+На этой странице обсудили:
 
-- Vuex mutations are regular JavaScript functions
-- Mutations can, and should, be tested in isolation from the main Vue app
+- что Vuex мутация – это обычные JavaScript функции
+- что мутации могут и должны тестироваться в изоляции от основного приложения Vue
 
-The test used in the above example can be found [here](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app/tests/unit/mutations.spec.js).
+Тест для примера выше можно найти [тут](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app/tests/unit/mutations.spec.js).
