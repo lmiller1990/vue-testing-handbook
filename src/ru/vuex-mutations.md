@@ -2,7 +2,7 @@
 
 Тестировать мутации в изоляции достаточно просто, так как это обычные JavaScript функции. На этой странице обсудим тестирование мутаций в изоляции. Если вы хотите тестировать мутации в контексте компонента, то смотрите [здесь](https://lmiller1990.github.io/vue-testing-handbook/ru/vuex-in-components-mutations-and-actions.html).
 
-Тест для полследующего примера можно найти [тут](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app/tests/unit/mutations.spec.js).
+Тест для последующего примера можно найти [тут](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app/tests/unit/mutations.spec.js).
 
 ## Создание мутации
 

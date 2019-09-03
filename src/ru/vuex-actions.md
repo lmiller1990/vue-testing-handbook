@@ -1,18 +1,18 @@
-## Testing Actions
+## Тестирование действий
 
-Testing actions in isolation is very straight forward. It is very similar to testing mutations in isolation - see [here](https://lmiller1990.github.io/vue-testing-handbook/vuex-mutations.html) for more on mutation testing. Testing actions in the context of a component is correctly dispatching them is discussed [here](https://lmiller1990.github.io/vue-testing-handbook/vuex-in-components-mutations-and-actions.html).
+Тестировать действия в изоляции очень просто. Это очень похоже на тестирование мутаций в изоляции – смотрите [здесь](https://lmiller1990.github.io//vue-testing-handbook/ru/vuex-mutations.html) про тестирование мутаций. Тестирование диспетчеризации действий в контексте компонента обсуждалось [здесь](https://lmiller1990.github.io//vue-testing-handbook/ru/vuex-in-components-mutations-and-actions.html).
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/actions.spec.js).
+Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/actions.spec.js).
 
-## Creating the Action
+## Создание действия
 
-We will write an action that follows a common Vuex pattern:
+Мы напишем действие, которое следует обычному Vuex паттерну:
 
-1. make an asynchronous call to an API
-2. do some proccessing on the data (optional)
-3. commit a mutation with the result as the payload
+1. делаем асихронный запрос к API
+2. обрабатываем данные (опционально)
+3. делаем commit мутации с результатом в виде нагрузки
 
-This is an `authenticate` action, which sends a username and password to an external API to check if they are a match. The result is then used to update the state by committing a `SET_AUTHENTICATED` mutation with the result as the payload.
+Вот действие `authenticate`, которое отправляет имя пользователя и пароль к внешнему API, в котором проверяется совпадают ли они. Затем результат используется для обновления хранилища, путем выполнения мутации `SET_AUTHENTICATED` с результатом в виде нагрузки.
 
 ```js
 import axios from "axios"
@@ -28,19 +28,19 @@ export default {
 }
 ```
 
-The action test should assert:
+Тест для действия должен проверять:
 
-1. was the correct API endpoint used?
-2. is the payload correct?
-3. was the correct mutation committed with the result
+1. правильный ли endpoint API использовался?
+2. правильная ли нагрузка для мутации?
+3. правильная ли мутация была использована?
 
-Let's go ahead and write the test, and let the failure messages guide us.
+Давайте двигаться вперед и напишем тест, пусть ошибки подсказывают нам что делать.
 
-## Writing the Test
+## Написание теста
 
 ```js
-describe("authenticate", () => {
-  it("authenticated a user", async () => {
+describe("Авторизация", () => {
+  it("авторизует пользователя", async () => {
     const commit = jest.fn()
     const username = "alice"
     const password = "password"
@@ -55,13 +55,13 @@ describe("authenticate", () => {
 })
 ```
 
-Since `axios` is asynchronous, to ensure Jest waits for test to finish we need to declare it as `async` and then `await` the call to `actions.authenticate`. Otherwise the test will finish before the `expect` assertion, and we will have an evergreen test - a test that can never fail.
+Так как `axios` асинхронный, нужно убедиться, что Jest дождется окончания теста. Добавим `async` для функции и `await` для вызова `actions.authenticate`. В противном случае тест завершится до проверки `expect` и получим тест, который всегда будет проходить проверку.
 
-Running the above test gives us the following failure message:
+Запуск теста выше выдаст нам такую ошибку:
 
-```
+```bash
  FAIL  tests/unit/actions.spec.js
-  ● authenticate › authenticated a user
+  ● Авторизация › авторизует пользователя
 
     SyntaxError: The string did not match the expected pattern.
 
@@ -71,11 +71,11 @@ Running the above test gives us the following failure message:
       at dispatchRequest (node_modules/axios/lib/core/dispatchRequest.js:59:10)
 ```
 
-This error is coming somewhere from within `axios`. We are making a request to `/api...`, and since we are running in a test environment, there isn't even a server to make a request to, thus the error. We also did not defined `url` or `body` - we will do that while we solve the `axios` error.
+Это ошибка возникает где-то внутри `axios`. Мы делаем запрос к `/api...` и так как мы запускаем тест в тестовом окружении, в котором даже нет сервера, получаем ошибку. Мы также не определили `url` или `body` – мы сделаем это, когда будем решать ошибку с `axios`.
 
-Since we are using Jest, we can easily mock the API call using `jest.mock`. We will use a mock `axios` instead of the real one, which will give us more control over it's behavior. Jest provides [ES6 Class Mocks](https://jestjs.io/docs/en/es6-class-mocks), which are a perfect fit for mocking `axios`.
+Так как мы используем Jest, можно легко замокать вызов API, применяя `jest.mock`. Мы сделаем мок для `axios`, который даст нам больше контроля над его поведением. Jest предоставляет [моки для ES6 классов](https://jestjs.io/docs/ru/es6-class-mocks), который идеально подходят для мока `axios`.
 
-The `axios` mock looks like this:
+Мок для `axios` выглядит следующим образом:
 
 ```js
 let url = ''
@@ -92,26 +92,27 @@ jest.mock("axios", () => ({
 }))
 ```
 
-We save `url` and `body` to variables to we can assert the correct endpoint is receiving the correct payload. Since we don't actually want to hit a real endpoint, we resolve the promise immediately which simulates a successful API call.
+Мы сохраняем `url` и `body` в переменные, из-за чего может сделать проверку, в которой endpoint получает правильную нагрузку. Так как мы не хотим использовать настоящий endpoint, мы немедленно выполняем промис, что симулирует успешный вызов API.
 
-`yarn unit:pass` now yields a passing test!
 
-## Testing for the API Error
+`yarn unit:pass` теперь выводит сообщение, что тест прошел проверку!
 
-We only tested the case where the API call succeed. It's important to test all the possible outcomes. Let's write a test for the case where an error occurs. This time, we will write the test first, followed by the implementation.
+## Тестирование ошибки API
 
-The test can be written like this:
+Мы только протестировали случай, когда вызов API успешный. Важно тестировать все возможные случаи. Давайте напишем тест, в котором происходит ошибка. В этот раз, мы сначала напишем тест, а затем реализацию.
+
+Тест выглядит примерно так:
 
 ```js
-it("catches an error", async () => {
+it("ловит ошибки", async () => {
   mockError = true
 
   await expect(actions.authenticate({ commit: jest.fn() }, {}))
-    .rejects.toThrow("API Error occurred.")
+    .rejects.toThrow("Произошла ошибка API.")
 })
 ```
 
-We need to find a way to force the `axios` mock to throw an error. That's what the `mockError` variable is for. Update the `axios` mock like this:
+Нам нужно найти способ заставить мок для `axios` сгенерировать ошибку. Вот для чего нужна переменная `mockError`. Обновим мок для `axios` вот так:
 
 ```js
 let url = ''
@@ -132,23 +133,23 @@ jest.mock("axios", () => ({
 }))
 ```
 
-Jest will only allow accessing an out of scope variable in an ES6 class mock if the variable name is prepended with `mock`. Now we can simply do `mockError = true` and `axios` will throw an error.
+Jest позволяет обращаться к переменной вне текущего лексического окружения ES6 класса только если перед названием перенной стоит `mock`. Теперь мы можем с легкостью сделать `mockError = true` и `axios` сгенерирует ошибку.
 
-Running this test gives us this failing error:
+Запуск теста выдаст нам такую ошибку:
 
-```
+```bash
 FAIL  tests/unit/actions.spec.js
-● authenticate › catchs an error
+● Авторизация › ловит ошибки
 
   expect(function).toThrow(string)
 
   Expected the function to throw an error matching:
-    "API Error occurred."
+    "Произошла ошибка API."
   Instead, it threw:
     Mock error
 ```
 
-It successfully caught the an error... but not the one we expected. Update `authenticate` to throw the error the test is expecting:
+Он успешно словил ошибку... но не ту которую мы хотели. Обновим `authenticate`, чтобы генирировать ошибку, которая ожидается в тесте: 
 
 ```js
 export default {
@@ -160,23 +161,24 @@ export default {
 
       commit("SET_AUTHENTICATED", authenticated)
     } catch (e) {
-      throw Error("API Error occurred.")
+      throw Error("Произошла ошибка API.")
     }
   }
 }
 ```
 
-Now the test is passing.
+Теперь тесты проходят проверку.
 
-## Improvements
+## Улучшение
 
-Now you know how to test actions in isolation. There is at least one potential improvement that can be made, which is to implement the `axios` mock as a [manual mock](https://jestjs.io/docs/en/manual-mocks). This involves creating a `__mocks__` directory on the same level as `node_modules` and implementing the mock module there. By doing this, you can share the mock implementation across all your tests. Jest will automatically use a `__mocks__` mock implementation. There are plenty of examples on the Jest website and around the internet on how to do so. Refactoring this test to use a manual mock is left as an exercise to the reader.
+Теперь вы знаете как тестировать действия в изоляции. Есть как минимум одно улучшение, которое можно сделать – это реализовать мок `axios` в виде [пользовательского мока](https://jestjs.io/docs/ru/manual-mocks). Необходимо создать папку `__mocks__` на том же уровне, где находится `node_modules` и реализовать мок модуль там. Сделая это, вы можете использовать реализацию мока во всех тестах. Jest автоматически использует мок реализации из `__mocks__`. На сайте Jest и в интернете есть множество примеров как сделать это. Рефакторинг этого теста, используя пользовательский мок остается как упражнение для читателя.
 
-## Conclusion
 
-This guide discussed:
+## Заключение
 
-- using Jest ES6 class mocks
-- testing both the success and failure cases of an action
+В этом руководстве обсудили:
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/actions.spec.js).
+- как использовать моки Jest для ES6 классов
+- как тестировать успешные и неудачные случаи действий
+
+Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/actions.spec.js).
