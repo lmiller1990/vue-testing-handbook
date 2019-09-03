@@ -64,7 +64,7 @@ describe("Bilingual", () => {
 [Vue warn]: Error in config.errorHandler: "TypeError: _vm.$t is not a function"
 ```
 
-Это потому что мы не установили `vue-i18n`, поэтому глобального метода `$t` не существует. Давайте замокаем его, используя опцию монтирования `mocks`.
+Это потому, что мы не установили `vue-i18n`, поэтому глобального метода `$t` не существует. Давайте замокаем его, используя опцию монтирования `mocks`.
 
 ```js
 import { shallowMount } from "@vue/test-utils"
