@@ -123,7 +123,7 @@ describe("Bilingual", () => {
 </div>
 ```
 
-Как использовать `mocks` при тестирования Vuex можно прочитать [здесь](https://lmiller1990.github.io/vue-testing-handbook/ru/vuex-in-components.html#testing-vuex-in-components). Техника одна и таже.
+Как использовать `mocks` при тестирования Vuex можно прочитать [здесь](https://lmiller1990.github.io/vue-testing-handbook/ru/vuex-in-components.html#testing-vuex-in-components). Техника одна и та же.
 
 ## Заключение
 
