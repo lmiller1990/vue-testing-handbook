@@ -1,34 +1,34 @@
-## Testing getters
+## Тестирование геттеров
 
-Testing getters in isolation is straight forward, since they are basically just JavaScript functions. The techniques are similar to testing mutations, more info [here](https://lmiller1990.github.io/vue-testing-handbook/vuex-mutations.html), and actions. 
+Тестировать геттеры в изоляции достаточно просто, так как это обычные JavaScript функции. Техника очень похожа на тестирование мутаций и действий, больше информации [здесь](https://lmiller1990.github.io/vue-testing-handbook/ru/vuex-mutations.html).
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/getters.spec.js).
+Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/getters.spec.js).
 
-We will look at two getters, which operate on a store that looks like this:
+Мы рассмотрит два геттера, который работают с хранилищем, который выглядит так:
 
 ```js
 const state = {
   dogs: [
-    { name: "lucky", breed: "poodle", age: 1 },
-    { name: "pochy", breed: "dalmatian", age: 2 },
-    { name: "blackie", breed: "poodle", age: 4 }
+    { name: "Лаки", breed: "пудель", age: 1 },
+    { name: "Песик", breed: "далматинец", age: 2 },
+    { name: "Блэки", breed: "пудель", age: 4 }
   ]
 }
 ```
 
-The getters we will test are:
+Геттеры, который будем тестировать:
 
-1. `poodles`: gets all `poodles`
-2. `poodlesByAge`: gets all poodles, and accepts an age argument
+1. `poodles`: получаем все пуделей
+2. `poodlesByAge`: получаем всех пуделей определенного возраста
 
-## Creating the Getters
+## Создание геттеров
 
-First, let's create the getters. 
+Давайте сначала сделаем геттеры: 
 
 ```js
 export default {
   poodles: (state) => {
-    return state.dogs.filter(dog => dog.breed === "poodle")
+    return state.dogs.filter(dog => dog.breed === "пудель")
   },
 
   poodlesByAge: (state, getters) => (age) => {
@@ -37,7 +37,7 @@ export default {
 }
 ```
 
-Nothing too exciting - remember that getters receive other getters as the second argument. Since we already have a `poodles` getter, we can use that in `poodlesByAge`. By returning a function in `poodlesByAge` that takes an argument, we can pass arguments to getters. The `poodlesByAge` getter can be used like this:
+Ничего особенного – помните, что геттеры принимают другие геттеры вторым аргументом. Так как у нас уже есть геттер `poodles`, мы можем использовать его в `poodlesByAge`. Возвращая функцию в `poodlesByAge`, принимающую аргумент, мы можем передать аргументы в геттеры. Геттер `poodlesByAge` можно использовать так:
 
 ```js
 computed: {
@@ -47,24 +47,24 @@ computed: {
 }
 ```
 
-Let's start with a test for `poodles`.
+Начнём с тестирования `poodles`.
 
-## Writing the Tests
+## Написание тестов
 
-Since a getter is just a JavaScript function that takes a `state` object as the first argument, the test is very simple. I'll write my test in a `getters.spec.js` file, with the following code:
+Так как геттер – это обычная JavaScript функция, которая принимает объект `state` первым аргументом, тестировать будет достаточно просто. Я буду писать тест в файле `getters.spec.js` со следующим кодом:
 
 ```js
 import getters from "../../src/store/getters.js"
 
 const dogs = [
-  { name: "lucky", breed: "poodle", age: 1 },
-  { name: "pochy", breed: "dalmatian", age: 2 },
-  { name: "blackie", breed: "poodle", age: 4 }
+  { name: "Лаки", breed: "пудель", age: 1 },
+  { name: "Песик", breed: "далматинец", age: 2 },
+  { name: "Блэки", breed: "пудель", age: 4 }
 ]
 const state = { dogs }
 
 describe("poodles", () => {
-  it("returns poodles", () => {
+  it("возвращает пуделей", () => {
     const actual = getters.poodles(state)
 
     expect(actual).toEqual([ dogs[0], dogs[2] ])
@@ -72,13 +72,13 @@ describe("poodles", () => {
 })
 ```
 
-Vuex automatically passes the `state` to the getter. Since we are testing the getters in isolation, we have to manually pass the `state`. Other than that, we are just testing a regular JavaScript function.
+Vuex автоматически передает `state` в геттер, но так как мы тестируем геттеры в изоляции, нужно передавать `state` вручную. Кроме того, мы тестируем обычную функцию JavaScript.
 
-`poodlesByAge` is a bit more interesting. The second argument to a getter is other `getters`. We are testing `poodlesByAge`, so we don't want to involve the implementation of `poodles`. Instead, we can stub `getters.poodles`. This will give us more fine grained control over the test.
+`poodlesByAge` немного интереснее. Вторым аргументом является другие геттеры. Мы тестируем `poodlesByAge`, поэтому не хотим реализовывать `poodles`. Вместо этого, мы можем использовать заглушку для `getters.poodles`. Это даст нам больше контроля над тестом.
 
 ```js
 describe("poodlesByAge", () => {
-  it("returns poodles by age", () => {
+  it("возвращет пуделей по возрасту", () => {
     const poodles = [ dogs[0], dogs[2] ]
     const actual = getters.poodlesByAge(state, { poodles })(1)
 
@@ -87,14 +87,14 @@ describe("poodlesByAge", () => {
 })
 ```
 
-Instead of actually passing the real `poodles` getter, we pass in the result it would return. We already know it is working, since we wrote a test for it. This allows us to focus on testing the logic unique to `poodlesByAge`.
+Вместо передачи настощего геттера `poodles`, мы передаем результат, который бы он вернул. Мы уже знаем, что он работает, так как тест написан. Это позволяет нам сфокусироваться на тестировании уникальной логики `poodlesByAge`.
 
-It is possible to have `async` getters. They can be tested using the same technique as `async` actions, which you can read about [here](https://lmiller1990.github.io/vue-testing-handbook/vuex-actions.html).
+Есть возожность делать `async` геттеры. Они тестируются так же, как и `async` действия, о которых можно прочитать [здесь](https://lmiller1990.github.io/vue-testing-handbook/ru/vuex-actions.html).
 
-## Conclusion
+## Заключение
 
-- `getters` are just plain JavaScript functions.
-- When testing `getters` in isolation, you need to pass the state manually.
-- If a getter uses another getter, you should stub the expected return result of the first getter. This will give you more fine grained control over the test, and let you focus on testing the getter in question
+- `getters` – это обычные JavaScript функции
+- При тестировании геттеров в изоляции, нужно передавать хранилище вручную
+- Если геттер использует другой геттер, вы должны использовать заглушку, которая возращает ожидаемый результат. Это даст больше контроля над тестом и позволит сфокусироваться на тестировании рассматриваемого геттера
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/getters.spec.js).
+Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/getters.spec.js).
