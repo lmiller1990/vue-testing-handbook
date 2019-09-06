@@ -1,10 +1,11 @@
-## Testing Vuex in components
+## Тестирование Vuex в компонентах
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ComponentWithVuex.spec.js).
+Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ComponentWithVuex.spec.js).
 
-## Using `createLocalVue` to test `$store.state`
 
-In a regular Vue app, we install Vuex using `Vue.use(Vuex)`, and then pass a new Vuex store to the app. If we do the same in a unit test, though, all unit tests will receive the Vuex store - even tests that are not using the store. `vue-test-utils` provides a `createLocalVue` method, which provides a temporary `Vue` instance to be used on a test by test basis. Let's see how to use it. First, a simple `<ComponentWithGetters>` component that renders a username in the store's base state.
+## Использование `createLocalVue` для тестирования `$store.state`
+
+В обычном Vue приложении мы устанавливаем Vuex, используя `Vue.use(Vuex)`, а затем передаем новое хранилище Vuex в приложение. Если мы сделаем тоже самое в юнит тесте, то все тесты получат Vuex хранилище даже если оно не используется. `vue-test-utils` предоставляет метод `createLocalVue`, создающий временный экземпляр `Vue`, который можно использовать в тестах. Давайте рассмотрим как это использовать. Сначала сделаем простой компонент `<ComponentWithGetters>`, который отрисовывает имя пользователя, основываясь на состоянии хранилища.
 
 ```html
 <template>
@@ -28,7 +29,7 @@ export default {
 </script>
 ```
 
-We can use `createLocalVue` to create a temporary Vue instance, and install Vuex. Then we simply pass the a new `store` in the component's mounting options. A full test looks like this:
+Мы можем использовать `createLocalVue` для создания временнего экземпляра Vue, в который установим Vuex. Затем просто передадим новый `store` в опции монтирования компонента. Полный тест выглядит так:
 
 ```js
 import Vuex from "vuex"
@@ -40,47 +41,49 @@ localVue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    username: "alice"
+    username: "Алиса"
   }
 })
 
 describe("ComponentWithVuex", () => {
-  it("renders a username using a real Vuex store", () => {
+  it("отрисовывает имя пользователя из настоящего Vuex хранилища", () => {
     const wrapper = shallowMount(ComponentWithVuex, { 
       store, 
       localVue 
     })
 
-    expect(wrapper.find(".username").text()).toBe("alice")
+    expect(wrapper.find(".username").text()).toBe("Алиса")
   })
 })
 ```
 
-The tests passes. Creating a new `localVue` introduces some boilerplate, and the test is quite long. If you have a lot of components that use a Vuex store, an alternative is to use the `mocks` mounting option, and simply mock the store. 
+Тест проходит проверку. Создание нового `localVue` вводит некоторый шаблон, из-за чего тест длится несколько дольше.
 
-## Using a mock store
+Если у вас много компонентов, использующих Vuex хранилище, будет лучше использовать `mocks` опцию монтирования и просто замокать хранилище.
 
-Using the `mocks` mounting options, you can mock the global `$store` object. This means you do not need to use `createLocalVue`, or create a new Vuex store. Using this technique, the above test can be rewritten like this:
+## Использование замоканого хранилища
+
+Используя опцию монтирования `mocks`, вы можете замокать глобальный объект `$store`. Это значит, что вам не нужно применять `createLocalVue` или создавать новое Vuex хранилище. Используя эту технику, тест выше можно переписать так:
 
 ```js
-it("renders a username using a mock store", () => {
+it("отрисовывает имя пользователя, используя замоканное хранилище", () => {
   const wrapper = shallowMount(ComponentWithVuex, {
     mocks: {
       $store: {
-        state: { username: "alice" }
+        state: { username: "Алиса" }
       }
     }
   })
 
-  expect(wrapper.find(".username").text()).toBe("alice")
+  expect(wrapper.find(".username").text()).toBe("Алиса")
 })
 ```
 
-I personally prefer this approach. All the necessary data is declared inside the test, and it is a bit more compact. Both techniques are useful, and neither is better or worse than the other.
+Лично я предпочитаю такой подход. Все необходимые данные объявляются внутри теста и он становится более компактным. Обе техники полезны, и ни одна не лучше и не хуже, чем другая.
 
-## Testing `getters`
+## Тестирование `getters`
 
-Using the above techniques, `getters` are easily tested. First, a component to test:
+Используя вышеупомянутые техники, `getters` достаточно просто тестировать. Сначала сделаем компонент для теста:
 
 ```html
 <template>
@@ -102,9 +105,9 @@ export default {
 </script>
 ```
 
-We want to assert that the component correctly renders the user's `fullname`. For this test, we don't care where the `fullname` comes from, just that the component renders is correctly.
+Мы хотим проверить, что компонент правильно отрисовывает `fullname` пользователя. Для этого теста, нам не важно откуда приходит `fullname`, важно только, правильно ли оно отрисуется.
 
-First, using a real Vuex store and `createLocalVue`, the test looks like this:
+Сначала, используя настоящее Vuex хранилище и `createLocalVue`, тест будет выглядеть так:
 
 ```js
 const localVue = createLocalVue()
@@ -112,8 +115,8 @@ localVue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    firstName: "Alice",
-    lastName: "Doe"
+    firstName: "Алиса",
+    lastName: "Доу"
   },
 
   getters: {
@@ -121,58 +124,60 @@ const store = new Vuex.Store({
   }
 })
 
-it("renders a username using a real Vuex getter", () => {
+it("отрисовывает имя пользователя используя настощий геттер Vuex", () => {
   const wrapper = shallowMount(ComponentWithGetters, { store, localVue })
 
-  expect(wrapper.find(".fullname").text()).toBe("Alice Doe")
+  expect(wrapper.find(".fullname").text()).toBe("Алиса Доу")
 })
 ```
 
-The test is very compact - just two lines of code. There is a lot of setup involved, however - we are bascially rebuilding the Vuex store. An alternative is to import the real Vuex store, with the actual getter. This introduces another dependency to the test though, and when developing a large system, it's possible the Vuex store might be being developed by another programmer, and has not been implemented yet. 
+Тест очень компактный – всего две строчки кода. Тем не менее, здесь много настроек – мы перестраиваем хранилище Vuex. Как альтернатива можно импортировать настоящее хранилище Vuex с реальным геттером. Это вводит в тест еще одну зависимость, и при разработке большой системы возможно, что хранилище Vuex может быть разработано другим программистом и еще не реализовано.
 
-Let's see how we can write the test using the `mocks` mounting option:
+Давайте посмотрим как мы можем написать тест, используя опцию монтирования `mocks`.
+
 
 ```js
-it("renders a username using computed mounting options", () => {
+it("отрисовываем имя пользователя, используя вычисленные опции монтирования", () => {
   const wrapper = shallowMount(ComponentWithGetters, {
     mocks: {
       $store: {
         getters: {
-          fullname: "Alice Doe"
+          fullname: "Алиса Доу"
         }
       }
     }
   })
 
-  expect(wrapper.find(".fullname").text()).toBe("Alice Doe")
+  expect(wrapper.find(".fullname").text()).toBe("Алиса Доу")
 })
 ```
 
-Now all the required data is contained in the test. Great! I strongly prefer this, since the test is fully contained, and all the knowledge required to understand what the component should do is contained in the test.
+Теперь вся необходимая информация содержиться в тесте. Отлично! Я всегда предпочитаю этот подход, так как тест полностью самостоятельный, в нём есть всё для понимания работы тестируемого компонента.
 
-We can make the test even more concise though, using the `computed` mounting option.
+Мы можем сделать тест еще короче, используя `computed` в опции монтирования.
 
-## Mocking getters using `computed`
+## Мокаем геттеры используя `computed`
 
-Getters are generally wrapped in `computed` properties. Remember, this test is all about making sure the component behaves correctly given the current state of the store. We are not testing the implementation of `fullname`, or to see if `getters` work. This means we can simply replace real store, or the mock store, using the `computed` mounting option. The test can be rewritten like this:
+Геттеры обычно оборачиваются в `computed` свойство.
+Помните, этот тест о том, как компонент поведёт себя в зависимости от текущего состояния хранилища. Мы не тестируем реализацию `fullname` или работу геттера. Это значит, что мы должны просто заменить настощее хранилище или замокать его, используя `computed` в опции монтирования. Тест можно переписать так:
 
 ```js
-it("renders a username using computed mounting options", () => {
+it("отрисовываем имя пользователя, используя вычисляемое свойство в  опции монтирования", () => {
   const wrapper = shallowMount(ComponentWithGetters, {
     computed: {
-      fullname: () => "Alice Doe"
+      fullname: () => "Алиса Доу"
     }
   })
 
-  expect(wrapper.find(".fullname").text()).toBe("Alice Doe")
+  expect(wrapper.find(".fullname").text()).toBe("Алиса Доу")
 })
 ```
 
-This is more concise than the two previous tests, and still expresses the component's intention.
+Тест более короткий, чем два предыдущих, но все также выражает намерение компонента.
 
-## The `mapState` and `mapGetters` helper
+## Помошники `mapState` и `mapGetters` 
 
-The above techniques all work in conjuction with Vuex's `mapState` and `mapGetters` helpers. We can update `ComponentWithGetters` to the following:
+Техники, описанные выше также работают вместе с помошниками `mapState` и `mapGetters`. Мы можем обновить  `ComponentWithGetters` вот так:
 
 ```js
 import { mapGetters } from "vuex"
@@ -188,16 +193,16 @@ export default {
 }
 ```
 
-The tests still pass.
+Тест все еще проходит проверку.
 
-## Conclusion
+## Заключение
 
-This guide discussed:
+В этом руководстве обсудили.
 
-- using `createLocalVue` and a real Vuex store to test `$store.state` and `getters`
-- using the `mocks` mounting option to mock `$store.state` and `getters`
-- using the `computed` mounting option to set the desired value of a Vuex getter
+- как использовать `createLocalVue` и настощее хранилище Vuex для тестирования `$store.state` и `getters`
+- как использовать `mocks` в опцииях монтирования, для того, чтобы замокать `$store.state` и `getters`
+- как использовать `computed` в опциях монтирования, чтобы устаналивать желаемое значение для Vuex геттера
 
-Techniques to test the implentation of Vuex getters in isolation can be found in [this guide](https://lmiller1990.github.io/vue-testing-handbook/vuex-getters.html).
+Техники, для тестирования реализации Vuex геттеров в изоляции можно найти в [этом руководстве](https://lmiller1990.github.io/vue-testing-handbook/ru/vuex-getters.html).
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ComponentWithVuex.spec.js).
+Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ComponentWithVuex.spec.js).
