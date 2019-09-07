@@ -1,14 +1,15 @@
-## Mutations and Actions
+## Мутации и действия
 
-The previous guide discussed testing components that use `$store.state` and `$store.getters`, which both provide the current state to the component. When asserting a component correctly commits a mutation or dispatches an action, what we really want to do is assert `$store.commit` and `$store.dispatch` is called with the correct handler (the mutation or action to call) and payload.
+В предыдущем руководстве обсуждалось как тестировать компоненты, которые используют `$store.state` и `$store.getters`. Оба метода дают представление о состояния приложения. Когда проверяется, что компонент правильно вызывает мутацию или действие, мы хотим убедиться, что `$store.commit` и `$store.dispatch` вызывается с правильной функцией-обработчиком и нагрузкой.
 
-There are two ways to go about this. One is to use a real Vuex store with `createLocalVue`, and another is to use a mock store. Both these techniques are demonstrated [here](https://lmiller1990.github.io/vue-testing-handbook/vuex-in-components.html). Let's see them again, in the context of mutations and actions.
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ComponentWithButtons.spec.js).
+Есть два способа сделать это. Первый – это использовать настоящее Vuex хранилище с использованием `createLocalVue`. Второй – использовать мок для хранилища. Обе техники продемонстированы [здесь](https://lmiller1990.github.io/vue-testing-handbook/ru/vuex-in-components.html). Давайте посмотрим на них снова, но уже в контексте мутаций и действий.
 
-## Creating the Component
+Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ComponentWithButtons.spec.js).
 
-For these examples, we will test a `<ComponentWithButtons>` component:
+## Создание компонента
+
+Для примеров, мы будем тестировать компонент `<ComponentWithButtons>`:
 
 ```vue
 <template>
@@ -28,7 +29,7 @@ For these examples, we will test a `<ComponentWithButtons>` component:
     <button 
       class="namespaced-dispatch" 
       @click="handleNamespacedDispatch">
-      Namespaced Dispatch
+          Именованный Dispatch
     </button>
   </div>
 </template>
@@ -39,29 +40,29 @@ export default {
 
   methods: {
     handleCommit() {
-      this.$store.commit("testMutation", { msg: "Test Commit" })
+      this.$store.commit("testMutation", { msg: "Тестовый Commit" })
     },
 
     handleDispatch() {
-      this.$store.dispatch("testAction", { msg: "Test Dispatch" })
+      this.$store.dispatch("testAction", { msg: "Тестовый Dispatch" })
     },
 
     handleNamespacedDispatch() {
-      this.$store.dispatch("namespaced/very/deeply/testAction", { msg: "Test Namespaced Dispatch" })
+      this.$store.dispatch("namespaced/very/deeply/testAction", { msg: "Тестовый именованный Dispatch" })
     }
   }
 }
 </script>
 ```
 
-## Testing with a real Vuex store
+## Тестирование с настоящим Vuex хранилищем
 
-Let's write a `ComponentWithButtons.spec.js` with a test for the mutation first. Remember, we want to verify two things:
+Давайте создадим `ComponentWithButtons.spec.js` для теста мутации. Помните, мы хотим убедиться в двух вещах: 
 
-1. Did the correct mutation get committed?
-2. Was the payload correct?
+1. Правильная ли мутация вызывается?
+2. Правильная ли была нагрузка?
 
-We will use `createLocalVue` to avoid polluting the global Vue instance.
+Мы будем использовать `createLocalVue`, чтобы избежать засорения глобального Vue экземпляра.
 
 ```js
 import Vuex from "vuex"
@@ -79,7 +80,7 @@ const store = new Vuex.Store({ mutations })
 
 describe("ComponentWithButtons", () => {
 
-  it("commits a mutation when a button is clicked", () => {
+  it("вызывает мутацию после клика по кнопке", () => {
     const wrapper = shallowMount(ComponentWithButtons, {
       store, localVue
     })
@@ -88,25 +89,25 @@ describe("ComponentWithButtons", () => {
 
     expect(mutations.testMutation).toHaveBeenCalledWith(
       {},
-      { msg: "Test Commit" }
+      { msg: "Тестовый Commit" }
     )
   })
 })
 ```
 
-That's a lot of code. Nothing too exciting is happening, though. We create a `localVue` and use Vuex, then create a store, passing a Jest mock function (`jest.fn()`) in place of the `testMutation`. Vuex mutations are always called with two arguments: the first is the current state, and the second is the payload. Since we didn't declare any state for the store, we expect it to be called with an empty object. The second argument is expected to me `{ msg: "Test Commit" }`, which is hard coded in the component.
+Здесь очень много кода, но ничего особенного не происходит. Мы создаём `localVue` и используем Vuex, затем создаём хранилище, передаём мок функцию (`jest.fn()`) вместо `testMutation`. Vuex мутации всегда вызываются с двумя аргументами: первым идёт текущее состояние, вторым нагрузка. Так как мы не объявляли никакого состояния для хранилища, ожидаем что вызов был с пустым объектом. Вторым аргументов ожидаем `{ msg: "Test Commit" }`, который захардкожен в компоненте.
 
-This is a lot of boilerplate code to write, but is a correct and valid way to verify components are behaving correctly. Another alternative that requires less code is using a mock store. Let's see how to do that for while writing a test to assert `testAction` is dispatched.
+Получилось очень много шаблонного кода, но это правильный и работающий способ проверить работу компонента. В качестве альтернативы можно использовать мок для хранилища. Поймём как это делать в процессе тестирования вызова `testAction`.
 
-## Testing using a mock store
+## Тестирование, используя мок для хранилища
 
-Let's see the code, then compare and contrast it to the previous test. Remember, we want to verify:
+Посмотрите на код и сравните его с предыдущим тестом. Помните, мы хотим убедиться, что:
 
-1. the correct action is dispatched
-2. the payload is correct
+1. было вызвано правильное действие
+2. нагрузка была правильной
 
 ```js
-it("dispatches an action when a button is clicked", () => {
+it("вызывает действия после клика по кнопке", () => {
   const mockStore = { dispatch: jest.fn() }
   const wrapper = shallowMount(ComponentWithButtons, {
     mocks: {
@@ -117,21 +118,20 @@ it("dispatches an action when a button is clicked", () => {
   wrapper.find(".dispatch").trigger("click")
   
   expect(mockStore.dispatch).toHaveBeenCalledWith(
-    "testAction" , { msg: "Test Dispatch" })
+    "testAction" , { msg: "Тестовый Dispatch" })
 })
 ```
 
-This is a lot more compact than the previous example. No `localVue`, no `Vuex` - instead of mocking the function, in the previous where we did `testMutation = jest.fn()`, we actually mock the `dispatch` function itself. Since `$store.dispatch` is just a regular JavaScript function, we are able to do this. Then we assert the correct action handler, `testAction`, is the first argument, and the second argument, the payload, is correct. We don't care what the action actually does - that can be tested in isolation. The goal of this test is to simply verify that clicking a button dispatches the correct action with payload.
+Получилось намного компактнее, чем в предыдущем примере. Нет `localVue` и `Vuex`, вместо мока функции `testMutation = jest.fn()` мы используем мок для самой функции `dispatch`. Так как `$store.dispatch` – это обычная JavaScript функции, мы можем себе это позволить. Затем мы проверяем, что вызов был с правильной функцией-обработчиком, нагрузкой. Нам не важно, что на самом деле выполняет действие – это тестируется в изоляции. Цель этого теста просто убедиться, что при клике на кнопку вызывается действие с правильной функцией-обработчиком и нагрузкой.
 
-Whether you use a real store or a mock store is your tests is down to personal preference. Both are correct. The important thing is you are testing your components.
+Использовать настоящее хранилище или мок в ваших тестах зависит от личных предпочтений. Оба способа правильные. Важно то, что вы тестируете компоненты.
 
-## Testing a Namespaced Action (or Mutation)
+## Тестирование именованных действий (или мутаций)
 
-The third and final example shows another way to test that an action was dispatched (or mutation committed) with the correct arguments. This combined both techniques discussed above - a real `Vuex` store, and a mocked `dispatch` method.
-
+В третьем и последнем примере посмотрим на еще один способ тестирования, что действие или мутация была вызвана с правильными аргументами. Этот способ объединяет обе техники из примеров выше – настощее `Vuex` хранилище и использование мока для метода `dispatch`.
 
 ```js
-it("dispatch a namespaced action when button is clicked", () => {
+it("вызывает именованное действие после клика по кнопке", () => {
   const store = new Vuex.Store()
   store.dispatch = jest.fn()
 
@@ -143,19 +143,21 @@ it("dispatch a namespaced action when button is clicked", () => {
 
   expect(store.dispatch).toHaveBeenCalledWith(
     'namespaced/very/deeply/testAction',
-    { msg: "Test Namespaced Dispatch" }
+    { msg: "Тестовый именованный Dispatch" }
   )
 })
 ```
 
-We start by creating a Vuex store, with the module(s) we are interested in. I declare the module `namespacedModule` inside the test, but in a real world app, you would just import the modules your component depends on. We then replace the `dispatch` method with a `jest.fn` mock, and make assertions against that.
+Мы начинаем с создания Vuex хранилища, с модулями, который нам интересны. Я объявляю модуль `namespacedModule` внутри теста, но в настоящем приложении, вы можете просто импортировать модули, от которых зависит ваш компонент. Затем мы заменяем метод `dispatch` на мок` jest.fn` и делаем проверку.
+ 
 
-## Conclusion
+## Заключение
 
-In this section we covered:
 
-1. Using Vuex with a `localVue` and mocking a mutation
-2. Mocking the Vuex API (`dispatch` and `commit`)
-3. Using a real Vuex store with a mock `dispatch` function
+В этой секции мы рассмотрели:
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ComponentWithButtons.spec.js).
+1. как использовать Vuex с `localVue` для мока мутаций
+2. как мокать Vuex API (`dispatch` и `commit`)
+3. как использовать настоящее Vuex хранилище и мок для функции `dispatch`
+
+Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ComponentWithButtons.spec.js).
