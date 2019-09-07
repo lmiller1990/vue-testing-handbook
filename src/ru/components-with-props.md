@@ -121,7 +121,7 @@ describe('SubmitButton.vue', () => {
 
 Запустим тесты через `yarn test:unit` и посмотрим на результаты:
 
-```shell
+```bash
 PASS  tests/unit/SubmitButton.spec.js
   SubmitButton.vue
     ✓ Отображает сообщение для администратора (4ms)
