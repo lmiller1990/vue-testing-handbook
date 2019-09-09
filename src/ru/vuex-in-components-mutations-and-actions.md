@@ -107,7 +107,7 @@ describe("ComponentWithButtons", () => {
 2. нагрузка была правильной
 
 ```js
-it("вызывает действия после клика по кнопке", () => {
+it("вызывает действие после клика по кнопке", () => {
   const mockStore = { dispatch: jest.fn() }
   const wrapper = shallowMount(ComponentWithButtons, {
     mocks: {
