@@ -72,7 +72,7 @@ export default new VueRouter({ routes })
 
 ## Написание теста
 
-Давайте посмотрим на код, а затем обсудим что он делает. Мы тестируем `App.vue`, поэтому в `App.spec.js` напишем следующее:
+Давайте посмотрим на код, а затем обсудим, что он делает. Мы тестируем `App.vue`, поэтому в `App.spec.js` напишем следующее:
 
 ```js
 import { shallowMount, mount, createLocalVue } from "@vue/test-utils"
