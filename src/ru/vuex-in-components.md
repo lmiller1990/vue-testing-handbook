@@ -177,7 +177,7 @@ it("отрисовываем имя пользователя, используя
 
 ## Помошники `mapState` и `mapGetters` 
 
-Техники, описанные выше также работают вместе с помошниками `mapState` и `mapGetters`. Мы можем обновить  `ComponentWithGetters` вот так:
+Техники, описанные выше, также работают вместе с помощниками `mapState` и `mapGetters`. Мы можем обновить  `ComponentWithGetters` вот так:
 
 ```js
 import { mapGetters } from "vuex"
