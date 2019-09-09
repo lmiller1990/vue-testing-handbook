@@ -124,7 +124,7 @@ const store = new Vuex.Store({
   }
 })
 
-it("отрисовывает имя пользователя используя настощий геттер Vuex", () => {
+it("отрисовывает имя пользователя, используя настоящий геттер Vuex", () => {
   const wrapper = shallowMount(ComponentWithGetters, { store, localVue })
 
   expect(wrapper.find(".fullname").text()).toBe("Алиса Доу")
