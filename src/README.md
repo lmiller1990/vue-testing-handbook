@@ -27,4 +27,4 @@ We will also explore how to use the Jest API to make our tests more robust, such
 
 ## Languages
 
-For now, the guide is in English and Japanese.
+For now, the guide is in English, Japanese and Russian.
