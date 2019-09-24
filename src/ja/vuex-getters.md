@@ -1,5 +1,5 @@
 ## ゲッターをテストする
-ゲッターのテストだけを独立しておこなう場合には、複雑な手順は全く必要ありません。ゲッターは通常の JavasScript の関数だからです。テストの方法はミューテーションやアクションに対するテストと似ています。ミューテーションに関する詳細な情報は[こちら](https://lmiller1990.github.io/vue-testing-handbook/ja/vuex-mutations.html)をご覧ください。
+ゲッターのテストだけを独立しておこなう場合には、複雑な手順は全く必要ありません。ゲッターは通常の JavaScript の関数だからです。テストの方法はミューテーションやアクションに対するテストと似ています。ミューテーションに関する詳細な情報は[こちら](https://lmiller1990.github.io/vue-testing-handbook/ja/vuex-mutations.html)をご覧ください。
 
 このガイドのテストのソースコードは[こちら](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/getters.spec.js)です。
 
@@ -91,8 +91,8 @@ describe("poodlesByAge", () => {
 
 ## 結論
 
-- `getters` は通常の JavaScript の関数である
-- `getters` のテストを独立して行う場合、state を手動で渡す必要がある
-- ゲッターを他のゲッターで使用する場合、そのゲッターの期待する返り値をスタブするべき。これにより、テストをよりコントロールすることができ、テスト対象のゲッターのテストに集中することができる
+- `getters` は通常の JavaScript の関数です。
+- `getters` のテストを独立して行う場合、state を手動で渡す必要があります。
+- ゲッターを他のゲッターで使用する場合、そのゲッターの期待する返り値をスタブするべきです。これにより、テストをよりコントロールすることができ、テスト対象のゲッターのテストに集中することができます。
 
 この記事のテストの完成形は[こちら](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/getters.spec.js)です。
