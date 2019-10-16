@@ -327,8 +327,10 @@ import mockModule from "@/bust-cache.js"
 jest.mock("@/bust-cache.js", () => ({ bustCache: jest.fn() }))
 
 it("calls bustCache and next when leaving the route", () => {
+  const wrapper = shallowMount(NestedRoute);
   const next = jest.fn()
-  NestedRoute.beforeRouteLeave(undefined, undefined, next)
+  NestedRoute.beforeRouteLeave.call(wrapper.vm, undefined, undefined, next)
+
 
   expect(mockModule.bustCache).toHaveBeenCalled()
   expect(next).toHaveBeenCalled()
