@@ -200,4 +200,4 @@ Since we have a good test suite, we can now easily and confidently refactor.
 
 - By passing `propsData` when mounting a component, you can set the `props` to be used in the test
 - Factory functions can be used to DRY your tests
-- Intead of `propsData`, you can also use [`setProps`](https://vue-test-utils.vuejs.org/api/wrapper-array/#setprops-props) to set prop values during tests
+- Instead of `propsData`, you can also use [`setProps`](https://vue-test-utils.vuejs.org/api/wrapper-array/#setprops-props) to set prop values during tests
