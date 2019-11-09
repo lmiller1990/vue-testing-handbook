@@ -1,7 +1,14 @@
 module.exports = {
   base: "/vue-testing-handbook/",
   title: "Vue testing handbook",
-  ga: "UA-122389064-1",
+  plugins: [
+    [
+      '@vuepress/google-analytics',
+      {
+        'ga': 'UA-122389064-1'
+      }
+    ]
+  ],
   head: [
     ['link', { rel: 'icon', href: 'https://lmiller1990.github.io/vue-testing-handbook/img/favicon.png' }],
     ['meta',{ property:"og:title", content:"Vue testing handbook"}],
