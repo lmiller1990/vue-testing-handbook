@@ -15,12 +15,13 @@ const store = new Vuex.Store({
 
 describe("ComponentWithButtons", () => {
 
-  it("commits a mutation when a button is clicked", () => {
+  it("commits a mutation when a button is clicked", async () => {
     const wrapper = shallowMount(ComponentWithButtons, {
       store, localVue
     })
 
     wrapper.find(".commit").trigger("click")
+    await wrapper.vm.$nextTick()    
 
     expect(mutations.testMutation).toHaveBeenCalledWith(
       {},
@@ -28,7 +29,7 @@ describe("ComponentWithButtons", () => {
     )
   })
 
-  it("dispatch a namespaced action when button is clicked", () => {
+  it("dispatch a namespaced action when button is clicked", async () => {
     const store = new Vuex.Store()
     store.dispatch = jest.fn()
 
@@ -37,6 +38,7 @@ describe("ComponentWithButtons", () => {
     })
 
     wrapper.find(".namespaced-dispatch").trigger("click")
+    await wrapper.vm.$nextTick()
 
     expect(store.dispatch).toHaveBeenCalledWith(
       'namespaced/very/deeply/testAction',
@@ -45,7 +47,7 @@ describe("ComponentWithButtons", () => {
   })
 
 
-  it("dispatches an action when a button is clicked", () => {
+  it("dispatches an action when a button is clicked", async () => {
     const mockStore = { dispatch: jest.fn() }
     const wrapper = shallowMount(ComponentWithButtons, {
       mocks: {
@@ -54,6 +56,7 @@ describe("ComponentWithButtons", () => {
     })
 
     wrapper.find(".dispatch").trigger("click")
+    await wrapper.vm.$nextTick()
     
     expect(mockStore.dispatch).toHaveBeenCalledWith(
       "testAction" , { msg: "Test Dispatch" })
