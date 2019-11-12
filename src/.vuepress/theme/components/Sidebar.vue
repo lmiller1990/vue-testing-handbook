@@ -1,9 +1,10 @@
 <template>
   <aside class="sidebar">
+    <CarbonAds />
     <!--
       <img id="ad" :src="$withBase('ad.png')" />
-    -->
       <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DKK3L&placement=lmiller1990githubio" id="_carbonads_js"></script>
+    -->
     <NavLinks/>
     <slot name="top"/>
     <SidebarLinks :depth="0" :items="items"/>
@@ -14,11 +15,12 @@
 <script>
 import SidebarLinks from '@theme/components/SidebarLinks.vue'
 import NavLinks from '@theme/components/NavLinks.vue'
+import CarbonAds from '@theme/components/CarbonAds.vue'
 
 export default {
   name: 'Sidebar',
 
-  components: { SidebarLinks, NavLinks },
+  components: { SidebarLinks, NavLinks, CarbonAds },
 
   props: ['items']
 }
