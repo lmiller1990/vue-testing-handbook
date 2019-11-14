@@ -25,6 +25,10 @@ We will also explore how to use the Jest API to make our tests more robust, such
 - mocking and spying on modules
 - using snapshots
 
-## Languages
+## Further Reading
 
-For now, the guide is in English, Japanese and Russian.
+Other useful resources include:
+
+- [Official docs](https://vue-test-utils.vuejs.org/)
+- [Book](https://www.manning.com/books/testing-vue-js-applications) written by the author of `vue-test-utils`
+- [This awesome course on VueSchool](https://vueschool.io/courses/learn-how-to-test-vuejs-components?friend=vth) by several Vue core contributors
