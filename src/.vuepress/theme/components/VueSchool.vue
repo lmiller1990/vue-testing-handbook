@@ -2,6 +2,7 @@
   <a 
     href="https://vueschool.io/courses/learn-how-to-test-vuejs-components?friend=vth"
     class="wrap"
+    @click="track"
   >
     <img :src="$withBase('vue-school.png')">
   </a>
@@ -10,7 +11,13 @@
 
 <script>
 export default {
-  name: 'VueSchool'
+  name: 'VueSchool',
+
+  methods: {
+    track() {
+      window.ga('send', 'event', 'affiliate', 'click')
+    }
+  }
 }
 </script>
 
