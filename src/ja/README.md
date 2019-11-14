@@ -26,6 +26,8 @@ JestのAPIでテストをもっと安定させる方法も紹介します。例�
 - モジュールのモックとスパイ
 - スナップショット
 
-## 言語
+## 他の参考
 
-英語と日本語でサポートします。
+- [公式のドキュメント](https://vue-test-utils.vuejs.org/)
+- [`vue-test-utils`を作った人が書いた本](https://www.manning.com/books/testing-vue-js-applications) （英語）
+- [VueSchoolの`vue-test-utils`のコース](https://vueschool.io/courses/learn-how-to-test-vuejs-components?friend=vth) （英語）
