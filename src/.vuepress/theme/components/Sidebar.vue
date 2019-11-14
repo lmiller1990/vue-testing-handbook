@@ -8,6 +8,10 @@
     <NavLinks/>
     <slot name="top"/>
     <SidebarLinks :depth="0" :items="items"/>
+    <VueSchool />
+    <div class="info">
+      Prefer videos? I recommend Vue School's <a href="https://vueschool.io/courses/learn-how-to-test-vuejs-components?friend=vth">Testing Vue.js Components course</a> to learn vue-test-utils, Jest and the other tooling with guys who literally built Vue.js.
+    </div>
     <slot name="bottom"/>
   </aside>
 </template>
@@ -16,11 +20,12 @@
 import SidebarLinks from '@theme/components/SidebarLinks.vue'
 import NavLinks from '@theme/components/NavLinks.vue'
 import CarbonAds from '@theme/components/CarbonAds.vue'
+import VueSchool from '@theme/components/VueSchool.vue'
 
 export default {
   name: 'Sidebar',
 
-  components: { SidebarLinks, NavLinks, CarbonAds },
+  components: { SidebarLinks, NavLinks, CarbonAds, VueSchool },
 
   props: ['items']
 }
@@ -120,4 +125,8 @@ export default {
         top calc(1rem - 2px)
     & > .sidebar-links
       padding 1rem 0
+
+.info
+  padding 8px 18px
+  font-size: 0.9em
 </style>
