@@ -17,7 +17,7 @@ export default {
   methods: {
     track() {
       console.log('Opening Vue school')
-      window.ga('send', 'event', 'affiliate', 'click')
+      window.ga('send', 'event', 'affiliate', 'click', 'vue-school')
     }
   }
 }
