@@ -1,6 +1,7 @@
 <template>
   <a 
     href="https://vueschool.io/courses/learn-how-to-test-vuejs-components?friend=vth"
+    target="_blank"
     class="wrap"
     @click="track"
   >
@@ -15,6 +16,7 @@ export default {
 
   methods: {
     track() {
+      console.log('Opening Vue school')
       window.ga('send', 'event', 'affiliate', 'click')
     }
   }
