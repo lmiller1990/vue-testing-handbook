@@ -10,7 +10,7 @@
     <SidebarLinks :depth="0" :items="items"/>
     <VueSchool />
     <div class="info">
-      Prefer videos? I recommend Vue School's <a href="https://vueschool.io/courses/learn-how-to-test-vuejs-components?friend=vth">Testing Vue.js Components course</a> to learn vue-test-utils, Jest and the other tooling with guys who literally built Vue.js.
+      Prefer videos? I recommend Vue School's <a href="https://vueschool.io/courses/learn-how-to-test-vuejs-components?friend=vth">Testing Vue.js</a> <a href="https://vueschool.io/courses/learn-how-to-test-vuejs-components?friend=vth">Components course</a> to learn vue-test-utils, Jest and the other tooling with guys who literally built Vue.js.
     </div>
     <slot name="bottom"/>
   </aside>
