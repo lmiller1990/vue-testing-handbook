@@ -17,6 +17,34 @@
     <NavLinks/>
     <slot name="top"/>
     <SidebarLinks :depth="0" :items="items"/>
+<<<<<<< HEAD
+=======
+    <VueSchool />
+    <div 
+      class="info"
+    >
+      Prefer videos? I recommend Vue School's 
+
+      <a 
+        href="https://vueschool.io/courses/learn-how-to-test-vuejs-components?friend=vth"
+        target="_blank" 
+        @click="track"
+    
+        >
+          Testing Vue.js
+        </a> 
+
+        <a 
+          target="_blank" 
+          href="https://vueschool.io/courses/learn-how-to-test-vuejs-components?friend=vth"
+          @click="track"
+        >
+          Components course
+        </a> 
+
+        to learn vue-test-utils, Jest and the other tooling with guys who literally built Vue.js.
+    </div>
+>>>>>>> 5b8a6e42eb5242554618324a911b36daf590643b
     <slot name="bottom"/>
   </aside>
 </template>
@@ -32,7 +60,14 @@ export default {
 
   components: { SidebarLinks, NavLinks, CarbonAds, VueSchool },
 
-  props: ['items']
+  props: ['items'],
+
+  methods: {
+    track() {
+      console.log('Opening Vue school')
+      window.ga('send', 'event', 'affiliate', 'click', 'vue-school')
+    }
+  }
 }
 </script>
 
