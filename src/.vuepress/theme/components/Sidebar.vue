@@ -6,20 +6,7 @@
 
     <br />
     <VueSchool />
-    <div class="info">
-      Prefer videos? I recommend Vue School's <a href="https://vueschool.io/courses/learn-how-to-test-vuejs-components?friend=vth">Testing Vue.js Components course</a> to learn vue-test-utils, Jest and the other tooling with guys who literally built Vue.js.
-    </div>
 
-    <!--
-      <img id="ad" :src="$withBase('ad.png')" />
-      <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DKK3L&placement=lmiller1990githubio" id="_carbonads_js"></script>
-    -->
-    <NavLinks/>
-    <slot name="top"/>
-    <SidebarLinks :depth="0" :items="items"/>
-<<<<<<< HEAD
-=======
-    <VueSchool />
     <div 
       class="info"
     >
@@ -44,7 +31,14 @@
 
         to learn vue-test-utils, Jest and the other tooling with guys who literally built Vue.js.
     </div>
->>>>>>> 5b8a6e42eb5242554618324a911b36daf590643b
+
+    <!--
+      <img id="ad" :src="$withBase('ad.png')" />
+      <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DKK3L&placement=lmiller1990githubio" id="_carbonads_js"></script>
+    -->
+    <NavLinks/>
+    <slot name="top"/>
+    <SidebarLinks :depth="0" :items="items"/>
     <slot name="bottom"/>
   </aside>
 </template>
