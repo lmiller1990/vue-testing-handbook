@@ -8,6 +8,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@vue/composition-api": "^0.3.2",
     "axios": "^0.19.0",
     "flush-promises": "^1.0.0",
     "vue": "^2.6.10",

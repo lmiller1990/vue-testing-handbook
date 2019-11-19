@@ -57,8 +57,9 @@ module.exports = {
           ['/vuex-getters', 'Vuex - Getters'],
           ['/vuex-in-components', 'Vuex in components - $state and getters'],
           ['/vuex-in-components-mutations-and-actions', 'Vuex in components - mutations and actions'],
-          ['/jest-mocking-modules', 'Jest - mocking modules'],
           ['/vue-router', 'Vue Router'],
+          ['/composition-api', 'Composition API'],
+          ['/jest-mocking-modules', 'Jest - mocking modules'],
         ]
       },
       '/ja/': {
@@ -83,8 +84,9 @@ module.exports = {
           ['/ja/vuex-getters', 'Vuex - ゲッター'],
           ['/ja/vuex-in-components', 'コンポーネントの中でVuexのテスト'],
           ['/ja/vuex-in-components-mutations-and-actions.md', 'Vuex in components - mutations and actions'],
-          ['/ja/jest-mocking-modules', 'Jestでモジュールをモック'],
           ['/ja/vue-router', 'Vueルーター'],
+          ['/ja/jest-mocking-modules', 'Jestでモジュールをモック'],
+          ['/ja/composition-api', 'Composition API'],
         ]
       },
       '/ru/': {
@@ -109,8 +111,9 @@ module.exports = {
           ['/ru/vuex-getters', 'Vuex - Геттеры'],
           ['/ru/vuex-in-components', 'Vuex в компонентах - $state и геттеры'],
           ['/ru/vuex-in-components-mutations-and-actions', 'Vuex в компонентах - мутации и действия'],
-          ['/ru/jest-mocking-modules', 'Jest - мокаем модули'],
           ['/ru/vue-router', 'Vue Router'],
+          ['/ru/jest-mocking-modules', 'Jest - мокаем модули'],
+          ['/ru/composition-api', 'Composition API'],
         ]
       }
     }
