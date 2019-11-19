@@ -1,6 +1,6 @@
 module.exports = {
   base: "/vue-testing-handbook/",
-  title: "Vue testing handbook",
+  title: "Vue Testing Handbook",
   plugins: [
     [
       '@vuepress/google-analytics',
@@ -11,7 +11,7 @@ module.exports = {
   ],
   head: [
     ['link', { rel: 'icon', href: 'https://lmiller1990.github.io/vue-testing-handbook/img/favicon.png' }],
-    ['meta',{ property:"og:title", content:"Vue testing handbook"}],
+    ['meta',{ property:"og:title", content:"Vue Testing Handbook"}],
     ['meta',{ property:"og:description", content:"Vue testing handbook"}],
     ['meta',{ property:"og:type", content:"website"}],
     ['meta',{ property:"og:url", content:"https://lmiller1990.github.io/vue-testing-handbook/"}],
@@ -20,7 +20,7 @@ module.exports = {
   locales: {
     '/': {
       lang: 'en-US',
-      title: 'Vue testing handbook',
+      title: 'Vue Testing Handbook',
     },
     '/ja/': {
       lang: 'ja-JP',
