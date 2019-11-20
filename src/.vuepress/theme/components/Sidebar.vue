@@ -1,8 +1,6 @@
 <template>
   <aside class="sidebar">
-    <!--
-      <CarbonAds />
-    -->
+  <CarbonAds />
 
     <br />
     <VueSchool />
