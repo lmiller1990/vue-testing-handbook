@@ -5,7 +5,10 @@
     class="wrap"
     @click="track"
   >
-    <img :src="$withBase('vue-school.png')">
+    <img :src="$withBase('vueschool-banner-small.png')">
+    <!--
+      <img :src="$withBase('vue-school.png')">
+    -->
   </a>
 </div>
 </template>
@@ -30,12 +33,14 @@ export default {
 }
 
 img {
+  border: 3px solid #1d285f;
   width: 100%;
 }
 
 @media (max-width:600px)  {
   img {
-    height: 70px;
+    /* height: 70px; */
+    height: 40px;
   }
 }
 </style>
