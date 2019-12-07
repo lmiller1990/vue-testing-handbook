@@ -113,6 +113,8 @@ describe('SubmitButton.vue', () => {
       }
     })
 
+    console.log(wrapper.html())
+    
     expect(wrapper.find("span").text()).toBe("Admin Privileges")
     expect(wrapper.find("button").text()).toBe("submit")
   })
