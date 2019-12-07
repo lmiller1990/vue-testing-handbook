@@ -5,10 +5,7 @@
     class="wrap"
     @click="track"
   >
-    <img :src="$withBase('vueschool-banner-small.png')">
-    <!--
-      <img :src="$withBase('vue-school.png')">
-    -->
+    <img :src="$withBase('vue-school.png')">
   </a>
 </div>
 </template>
