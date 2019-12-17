@@ -1,10 +1,17 @@
 module.exports = {
   base: "/vue-testing-handbook/",
-  title: "Vue testing handbook",
-  ga: "UA-122389064-1",
+  title: "Vue Testing Handbook",
+  plugins: [
+    [
+      '@vuepress/google-analytics',
+      {
+        'ga': 'UA-122389064-1'
+      }
+    ]
+  ],
   head: [
     ['link', { rel: 'icon', href: 'https://lmiller1990.github.io/vue-testing-handbook/img/favicon.png' }],
-    ['meta',{ property:"og:title", content:"Vue testing handbook"}],
+    ['meta',{ property:"og:title", content:"Vue Testing Handbook"}],
     ['meta',{ property:"og:description", content:"Vue testing handbook"}],
     ['meta',{ property:"og:type", content:"website"}],
     ['meta',{ property:"og:url", content:"https://lmiller1990.github.io/vue-testing-handbook/"}],
@@ -13,7 +20,7 @@ module.exports = {
   locales: {
     '/': {
       lang: 'en-US',
-      title: 'Vue testing handbook',
+      title: 'Vue Testing Handbook',
     },
     '/ja/': {
       lang: 'ja-JP',
@@ -50,8 +57,9 @@ module.exports = {
           ['/vuex-getters', 'Vuex - Getters'],
           ['/vuex-in-components', 'Vuex in components - $state and getters'],
           ['/vuex-in-components-mutations-and-actions', 'Vuex in components - mutations and actions'],
-          ['/jest-mocking-modules', 'Jest - mocking modules'],
           ['/vue-router', 'Vue Router'],
+          ['/composition-api', 'Composition API'],
+          ['/jest-mocking-modules', 'Jest - mocking modules'],
         ]
       },
       '/ja/': {
@@ -76,8 +84,36 @@ module.exports = {
           ['/ja/vuex-getters', 'Vuex - ゲッター'],
           ['/ja/vuex-in-components', 'コンポーネントの中でVuexのテスト'],
           ['/ja/vuex-in-components-mutations-and-actions.md', 'Vuex in components - mutations and actions'],
-          ['/ja/jest-mocking-modules', 'Jestでモジュールをモック'],
           ['/ja/vue-router', 'Vueルーター'],
+          ['/ja/jest-mocking-modules', 'Jestでモジュールをモック'],
+          ['/ja/composition-api', 'Composition API'],
+        ]
+      },
+      '/ru/': {
+        label: 'Русский',
+        selectText: 'Переводы',
+        lastUpdated: 'Последнее обновление',
+        editLinkText: 'Редактировать эту страницу на GitHub',
+        sidebar: [
+          ['/ru/', 'Введение'],
+          ['/ru/setting-up-for-tdd', 'Подготовка к TDD'],
+          ['/ru/rendering-a-component', 'Отрисовка компонентов'],
+          ['/ru/components-with-props', 'Тестирование входных параметров'],
+          ['/ru/computed-properties', 'Вычисляемые свойства'],
+          ['/ru/simulating-user-input', 'Симулирование пользовательского ввода'],
+          ['/ru/testing-emitted-events', 'Тестирование пользовательских событий'],
+          ['/ru/mocking-global-objects', 'Мокаем глобальные объекты'],
+          ['/ru/stubbing-components', 'Заглушки для компонентов'],
+          ['/ru/finding-elements-and-components', 'Поиск элементов и компонентов'],
+          ['/ru/testing-vuex', 'Тестирование Vuex'],
+          ['/ru/vuex-mutations', 'Vuex - Мутации'],
+          ['/ru/vuex-actions', 'Vuex - Действия'],
+          ['/ru/vuex-getters', 'Vuex - Геттеры'],
+          ['/ru/vuex-in-components', 'Vuex в компонентах - $state и геттеры'],
+          ['/ru/vuex-in-components-mutations-and-actions', 'Vuex в компонентах - мутации и действия'],
+          ['/ru/vue-router', 'Vue Router'],
+          ['/ru/jest-mocking-modules', 'Jest - мокаем модули'],
+          ['/ru/composition-api', 'Composition API'],
         ]
       },
       '/ru/': {

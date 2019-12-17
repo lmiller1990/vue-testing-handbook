@@ -57,18 +57,19 @@ Pretty simple, we just set `submitted` to be `true` when the form is submitted, 
 
 ## Writing the test
 
-Let's see a test:
+Let's see a test. We are marking this test as `async` - read on to find out why.
 
 ```js
 import { shallowMount } from "@vue/test-utils"
 import FormSubmitter from "@/components/FormSubmitter.vue"
 
 describe("FormSubmitter", () => {
-  it("reveals a notification when submitted", () => {
+  it("reveals a notification when submitted", async () => {
     const wrapper = shallowMount(FormSubmitter)
 
     wrapper.find("[data-username]").setValue("alice")
     wrapper.find("form").trigger("submit.prevent")
+    await wrapper.vm.$nextTick()
 
     expect(wrapper.find(".message").text())
       .toBe("Thank you for your submission, alice.")
@@ -78,7 +79,9 @@ describe("FormSubmitter", () => {
 
 This test is fairly self explanatory. We `shallowMount` the component, set the username and use the `trigger` method `vue-test-utils` provides to simulate user input. `trigger` works on custom events, as well as events that use modifiers, like `submit.prevent`, `keydown.enter`, and so on.
 
-This test also follows the three steps of unit testing:
+Notice after calling `trigger`, we do `await wrapper.vm.$nextTick()`. This is why we had to mark the test as `async` - so we can use `await`. As of `vue-test-utils` beta 28, you need to call `nextTick` to ensure Vue's reactivity system updates the DOM. Sometimes you can get away without calling `nextTick`, but if you components start to get complex, you can hit a race condition and your assertion might run before Vue has updated the DOM. You can read more about this in the official [vue-test-utils documentation](https://vue-test-utils.vuejs.org/guides/#updates-applied-by-vue).
+
+The above test also follows the three steps of unit testing:
 
 1. arrange (set up for the test. In our case, we render the component).
 2. act (execute actions on the system)
@@ -241,6 +244,8 @@ it("reveals a notification when submitted", async () => {
     .toBe("Thank you for your submission, alice.")
 })
 ```
+
+Using `flush-promises` has the nice side effect of ensuring all the promises, including `nextTick` have resolved, and Vue has updated the DOM.
 
 Now the test passes. The source code for `flush-promises` is only about 10 lines long, if you are interested in Node.js it is worth reading and understanding how it works.
 

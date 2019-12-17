@@ -85,16 +85,22 @@ const localVue = createLocalVue()
 localVue.use(VueRouter)
 
 describe("App", () => {
-  it("renders a child component via routing", () => {
+  it("renders a child component via routing", async () => {
     const router = new VueRouter({ routes })
-    const wrapper = mount(App, { localVue, router })
+    const wrapper = mount(App, { 
+      localVue,
+      router
+    })
 
     router.push("/nested-route")
+    await wrapper.vm.$nextTick()
 
     expect(wrapper.find(NestedRoute).exists()).toBe(true)
   })
 })
 ```
+
+* Notice the tests are marked `await` and call `nextTick`. See [here](/simulating-user-input.html#writing-the-test) for more details on why.
 
 As usual, we start by importing the various modules for the test. Notably, we are importing the actual routes we will be using for the application. This is ideal in some ways - if the real routing breaks, the unit tests should fail, letting us fix the problem before deploying the application.
 
@@ -281,7 +287,7 @@ describe("beforeEach", () => {
     expect(next).toHaveBeenCalled()
   })
 
-  it("busts the cache when going to /user", () => {
+  it("does not bust the cache when going to /user", () => {
     const to = {
       matched: [{ meta: { shouldBustCache: false } }]
     }
@@ -326,9 +332,12 @@ import mockModule from "@/bust-cache.js"
 
 jest.mock("@/bust-cache.js", () => ({ bustCache: jest.fn() }))
 
-it("calls bustCache and next when leaving the route", () => {
+it("calls bustCache and next when leaving the route", async () => {
+  const wrapper = shallowMount(NestedRoute);
   const next = jest.fn()
-  NestedRoute.beforeRouteLeave(undefined, undefined, next)
+  NestedRoute.beforeRouteLeave.call(wrapper.vm, undefined, undefined, next)
+  await wrapper.vm.$nextTick()
+
 
   expect(mockModule.bustCache).toHaveBeenCalled()
   expect(next).toHaveBeenCalled()

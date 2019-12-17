@@ -13,7 +13,7 @@ jest.mock("@/components/NestedRoute.vue", () => ({
 }))
 
 describe("App", () => {
-  it("renders a child component via routing", () => {
+  it("renders a child component via routing", async () => {
     const router = new VueRouter({ routes })
     const wrapper = mount(App, { 
       localVue,
@@ -21,6 +21,7 @@ describe("App", () => {
     })
 
     router.push("/nested-route")
+    await wrapper.vm.$nextTick()
 
     expect(wrapper.find(NestedRoute).exists()).toBe(true)
   })
