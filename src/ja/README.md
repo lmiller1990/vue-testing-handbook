@@ -6,7 +6,7 @@ Vue.jsテストハンドブックにようこそ！
 
 各セクションはその他のセクションとは独立してます。最初は`vue-cli`をインストールしてテスト環境を準備してから最初のテストを書きます。そしてコンポーネントをレンダーする`mount`と`shallowMount`の２つの方法とそれぞれの違いを説明します。
 
-続いてコンポーネントをテストするときによくある怒る場面を紹介します。例えば：
+続いてコンポーネントをテストするときによくある場面を紹介します。例えば：
 
 - `props`を受け取る
 - 算出プロパティ
@@ -20,12 +20,14 @@ Vue.jsテストハンドブックにようこそ！
 - Vueルーターのテスト
 - 第三者のコンポーネントのテスト
 
-JestのAPIでテストをもっと安定いさせる方法も紹介します。例えば：
+JestのAPIでテストをもっと安定させる方法も紹介します。例えば：
 
 - APIレスポンスをモックする
 - モジュールのモックとスパイ
 - スナップショット
 
-## 言語
+## 他の参考
 
-英語と日本語でサポートします。
+- [公式のドキュメント](https://vue-test-utils.vuejs.org/)
+- [`vue-test-utils`を作った人が書いた本](https://www.manning.com/books/testing-vue-js-applications) （英語）
+- [VueSchoolの`vue-test-utils`のコース](https://vueschool.io/courses/learn-how-to-test-vuejs-components?friend=vth) （英語）
