@@ -1,6 +1,6 @@
 module.exports = {
-  base: "/vue-testing-handbook/",
-  title: "Vue Testing Handbook",
+  base: '/vue-testing-handbook/',
+  title: 'Vue Testing Handbook',
   plugins: [
     [
       '@vuepress/google-analytics',
@@ -11,11 +11,11 @@ module.exports = {
   ],
   head: [
     ['link', { rel: 'icon', href: 'https://lmiller1990.github.io/vue-testing-handbook/img/favicon.png' }],
-    ['meta',{ property:"og:title", content:"Vue Testing Handbook"}],
-    ['meta',{ property:"og:description", content:"Vue testing handbook"}],
-    ['meta',{ property:"og:type", content:"website"}],
-    ['meta',{ property:"og:url", content:"https://lmiller1990.github.io/vue-testing-handbook/"}],
-    ['meta',{ property:"og:image", content: "https://lmiller1990.github.io/vue-testing-handbook/img/og.png" }],
+    ['meta', { property:'og:title', content:'Vue Testing Handbook'}],
+    ['meta', { property:'og:description', content:'Vue testing handbook'}],
+    ['meta', { property:'og:type', content:'website'}],
+    ['meta', { property:'og:url', content:'https://lmiller1990.github.io/vue-testing-handbook/'}],
+    ['meta', { property:'og:image', content: 'https://lmiller1990.github.io/vue-testing-handbook/img/og.png' }],
   ],
   locales: {
     '/': {
@@ -28,7 +28,7 @@ module.exports = {
     },
     '/ru/': {
       lang: 'ru-RU',
-      title: 'Руководство по тестированию Vue-компонентов',
+      title: 'Руководство по тестированию Vue-приложений',
     },
   },
   themeConfig: {
@@ -112,36 +112,10 @@ module.exports = {
           ['/ru/vuex-in-components', 'Vuex в компонентах - $state и геттеры'],
           ['/ru/vuex-in-components-mutations-and-actions', 'Vuex в компонентах - мутации и действия'],
           ['/ru/vue-router', 'Vue Router'],
-          ['/ru/jest-mocking-modules', 'Jest - мокаем модули'],
           ['/ru/composition-api', 'Composition API'],
+          ['/ru/jest-mocking-modules', 'Jest - мокаем модули'],
         ]
       },
-      '/ru/': {
-        label: 'Русский',
-        selectText: 'Переводы',
-        lastUpdated: 'Последнее обновление',
-        editLinkText: 'Редактировать эту страницу на GitHub',
-        sidebar: [
-          ['/ru/', 'Введение'],
-          ['/ru/setting-up-for-tdd', 'Подготовка к TDD'],
-          ['/ru/rendering-a-component', 'Отрисовка компонентов'],
-          ['/ru/components-with-props', 'Тестирование входных параметров'],
-          ['/ru/computed-properties', 'Вычисляемые свойства'],
-          ['/ru/simulating-user-input', 'Симулирование пользовательского ввода'],
-          ['/ru/testing-emitted-events', 'Тестирование пользовательских событий'],
-          ['/ru/mocking-global-objects', 'Мокаем глобальные объекты'],
-          ['/ru/stubbing-components', 'Заглушки для компонентов'],
-          ['/ru/finding-elements-and-components', 'Поиск элементов и компонентов'],
-          ['/ru/testing-vuex', 'Тестирование Vuex'],
-          ['/ru/vuex-mutations', 'Vuex - Мутации'],
-          ['/ru/vuex-actions', 'Vuex - Действия'],
-          ['/ru/vuex-getters', 'Vuex - Геттеры'],
-          ['/ru/vuex-in-components', 'Vuex в компонентах - $state и геттеры'],
-          ['/ru/vuex-in-components-mutations-and-actions', 'Vuex в компонентах - мутации и действия'],
-          ['/ru/jest-mocking-modules', 'Jest - мокаем модули'],
-          ['/ru/vue-router', 'Vue Router'],
-        ]
-      }
     }
   },
   markdown: {
@@ -150,4 +124,4 @@ module.exports = {
       md.use(require('markdown-it-include'))
     }
   }
-}
+};
