@@ -106,7 +106,7 @@ describe("App", () => {
 
 可以在 `<App>` 测试中使用一个相同的 `localVue`，并将其声明在第一个 `describe` 块之外。不过，由于要为不同的路由做不同的测试，所以把 `router` 定义在 `it` 块里。
 
-另一个值得注意的有别于其他手册的点是，本书中用了 `mount` 而非 `shallowMount`。如果用了 `shallowMount`，则 `<router-link>` 就会被忽略，不管当前路由是什么，渲染的其实都是一个无用的 stub 组件。
+另一个值得注意的有别于其他指南的点是，本书中用了 `mount` 而非 `shallowMount`。如果用了 `shallowMount`，则 `<router-link>` 就会被忽略，不管当前路由是什么，渲染的其实都是一个无用的 stub 组件。
 
 ## 为使用了 `mount` 的大型渲染树做些变通
 

@@ -1,34 +1,34 @@
-## What is this guide?
+## 这本指南是什么？
 
-Welcome to the Vue.js testing handbook!
+欢迎来到 Vue.js 测试指南！
 
-This is a collection of short, focused examples on how to test Vue components. It uses `vue-test-utils`, the official library for testing Vue components, and Jest, a modern testing framework. It covers the `vue-test-utils` API, as well as best practises for testing components.
+这是一系列关于如何测试 Vue 组件的短小而目标明确的示例。它使用了测试 Vue 组件的官方库 [`vue-test-utils`](https://github.com/vuejs/vue-test-utils)，以及一个现代测试框架 [Jest](https://jestjs.io/)。本书不但涵盖了 `vue-test-utils` 的 API，而且也是测试组件的最佳实践。
 
-Each section is independent from the others. We start of by setting up an environment with `vue-cli` and writing a simple test. Next, two ways to render a component are discussed - `mount` and `shallowMount`. The differences will be demonstrated and explained.
+每个章节都是互相独立的。我们从通过 `vue-cli` 设置一个环境并编写一个简单的测试起步。而后，讨论了两种渲染一个组件的方式 -- `mount` 和 `shallowMount`。其区别将被演示和说明。
 
-From then on, we cover how to test various scenarios that arise when testing components, such as testing components that:
+从那时起，我们覆盖了如何应对测试组件时出现的各种情景，诸如：
 
-- receive props
-- use computed properties
-- render other components
-- emit events
+- 接受 props
+- 使用 computed 属性
+- 渲染其他组件
+- emit 事件
 
-and so forth. We then move on to more interesting cases, such as:
+等等。其后我们继续向更多有趣的场景进发，比如：
 
-- best practises for testing Vuex (in components, and independently)
-- testing Vue router
-- testing involving third party components
+- 测试 Vuex (在组件中，并且是独立的) 的最佳实践
+- 测试 Vue router
+- 测试包含的第三方组件
 
-We will also explore how to use the Jest API to make our tests more robust, such as:
+我们也将探索如何使用 Jest API 让我们的测试更健壮，如：
 
-- mocking API responses
-- mocking and spying on modules
-- using snapshots
+- mocking API 响应
+- 模块上的 mocking 和 spying
+- 使用 snapshots
 
-## Further Reading
+## 延伸阅读
 
-Other useful resources include:
+更多有用的资源包括：
 
 - [Official docs](https://vue-test-utils.vuejs.org/)
-- [Book](https://www.manning.com/books/testing-vue-js-applications) written by the author of `vue-test-utils`
-- [This awesome course on VueSchool](https://vueschool.io/courses/learn-how-to-test-vuejs-components?friend=vth) by several Vue core contributors
+- [Book](https://www.manning.com/books/testing-vue-js-applications) 另一位作者写的 `vue-test-utils`
+- [This awesome course on VueSchool](https://vueschool.io/courses/learn-how-to-test-vuejs-components?friend=vth) 由多位 Vue 核心贡献者编写
