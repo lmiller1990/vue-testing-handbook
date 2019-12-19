@@ -1,6 +1,6 @@
 module.exports = {
-  base: "/vue-testing-handbook/",
-  title: "Vue Testing Handbook",
+  base: '/vue-testing-handbook/',
+  title: 'Vue Testing Handbook',
   plugins: [
     [
       '@vuepress/google-analytics',
@@ -11,11 +11,11 @@ module.exports = {
   ],
   head: [
     ['link', { rel: 'icon', href: 'https://lmiller1990.github.io/vue-testing-handbook/img/favicon.png' }],
-    ['meta',{ property:"og:title", content:"Vue Testing Handbook"}],
-    ['meta',{ property:"og:description", content:"Vue testing handbook"}],
-    ['meta',{ property:"og:type", content:"website"}],
-    ['meta',{ property:"og:url", content:"https://lmiller1990.github.io/vue-testing-handbook/"}],
-    ['meta',{ property:"og:image", content: "https://lmiller1990.github.io/vue-testing-handbook/img/og.png" }],
+    ['meta', { property:'og:title', content:'Vue Testing Handbook'}],
+    ['meta', { property:'og:description', content:'Vue testing handbook'}],
+    ['meta', { property:'og:type', content:'website'}],
+    ['meta', { property:'og:url', content:'https://lmiller1990.github.io/vue-testing-handbook/'}],
+    ['meta', { property:'og:image', content: 'https://lmiller1990.github.io/vue-testing-handbook/img/og.png' }],
   ],
   locales: {
     '/': {
@@ -28,7 +28,7 @@ module.exports = {
     },
     '/ru/': {
       lang: 'ru-RU',
-      title: 'Руководство по тестированию Vue-компонентов',
+      title: 'Руководство по тестированию Vue-приложений',
     },
   },
   themeConfig: {
@@ -112,10 +112,10 @@ module.exports = {
           ['/ru/vuex-in-components', 'Vuex в компонентах - $state и геттеры'],
           ['/ru/vuex-in-components-mutations-and-actions', 'Vuex в компонентах - мутации и действия'],
           ['/ru/vue-router', 'Vue Router'],
-          ['/ru/jest-mocking-modules', 'Jest - мокаем модули'],
           ['/ru/composition-api', 'Composition API'],
+          ['/ru/jest-mocking-modules', 'Jest - мокаем модули'],
         ]
-      }
+      },
     }
   },
   markdown: {
@@ -124,4 +124,4 @@ module.exports = {
       md.use(require('markdown-it-include'))
     }
   }
-}
+};

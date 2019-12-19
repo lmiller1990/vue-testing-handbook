@@ -1,8 +1,8 @@
 [English](https://github.com/lmiller1990/vue-testing-handbook#vue-testing-handbook) | [日本語](https://github.com/lmiller1990/vue-testing-handbook#vue-testing-handbook-1) | [Русский](https://github.com/webistomin/vue-testing-handbook/blob/master/README.ru.md)
 
-## Руководство по тестированию Vue приложений
+## Руководство по тестированию Vue-приложений
 
-Добро пожаловать в руководство по тестированию Vue приложений!
+Добро пожаловать в руководство по тестированию Vue-приложений!
 
 ## Что это?
 
