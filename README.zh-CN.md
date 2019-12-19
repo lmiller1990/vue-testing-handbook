@@ -1,4 +1,4 @@
-[English](https://github.com/lmiller1990/vue-testing-handbook#vue-testing-handbook) | [日本語](https://github.com/lmiller1990/vue-testing-handbook/blob/master/src/ja/README.md) | [Русский](https://github.com/webistomin/vue-testing-handbook/blob/master/README.ru.md) | [简体中文](https://github.com/webistomin/vue-testing-handbook/blob/master/README.zh-CN.md)
+[English](https://github.com/lmiller1990/vue-testing-handbook#vue-testing-handbook) | [日本語](https://github.com/lmiller1990/vue-testing-handbook/blob/master/src/ja/README.md) | [Русский](https://github.com/webistomin/vue-testing-handbook/blob/master/README.ru.md) | [简体中文](https://github.com/tonylua/vue-testing-handbook/blob/master/README.zh-CN.md)
 
 ## Vue 测试指南
 
@@ -10,7 +10,7 @@
 
 ## 语言
 
-这本指南最初由英文编写而成。目前也有 [简体中文](https://github.com/lmiller1990/vue-testing-handbook/blob/master/src/zh-CN/README.md)、[俄文](https://github.com/lmiller1990/vue-testing-handbook/blob/master/src/ru/README.md) 和 [日文](https://github.com/lmiller1990/vue-testing-handbook/blob/master/src/ja/README.md) 版本可以阅读。如果你有意将本书翻译为你自己的语言请新建一个 issue ！
+这本指南最初由英文编写而成。目前也有 [简体中文](https://github.com/tonylua/vue-testing-handbook/blob/master/src/zh-CN/README.md)、[俄文](https://github.com/webistomin/vue-testing-handbook/blob/master/src/ru/README.md) 和 [日文](https://github.com/lmiller1990/vue-testing-handbook/blob/master/src/ja/README.md) 版本可以阅读。如果你有意将本书翻译为你自己的语言请新建一个 issue ！
 
 ## 作出贡献 
 
