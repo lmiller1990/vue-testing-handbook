@@ -1,10 +1,10 @@
 ## Stubbing components
 
-You can find the test described on this page [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ParentWithAPICallChild.spec.js).
+可以在 [这里](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ParentWithAPICallChild.spec.js) 找到本页中描述的测试.
 
-## Why stub?
+## 为什么用 stub ？
 
-When writing unit tests, often we want to _stub_ parts of the code we are not interested in. A stub is simply a piece of code that stands in for another. Let's say you are writing a test for a `<UserContainer>` component. It looks like this:
+当编写测试时，我们经常会想要 _stub_ 掉代码中那些我们不感兴趣的部分。一个 stub 就是简单的一段替身代码。比方说你正在为 `<UserContainer>` 组件编写一个测试。该组件看起来就像这样：
 
 ```html
 <UserContainer>
@@ -12,7 +12,7 @@ When writing unit tests, often we want to _stub_ parts of the code we are not in
 </UserContainer>
 ```
 
-`<UsersDisplay>` has a `created` lifecycle method like this:
+`<UsersDisplay>` 有一个 `created` 像这样的生命周期方法：
 
 ```js
 created() {
@@ -20,15 +20,15 @@ created() {
 }
 ```
 
-We want to write a test that asserts `<UsersDisplay>` is rendered. 
+我们想编写一个测试来断言 `<UsersDisplay>` 已经被渲染了。 
 
-`axios` is making an ajax request to an external service in the `created` hook. That means when you do `mount(UserContainer)`, `<UsersDisplay>` is also mounted, and `created` initiates an ajax request. Since this is a unit test, we only are interested in whether `<UserContainer>` correctly renders `<UsersDisplay>` - verifying the ajax request is triggered with the correct endpoint, etc, is the responsibility of `<UsersDisplay>`, which should be tested in the `<UsersDisplay>` test file.
+`axios` 被用来在 `created` 钩子中生成一个指向外部服务的 ajax 请求。这意味着当你执行 `mount(UserContainer)` 时，`<UsersDisplay>` 也加载了，并且 `created` 启动了一个 ajax 请求。因为这是一个单元测试，我们只关心 `<UserContainer>` 是否正确的渲染了 `<UsersDisplay>` -- 至于检验 ajax 请求在适当的点被触发，等等，则是 `<UsersDisplay>` 的职责了，应该在 `<UsersDisplay>` 的测试文件中进行。
 
-One way to prevent the `<UsersDisplay>` from initiating the ajax request is by _stubbing_ the component out. Let's write our own components and test, to get a better understanding of the different ways and benefits of using stubs.
+一种防止 `<UsersDisplay>` 启动 ajax 请求途径是将该组件 _stubbing(译注：插入替换的桩代码)_ 掉。让我们编写自己组件并测试，以获得关于使用 stubs 不同方式和优点的更好理解。
 
-## Creating the components
+## 创建组件
 
-This example will use two components. The first is `ParentWithAPICallChild`, which simply renders another component:
+这个例子将使用两个组件。第一个是 `ParentWithAPICallChild`，用来简单地渲染另一个组件：
 
 ```html
 <template>
@@ -48,7 +48,7 @@ export default {
 </script>
 ```
 
-`<ParentWithAPICallChild>` is a simple component. It's sole responsibility is to render `<ComponentWithAsyncCall>`. `<ComponentWithAsyncCall>`, as the name suggests, makes an ajax call using the `axios` http client:
+`<ParentWithAPICallChild>` 是个简单的组件。其唯一的职责就是渲染 `<ComponentWithAsyncCall>`。`<ComponentWithAsyncCall>`，如其名字所暗示的，使用 `axios` http 客户端发起一个 ajax 调用：
 
 ```html
 <template>
@@ -75,11 +75,11 @@ export default {
 </script>
 ```
 
-`<ComponentWithAsyncCall>` calls `makeApiCall` in the `created` lifecycle hook.
+`<ComponentWithAsyncCall>` 在 `created` 生命周期钩子中调用了 `makeApiCall`。
 
-## Write a test using `mount`
+## 使用 `mount` 编写一个测试
 
-Let's start off by writing a test to verify that `<ComponentWithAsyncCall>` is rendered:
+让我们从编写一个验证 `<ComponentWithAsyncCall>` 是否被渲染的测试开始：
 
 ```js
 import { shallowMount, mount } from '@vue/test-utils'
@@ -95,7 +95,7 @@ describe('ParentWithAPICallChild.vue', () => {
 })
 ```
 
-Running `yarn test:unit` yields:
+运行 `yarn test:unit` 会产生：
 
 ```
 PASS  tests/unit/ParentWithAPICallChild.spec.js
@@ -104,11 +104,11 @@ console.log src/components/ComponentWithAsyncCall.vue:17
   Making api call
 ```
 
-The test is passing - great! However, we can do better. Notice the `console.log` in the test output - this comes from the `makeApiCall` method. Ideally we don't want to make calls to external services in our unit tests, especially when it's from a component that is not the main focus of the current test. We can use the `stubs` mounting option, described in the `vue-test-utils` docs [here](https://vue-test-utils.vuejs.org/api/options.html#stubs).
+测试通过了 -- 这很棒！但是，我们可以做得更好。注意测试输出中的 `console.log` -- 这来自 `makeApiCall` 方法。理想情况下我们不想在单元测试中发起对外部服务的调用，特别是当其从一个并非当前主要目标的组件中发起时。我们可以使用 `stubs` 加载选项，在 `vue-test-utils` 文档的 [这个章节](https://vue-test-utils.vuejs.org/api/options.html#stubs) 中有所描述。
 
-## Using `stubs` to stub `<ComponentWithAsyncCall>`
+## 使用 `stubs` 去 stub `<ComponentWithAsyncCall>`
 
-Let's update the test, this time stubbing `<ComponentWithAsyncCall>`:
+让我们更新测试，这次 stubbing 掉 `<ComponentWithAsyncCall>`：
 
 ```js
 it('renders with mount and does initialize API call', () => {
@@ -122,9 +122,9 @@ it('renders with mount and does initialize API call', () => {
 })
 ```
 
-The test still passes when `yarn test:unit` is run, however the `console.log` is nowhere to be seen. That's because passing `[component]: true` to `stubs` replaced the original component with a _stub_. The external interface is still the same (we can still select is using `find`, since the `name` property, which is used internally by `find`, is still the same). The internal methods, such as `makeApiCall`, are replaced by dummy methods that don't do anything - they are "stubbed out".
+运行 `yarn test:unit` 时该测试将通过，而 `console.log` 也无影无踪了。这是因为向 `stubs` 传入 `[component]: true` 后用一个 _stub_ 替换了原始的组件。外部的接口也照旧（我们依然可以用 `find` 选取，因为 `find` 内部使用的 `name` 属性仍旧相同）。诸如 `makeApiCall` 的内部方法，则被不做任何事情的伪造方法替代了 -- 它们被 “stubbed out” 了。
 
-You can also specify the markup to use for the stub, if you like:
+也可以指定 stub 所用的标记语言，如果你乐意：
 
 ```js
 const wrapper = mount(ParentWithAPICallChild, {
@@ -134,9 +134,9 @@ const wrapper = mount(ParentWithAPICallChild, {
 })
 ```
 
-## Automatically stubbing with `shallowMount`
+## `shallowMount` 的自动化 stubbing
 
-Instead of using `mount` and manually stubbing `<ComponentWithAsyncCall>`, we can simply use `shallowMount`, which automatically stubs any other components by default. The test with `shallowMount` looks like this:
+不同于使用 `mount` 并手动 stub 掉 `<ComponentWithAsyncCall>`，我们可以简单的使用 `shallowMount`，它默认会自动 stub 掉任何其他组件。用了 `shallowMount` 的测试看起来是这个样子的：
 
 ```js
 it('renders with shallowMount and does not initialize API call', () => {
@@ -146,12 +146,12 @@ it('renders with shallowMount and does not initialize API call', () => {
 })
 ```
 
-Running `yarn test:unit` doesn't show any `console.log`, and test passes. `shallowMount` automatically stubbed `<ComponentWithAsyncCall>`. `shallowMount` is useful for testing components that have a lot of child components, that might have behavior triggered in lifecycle hooks such as `created` or `mounted`, as so on. I tend to use `shallowMount` by default, unless I have a good reason to use `mount`. It depends on your use case, and what you are testing.
+运行 `yarn test:unit` 没有显示任何 `console.log`，并且测试也通过了。`shallowMount` 自动 stub 了 `<ComponentWithAsyncCall>`。对于有若干子组件、可能也会触发很多诸如 `created` 或 `mounted` 生命周期钩子行为的组件，使用 `shallowMount` 测试会很有用。我倾向于默认使用 `shallowMount`，触发有好使用 `mount` 的理由。这取决于你的用例，以及你在测试什么。
 
-## Conclusion
+## 总结
 
-- `stubs` is useful for stubbing out the behavior of children that is unrelated to the current unit test
-- `shallowMount` stubs out child components by default
-- you can pass `true` to create a default stub, or pass your own custom implementation
+- `stubs` 在屏蔽子组件中与当前单元测试无关行为方面很有用
+- `shallowMount` 默认就 stub 掉了子组件
+- 可以向默认 stub 中传入 `true` 或自定义的实现
 
-You can find the test described on this page [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ParentWithAPICallChild.spec.js).
+可以在 [这里](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ParentWithAPICallChild.spec.js) 找到本页中描述的测试.
