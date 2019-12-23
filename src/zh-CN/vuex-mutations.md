@@ -1,14 +1,14 @@
-## Testing Mutations
+## 测试 Mutations
 
-Testing mutations in isolation is very straight forward, because mutations are just regular JavaScript functions. This page discusses testing mutations in isolation. If you want to test mutations in the context of a component committing a mutation, see [here](https://lmiller1990.github.io/vue-testing-handbook/vuex-in-components-mutations-and-actions.html).
+由于 mutations 就是普通的 JavaScript 函数，所以单独地测试它们非常容易，在本页中讨论了这点。如果你想在组件 commit 一个 mutation 的上下文中测试 mutations，请查看 [这里](https://lmiller1990.github.io/vue-testing-handbook/vuex-in-components-mutations-and-actions.html) 。
 
-The test used in the following example can be found [here](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app/tests/unit/mutations.spec.js).
+下面例子中用到的测试可以在 [这里](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app/tests/unit/mutations.spec.js) 找到。
 
-## Creating the Mutation
+## 创建 mutation
 
-Mutations tend to following a set pattern. Get some data, maybe do some processing, then assign the data to the state. Here is the outline of an `ADD_POST` mutation. Once implemented, it will receive a `post` object in the payload, and add the `post.id` to `state.postIds`. It will also add the post object to the `state.posts` object, where the key is the `post.id`. This is a common pattern in apps using Vuex.
+mutations 易于遵循一套模式：取得一些数据，可能进行一些处理，然后将数据赋值给 state。比如一个 `ADD_POST` mutation 的概述如下：一旦被实现，它将从 payload 中获取一个 `post` 对象，并将 `post.id` 添加到 `state.postIds` 中；它也会将那个 post 对象以 `post.id` 为 key 添加到 `state.posts` 对象中。这即是在应用中使用 Vuex 的一个通常的模式。
 
-We will develop it using TDD. The start of the mutation is as follows:
+我们将使用 TDD 进行开发。mutation 是这样开头的：
 
 ```js
 export default {
@@ -18,7 +18,7 @@ export default {
 }
 ```
 
-Let's write the test, and let the error messages guide our development:
+让我们开始写测试，并让报错信息指引我们的开发：
 
 ```js
 import mutations from "@/store/mutations.js"
@@ -41,7 +41,7 @@ describe("SET_POST", () => {
 })
 ```
 
-Running this test with `yarn test:unit` yields the following failure message:
+以 `yarn test:unit` 运行测试将产生以下错误信息：
 
 ```
 FAIL  tests/unit/mutations.spec.js
@@ -55,7 +55,7 @@ FAIL  tests/unit/mutations.spec.js
     {"postIds": [], "posts": {}}
 ```
 
-Let's start by adding the `post.id` to `state.postIds`:
+让我们从将 `post.id` 加入 `state.postIds` 开始：
 
 ```js
 export default {
@@ -65,7 +65,7 @@ export default {
 }
 ```
 
-Now `yarn test:unit` yields:
+现在 `yarn test:unit` 会产生:
 
 ```
 Expected value to equal:
@@ -74,7 +74,7 @@ Received:
   {"postIds": [1], "posts": {}}
 ```
 
-`postIds` looks good. Now we just need to add the post to `state.posts`. Because of how the Vue reactivity system works we cannot simply write `post[post.id] = post` to add the post. More details can be found [here](https://vuejs.org/v2/guide/reactivity.html#Change-Detection-Caveats). Basically, you need to create a new object using `Object.assign` or the `...` operator. We will use the `...` operator to assign the post to `state.posts`:
+`postIds` 看起来挺好了。现在我们只需要将 post 加入 `state.posts`。限于 Vue 反应式系统的工作方式我们无法简单地写成 `post[post.id] = post` 来添加 post。更多细节可以在 [这里](https://vuejs.org/v2/guide/reactivity.html#Change-Detection-Caveats)找到。基本上，你需要使用 `Object.assign` 或 `...` 操作符创建一个新的对象。此处我们将使用 `...` 操作符将 post 赋值到 `state.posts`：
 
 ```js
 export default {
@@ -85,15 +85,15 @@ export default {
 }
 ```
 
-Now the test passes!
+现在测试都通过了！
 
-## Conclusion
+## 总结
 
-Testing Vuex mutations requires nothing specific to Vue or Vuex, since they are just regular JavaScript functions. Simply import them and test as needed. The only thing to be careful of is Vue's reactivity caveats, which apply to Vuex as well. You can read more about the reactivity system and common caveats [here](https://vuejs.org/v2/guide/reactivity.html#Change-Detection-Caveats).
+测试 Vuex mutations 不需要什么特殊的 Vue 或 Vuex 功能，因为它们都是普通的 JavaScript 函数。根据需要简单地引入它们并测试就行了。唯一需要留意的事情是 Vue 的反应式注意事项，对于 Vuex 也是一样的。更多关于反应式系统和一般注意事项可以在 [这里](https://vuejs.org/v2/guide/reactivity.html#Change-Detection-Caveats) 读到。
 
-The page discussed:
+本页讨论了：
 
-- Vuex mutations are regular JavaScript functions
-- Mutations can, and should, be tested in isolation from the main Vue app
+- Vuex mutations 是普通的 JavaScript 函数
+- mutations 可以、也应该，被区别于主 Vue 应用而单独地测试
 
-The test used in the above example can be found [here](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app/tests/unit/mutations.spec.js).
+以上例子中使用的测试可以在 [这里](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app/tests/unit/mutations.spec.js) 找到。
