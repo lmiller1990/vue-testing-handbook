@@ -1,10 +1,10 @@
-## Testing Vuex in components
+## 测试组件内的 Vuex -- state 和 getters
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ComponentWithVuex.spec.js).
+本页中描述的测试源码可以在 [这里](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ComponentWithVuex.spec.js) 找到。
 
-## Using `createLocalVue` to test `$store.state`
+## 使用 `createLocalVue` 测试 `$store.state`
 
-In a regular Vue app, we install Vuex using `Vue.use(Vuex)`, and then pass a new Vuex store to the app. If we do the same in a unit test, though, all unit tests will receive the Vuex store - even tests that are not using the store. `vue-test-utils` provides a `createLocalVue` method, which provides a temporary `Vue` instance to be used on a test by test basis. Let's see how to use it. First, a simple `<ComponentWithGetters>` component that renders a username in the store's base state.
+在一个普通的 Vue 应用中，我们使用 `Vue.use(Vuex)` 来安装 Vuex 插件，并将一个新的 Vuex store 传入 app 中。如果我们也在一个单元测试中做同样的事，那么，所有单元测试都得接收那个 Vuex store，尽管测试中根本用不到它。`vue-test-utils` 提供了一个 `createLocalVue` 方法，用来为测试提供一个临时 `Vue` 实例。让我们看看如何使用它。首先，是一个基于 store 的 state 渲染出一个 username 的 `<ComponentWithGetters>` 组件。
 
 ```html
 <template>
@@ -28,7 +28,7 @@ export default {
 </script>
 ```
 
-We can use `createLocalVue` to create a temporary Vue instance, and install Vuex. Then we simply pass the a new `store` in the component's mounting options. A full test looks like this:
+我们可以使用 `createLocalVue` 创建一个临时的 `Vue` 实例，并用其安装 Vuex。而后我们将一个新的 `store` 传入组件的加载选项中。完整的测试看起来是这样的：
 
 ```js
 import Vuex from "vuex"
@@ -56,11 +56,11 @@ describe("ComponentWithVuex", () => {
 })
 ```
 
-The tests passes. Creating a new `localVue` introduces some boilerplate, and the test is quite long. If you have a lot of components that use a Vuex store, an alternative is to use the `mocks` mounting option, and simply mock the store. 
+测试通过。创建一个新的 `localVue` 实例引入了一些样板文件（boilerplate），并且测试也很长。如果你有好多使用了 Vuex store 的组件要测试，一个替代方法是使用 `mocks` 加载选项，用以简化 store 的 mock。
 
-## Using a mock store
+## 使用一个 mock 的 store
 
-Using the `mocks` mounting options, you can mock the global `$store` object. This means you do not need to use `createLocalVue`, or create a new Vuex store. Using this technique, the above test can be rewritten like this:
+通过使用 `mocks` 加载选项，可以 mock 掉全局的 `$store` 对象。这意味着你不需要使用 `createLocalVue`，或创建一个新的 Vuex store 了。使用此项技术，以上测试可以重写成这样：
 
 ```js
 it("renders a username using a mock store", () => {
@@ -76,11 +76,11 @@ it("renders a username using a mock store", () => {
 })
 ```
 
-I personally prefer this approach. All the necessary data is declared inside the test, and it is a bit more compact. Both techniques are useful, and neither is better or worse than the other.
+我个人更喜欢这种实现。所有必须的数据被声明在测试内部，同时它也更紧凑一点儿。当然两种技术都很有用，并没有哪种更好哪种更差之分。
 
-## Testing `getters`
+## 测试 `getters`
 
-Using the above techniques, `getters` are easily tested. First, a component to test:
+使用上述技术，`getters` 同样易于测试。首先，是用于测试的组件：
 
 ```html
 <template>
@@ -102,9 +102,9 @@ export default {
 </script>
 ```
 
-We want to assert that the component correctly renders the user's `fullname`. For this test, we don't care where the `fullname` comes from, just that the component renders is correctly.
+我们想要断言组件正确地渲染了用户的 `fullname`。对于该测试，我们不关心 `fullname` 来自何方，组件渲染正常就行。
 
-First, using a real Vuex store and `createLocalVue`, the test looks like this:
+先看看用真实的 Vuex store 和 `createLocalVue`，测试看起来是这样的：
 
 ```js
 const localVue = createLocalVue()
@@ -128,9 +128,9 @@ it("renders a username using a real Vuex getter", () => {
 })
 ```
 
-The test is very compact - just two lines of code. There is a lot of setup involved, however - we are bascially rebuilding the Vuex store. An alternative is to import the real Vuex store, with the actual getter. This introduces another dependency to the test though, and when developing a large system, it's possible the Vuex store might be being developed by another programmer, and has not been implemented yet. 
+测试很紧凑 -- 只有两行代码。不过也引入了很多设置代码 -- 我们基本上重建了 Vuex store。一个替代方法是引入有着真正 getters 的真实的 Vuex store。这将引入测试中的另一项依赖，当开发一个大系统时，Vuex store 可能由另一位程序员开发，也可能尚未实现。
 
-Let's see how we can write the test using the `mocks` mounting option:
+让我看看使用 `mocks` 加载选项编写测试的情况：
 
 ```js
 it("renders a username using computed mounting options", () => {
@@ -148,13 +148,13 @@ it("renders a username using computed mounting options", () => {
 })
 ```
 
-Now all the required data is contained in the test. Great! I strongly prefer this, since the test is fully contained, and all the knowledge required to understand what the component should do is contained in the test.
+现在全部所需的数据都包含在测试中了。太棒了！我特喜欢这个，因为测试是全包含的（fully contained），理解组件应该做什么所需的所有知识都都包含在测试中。
 
-We can make the test even more concise though, using the `computed` mounting option.
+使用 `computed` 加载选项，我们甚至能让测试变得更简单。
 
-## Mocking getters using `computed`
+## 用 `computed` 来模拟 getters
 
-Getters are generally wrapped in `computed` properties. Remember, this test is all about making sure the component behaves correctly given the current state of the store. We are not testing the implementation of `fullname`, or to see if `getters` work. This means we can simply replace real store, or the mock store, using the `computed` mounting option. The test can be rewritten like this:
+getters 通常被包裹在 `computed` 属性中。请记住，这个测试就是为了在给定 store 中的当前 state 时，确保组件行为的正确性。我们不测试 `fullname` 的实现或是要瞧瞧 `getters` 是否工作。这意味着我们可以简单地替换掉真实 store，或使用 `computed` 加载选项 mock 掉 store。测试可以重写为：
 
 ```js
 it("renders a username using computed mounting options", () => {
@@ -168,11 +168,11 @@ it("renders a username using computed mounting options", () => {
 })
 ```
 
-This is more concise than the two previous tests, and still expresses the component's intention.
+这比之前两个测试更简洁了，并且仍然表达了组件的意图。
 
-## The `mapState` and `mapGetters` helper
+## `mapState` 和 `mapGetters` 辅助选项
 
-The above techniques all work in conjuction with Vuex's `mapState` and `mapGetters` helpers. We can update `ComponentWithGetters` to the following:
+上述技术都能与 Vuex 的 `mapState` 和 `mapGetters` 辅助选项结合起来工作。我们可以将 `ComponentWithGetters` 更新为：
 
 ```js
 import { mapGetters } from "vuex"
@@ -188,16 +188,16 @@ export default {
 }
 ```
 
-The tests still pass.
+测试仍然通过。
 
-## Conclusion
+## 总结
 
-This guide discussed:
+本文讨论了：
 
-- using `createLocalVue` and a real Vuex store to test `$store.state` and `getters`
-- using the `mocks` mounting option to mock `$store.state` and `getters`
-- using the `computed` mounting option to set the desired value of a Vuex getter
+- 使用 `createLocalVue` 和真实 Vuex store 测试 `$store.state` 和 `getters`
+- 使用 `mocks` 加载选项 mock 掉 `$store.state` 和 `getters`
+- 使用 `computed` 加载选项以设置 Vuex getter 的期望值
 
-Techniques to test the implentation of Vuex getters in isolation can be found in [this guide](https://lmiller1990.github.io/vue-testing-handbook/vuex-getters.html).
+单独地测试 Vuex getters 实现的技术可以在 [这篇向导](https://lmiller1990.github.io/vue-testing-handbook/vuex-getters.html) 中找到。
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ComponentWithVuex.spec.js).
+本页中描述的测试源码可以在 [这里](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ComponentWithVuex.spec.js) 找到。
