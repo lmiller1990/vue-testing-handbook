@@ -1,10 +1,10 @@
-## Testing getters
+## 测试 getters
 
-Testing getters in isolation is straight forward, since they are basically just JavaScript functions. The techniques are similar to testing mutations, more info [here](https://lmiller1990.github.io/vue-testing-handbook/vuex-mutations.html), and actions. 
+由于 getters 就是普通的 JavaScript 函数，所以单独地测试它们非常容易。所用技术类似于测试 mutations 或 actions，更多信息查看 [这里](https://lmiller1990.github.io/vue-testing-handbook/vuex-mutations.html)。 
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/getters.spec.js).
+本页中描述的测试源码可以在 [这里](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/getters.spec.js) 找到。
 
-We will look at two getters, which operate on a store that looks like this:
+我们考虑一个用两个 getters 操作一个 store 的案例，看起来是这样的：
 
 ```js
 const state = {
@@ -16,14 +16,14 @@ const state = {
 }
 ```
 
-The getters we will test are:
+对于 getters 我们将测试：
 
-1. `poodles`: gets all `poodles`
-2. `poodlesByAge`: gets all poodles, and accepts an age argument
+1. `poodles`: 取得所有 `poodles`
+2. `poodlesByAge`: 取得所有 `poodles`，并接受一个年龄参数
 
-## Creating the Getters
+## 创建 getters
 
-First, let's create the getters. 
+首先，创建 getters。
 
 ```js
 export default {
@@ -37,7 +37,7 @@ export default {
 }
 ```
 
-Nothing too exciting - remember that getters receive other getters as the second argument. Since we already have a `poodles` getter, we can use that in `poodlesByAge`. By returning a function in `poodlesByAge` that takes an argument, we can pass arguments to getters. The `poodlesByAge` getter can be used like this:
+并没有什么特别令人兴奋的 -- 记住 getter 可以接受其他的 getters 作为第二个参数。因为我们已经有一个 `poodles` getter 了，可以在 `poodlesByAge` 中复用它。通过在 `poodlesByAge` 返回一个接受参数的函数，我们可以向 getters 中传入参数。`poodlesByAge` getter 用法是这样的：
 
 ```js
 computed: {
@@ -47,11 +47,11 @@ computed: {
 }
 ```
 
-Let's start with a test for `poodles`.
+让我们从测试 `poodles` 开始吧。
 
-## Writing the Tests
+## 编写测试
 
-Since a getter is just a JavaScript function that takes a `state` object as the first argument, the test is very simple. I'll write my test in a `getters.spec.js` file, with the following code:
+鉴于一个 getter 只是一个接收一个 `state` 对象作为首个参数的 JavaScript 函数，所以测试起来非常简单。我将把测试写在 `getters.spec.js` 文件中，代码如下：
 
 ```js
 import getters from "../../src/store/getters.js"
@@ -72,9 +72,9 @@ describe("poodles", () => {
 })
 ```
 
-Vuex automatically passes the `state` to the getter. Since we are testing the getters in isolation, we have to manually pass the `state`. Other than that, we are just testing a regular JavaScript function.
+Vuex 会自动将 `state` 传入 getter。因为我们是单独地测试 getters，所以还得手动传入 `state`。除此之外，我们就是在测试一个普通的 JavaScript 函数。
 
-`poodlesByAge` is a bit more interesting. The second argument to a getter is other `getters`. We are testing `poodlesByAge`, so we don't want to involve the implementation of `poodles`. Instead, we can stub `getters.poodles`. This will give us more fine grained control over the test.
+`poodlesByAge` 则更有趣一点了。传入一个 getter 的第二个参数是其他 `getters`。我们正在测试的是 `poodlesByAge`，所以我们不想将 `poodles` 的实现牵扯进来。我们通过 stub 掉 `getters.poodles` 取而代之。这将给我们对测试更细粒度的控制。
 
 ```js
 describe("poodlesByAge", () => {
@@ -87,14 +87,14 @@ describe("poodlesByAge", () => {
 })
 ```
 
-Instead of actually passing the real `poodles` getter, we pass in the result it would return. We already know it is working, since we wrote a test for it. This allows us to focus on testing the logic unique to `poodlesByAge`.
+不同于向 getter 传入真实的 `poodles`（译注：刚刚测试过的另一个 getter），我们传入的是一个它可能返回的结果。因为之前写过一个测试了，所以我们知道它是工作正常的。这使得我们把测试逻辑单独聚焦于 `poodlesByAge`。
 
-It is possible to have `async` getters. They can be tested using the same technique as `async` actions, which you can read about [here](https://lmiller1990.github.io/vue-testing-handbook/vuex-actions.html).
+`async` 的 getters 也是可能的。它们可以通过和测试 `async` actions 的相同技术被测试，参见 [这里](https://lmiller1990.github.io/vue-testing-handbook/vuex-actions.html)。
 
-## Conclusion
+## 总结
 
-- `getters` are just plain JavaScript functions.
-- When testing `getters` in isolation, you need to pass the state manually.
-- If a getter uses another getter, you should stub the expected return result of the first getter. This will give you more fine grained control over the test, and let you focus on testing the getter in question
+- `getters` 只是普通的 JavaScript 函数。
+- 当单独地测试 `getters` 时，你需要手动传入 state
+- 如果一个 getter 使用了其他 getters，你应该用符合期望的返回结果 stub 掉后者。这将给我们对测试更细粒度的控制，并让你聚焦于测试中的 getter。
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/getters.spec.js).
+本页中描述的测试源码可以在 [这里](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/getters.spec.js) 找到。
