@@ -304,13 +304,13 @@ describe("beforeEach", () => {
 })
 ```
 
-最主要的有趣之处在于，我们借助 `jest.mock`，mock 掉了整个模块，并用 `afterEach` 钩子将其复原（译注：不要混淆这里 Jest 的 afterEach 和导入的 router 的 beforeEach）。通过将 `beforeEach` 导出为一个已结耦的、普通的 Javascript 函数，从而让其在测试过程中不成问题。
+最主要的有趣之处在于，我们借助 `jest.mock`，mock 掉了整个模块，并用 `afterEach` 钩子将其复原（译注：不要混淆这里 Jest 的 afterEach 和导入的 router 的 beforeEach）。通过将 `beforeEach` 导出为一个已解耦的、普通的 Javascript 函数，从而让其在测试过程中不成问题。
 
 为了确定 hook 真的调用了 `bustCache` 并且显示了最新的数据，可以使用一个诸如 [Cypress.io](https://www.cypress.io/) 的端到端测试工具，它也在应用脚手架 `vue-cli` 的选项中提供了，可以被使用。
 
 ## 组件 guards
 
-一旦将组件 guards 视为已结耦的、普通的 Javascript 函数，则它们也是易于测试的。假设我们为 `<NestedRoute>` 添加了一个 `beforeRouteLeave` hook：
+一旦将组件 guards 视为已解耦的、普通的 Javascript 函数，则它们也是易于测试的。假设我们为 `<NestedRoute>` 添加了一个 `beforeRouteLeave` hook：
 
 ```vue
 <script>
