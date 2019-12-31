@@ -1,14 +1,14 @@
-## Testing Emitted Events
+## 测试已发出的事件
 
-As applications grow larger, the number of components grows as well. When these components need to share data, child components can [emit](https://vuejs.org/v2/api/#vm-emit) an event, and the parent component responds.
+随着应用规模的增长，其中组件的数量也会与日俱增。当这些组件间需要共享数据时，子组件可以 [发出（emit）](https://vuejs.org/v2/api/#vm-emit)  一个 _事件（event）_，而父组件会响应。
 
-`vue-test-utils` provides an `emitted` API which allows us to make assertions on emitted events. The documentation for `emitted` is found [here](https://vue-test-utils.vuejs.org/api/wrapper/emitted.html).
+`vue-test-utils` 提供了一个 `emitted` API 以允许我们对已发出的事件作出断言。`emitted` 的文档可以在 [这里](https://vue-test-utils.vuejs.org/api/wrapper/emitted.html) 找到。
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Emitter.spec.js).
+在本页中所描述的测试源码可以在 [这里](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Emitter.spec.js) 找到。
 
-## Write a Component and Test
+## 编写组件及测试
 
-Let's build a simple component. Create an `<Emitter>` component, and add the following code.
+先建立一个简单的组件。创建一个 `<Emitter>` 组件，并添加如下代码。
 
 ```html
 <template>
@@ -32,7 +32,7 @@ Let's build a simple component. Create an `<Emitter>` component, and add the fol
 </style>
 ```
 
-Add a test called `emitEvent`:
+添加一个名为 `emitEvent` 的测试：
 
 ```js
 import Emitter from "@/components/Emitter.vue"
@@ -48,9 +48,10 @@ describe("Emitter", () => {
   })
 })
 ```
-Using the [emitted API](https://vue-test-utils.vuejs.org/ja/api/wrapper/emitted.html) provided by `vue-test-utils`, we can easily see the emitted events.
 
-Run the test with `yarn test:unit`.
+通过使用 `vue-test-utils` 提供的 [emitted API](https://vue-test-utils.vuejs.org/ja/api/wrapper/emitted.html)，我们可以轻易地看到已发出的事件。
+
+输入 `yarn test:unit` 运行测试。
 
 ```
 PASS  tests/unit/Emitter.spec.js
@@ -60,15 +61,15 @@ PASS  tests/unit/Emitter.spec.js
     { myEvent: [ [ 'name', 'password' ] ] }
 ```
 
-## emitted syntax
+## emitted 语法
 
-`emitted` returns an object. The emitted events are saved as properties on the object. You can inspect the events using `emitted().[event]`:
+`emitted` 返回一个对象，其属性是已发出的各种事件。你可以通过 `emitted().[event]` 的方式检查事件：
 
 ```js
 emitted().myEvent //=>  [ [ 'name', 'password' ] ]
 ```
 
-Let's try calling `emitEvent` twice.
+让我们试着调用 `emitEvent` 两次。
 
 ```js
 it("emits an event with two arguments", () => {
@@ -81,17 +82,16 @@ it("emits an event with two arguments", () => {
 })
 ```
 
-Run the test with `yarn test:unit`:
+用 `yarn test:unit` 运行测试：
 
 ```
 console.log tests/unit/Emitter.spec.js:11
   [ [ 'name', 'password' ], [ 'name', 'password' ] ]
 ```
 
-`emitted().emitEvent` returns an array. The first instance of `emitEvent` is accessible using with `emitted().emitEvent[0]`. The arguments are accessible using a similar syntax, `emitted().emitEvent[0][0]` and so forth. 
+`emitted().myEvent` 返回了一个数组。事件实例可以通过 `emitted().myEvent[0]` 的形式访问到；参数可以用相似的语法访问到，如 `emitted().myEvent[0][0]` 等等。
 
-Let's make an actual assertion against the emitted event.
-
+让我们对已发出的事件做一条真正的断言。
 
 ```js
 it("emits an event with two arguments", () => {
@@ -103,11 +103,11 @@ it("emits an event with two arguments", () => {
 })
 ```
 
-The test passes.
+测试通过了。
 
-## Testing events without mounting the component
+## 在不加载组件的情况下测试事件
 
-Some times you might want to test emitted events without actually mounting the component. You can do this by using `call`. Let's write another test.
+有时你会想要在不真的加载组件的情况下测试已发出的事件。可以通过使用 `call` 来达到目的。让我们编写另一个测试。
 
 ```js
 it("emits an event without mounting the component", () => {
@@ -120,16 +120,16 @@ it("emits an event without mounting the component", () => {
 })
 ```
 
-Since `$emit` is just a JavaScript object, you can mock `$emit`, and by using `call` to attach it to the `this` context of `emitEvent`. By using `call`, you can call a method without mounting the component. 
+因为 `$emit` 只是一个 JavaScript 对象，所以你可以 mock 掉 `$emit`，并通过使用 `call` 将其附加到 `emitEvent` 的 `this` 上下文中。通过使用 `call`，就可以在不加载组件的情况下调用一个方法了。
 
-Using `call` can be useful in situations where you have some heavy processing in lifecycle methods like `created` and `mounted` that you don't want to execute. Since you don't mount the component, the lifecycle methods are never called. It can also be useful when you want to manipulate the `this` context in a specific manner.
+在组件中诸如 `created` 和 `mounted` 等生命周期中包含很重的处理逻辑而你又不想去执行它们的情况下，使用 `call` 是很有用的。因为不需加载组件，其生命周期方法也不会被调用。该方法在你想以一个特殊的方式操纵 `this` 上下文时同样有用。
 
-## Conclusion
+## 总结
 
-- the `emitted` API from `vue-test-utils` is used to make assertions against emitted events
-- `emitted` is a method. It returns an object with properties corresponding to the emitted events
-- each property of `emitted` is an array. You can access each instance of an emitted event by using the `[0]`, `[1]` array syntax
-- the arguments of emitted events are also saved as arrays, and can accessed using the `[0]`, `[1]` array syntax
-- `$emit` can be mocked using `call`, assertions can be made without rendering the component
+- 来自 `vue-test-utils` 的 `emitted` API 用于对已发出的事件作出断言
+- `emitted` 是一个方法，返回一个以相应的已发出事件作为属性的对象
+- `emitted` 的每个属性都是个数组。可以通过诸如 `[0]`、`[1]` 的数组语法访问每个已发出事件的实例
+- 已发出事件的参数也被保存为数组，并能使用诸如 `[0]`、`[1]` 的数组语法访问到
+- `$emit` 可以通过调用 `call` 被 mock 掉，assertions can be made without rendering the component
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Emitter.spec.js).
+在本页中所描述的测试源码可以在 [这里](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Emitter.spec.js) 找到。
