@@ -31,4 +31,5 @@ Other useful resources include:
 
 - [Official docs](https://vue-test-utils.vuejs.org/)
 - [Book](https://www.manning.com/books/testing-vue-js-applications) written by the author of `vue-test-utils`
+- My [Vue.js 3 + Unit Testing Course](https://vuejs.course.com) (early 2020, early preview/review spots available)
 - [This awesome course on VueSchool](https://vueschool.io/courses/learn-how-to-test-vuejs-components?friend=vth) by several Vue core contributors
