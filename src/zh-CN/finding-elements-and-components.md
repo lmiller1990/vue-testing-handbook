@@ -1,12 +1,12 @@
-## Finding Elements
+## 找到元素
 
-`vue-test-utils` provides a number of ways to find and assert the presence of html elements or other Vue components using the `find` method. The main use of `find` is asserting a component correctly renders an element or child component.
+通过 `find` 方法，`vue-test-utils` 提供了找到并断言 HTML 元素或其他 Vue 组件是否存在的许多方式。`find` 的主要用处就是断言一个组件是否正确地渲染了元素或子组件。
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Parent.spec.js).
+在本页中所描述的测试源码可以在 [这里](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Parent.spec.js) 找到。
 
-## Creating the Components
+## 创建组件
 
-For this example, we will create a `<Child>` and `<Parent>` and component.
+对于本例，我们将创建一个 `<Child>` 组件和一个 `<Parent>` 组件。
 
 Child: 
 
@@ -52,9 +52,9 @@ export default {
 </script>
 ```
 
-## `find` with `querySelector` syntax
+## 有着 `querySelector` 语法的 `find`
 
-Regular elements can easily be selected using the syntax used with `document.querySelector`. `vue-test-utils` also provides a `isVisible` method to check if elements conditionally rendered with `v-show` are visible. Create a `Parent.spec.js`, and inside add the following test:
+正如通过使用 `document.querySelector` 语法，可以轻易地选取普通的 HTML 元素；`vue-test-utils` 也提供了一个 `isVisible` 方法以检查元素是否被 `v-show` 条件性地渲染了。创建一个 `Parent.spec.js`，并输入下面的测试代码：
 
 ```js
 import { mount, shallowMount } from "@vue/test-utils"
@@ -69,7 +69,7 @@ describe("Parent", () => {
 })
 ```
 
-Since `v-show="showSpan"` defaults to `false`, we expect the found `<span>` element's `isVisible` method to return `false`. The tests passes when run with `yarn test:unit`. Next, a test around the case when `showSpan` is `true`.
+因为 `v-show="showSpan"` 默认为 `false`，我们期望找到的 `<span>` 元素的 `isVisible` 方法会返回 `false`。当运行 `yarn test:unit` 后测试通过了。下一步，添加一个当 `showSpan` 为 `true` 时的测试：
 
 ```js
 it("does render a span", () => {
@@ -83,16 +83,18 @@ it("does render a span", () => {
 })
 ```
 
-It passes! Much like `isVisible` for `v-show`, `vue-test-utils` provides an `exists` method to be used when testing elements conditionally rendered using `v-if`.
+它也通过了！
 
-## Finding Components with `name` and `Component`
+和 `isVisible` 之于 `v-show` 非常相似的是，`vue-test-utils` 提供了一个 `exists` 方法以用来测试当使用 `v-if` 时元素被条件性渲染的情况。
 
-Finding child components is a little different to finding regular HTML elements. There two main ways to assert the presence of child Vue components:
+## 通过 `name` 和 `Component` 找到组件
+
+找到子组件和找到普通 HTML 元素稍有不同。主要有两种方法来断言 Vue 子组件的存在：
 
 1. `find(Component)`
 2. `find({ name: "ComponentName" })`
 
-These are a bit easier to understand in the context of an example test. Let's start with the `find(Component)` syntax. This requires us to `import` the component, and pass it to the `find` function.
+这两种方法在一个例子中可能更好理解一些。让我们从 `find(Component)` 语法开始。这需要 `import` 组件，并将其引用传入 `find` 函数中。
 
 ```js
 import Child from "@/components/Child.vue"
@@ -104,9 +106,9 @@ it("does not render a Child component", () => {
 })
 ```
 
-The implementation for `find` is quite complex, since it works with the `querySelector` syntax, as well as several other syntaxes. You can see the part of the source that finds children Vue components [here](https://github.com/vuejs/vue-test-utils/blob/dev/packages/test-utils/src/find.js). It basically checks the component's `name` against each child rendered, and then checks the `constructor`, and some other properties. 
+`find` 的实现颇为复杂，因为它要以 `querySelector` 的语法工作，同时也有很多其他的语法。你可以看看源码中关于找到 Vue 子组件的 [这个部分](https://github.com/vuejs/vue-test-utils/blob/dev/packages/test-utils/src/find.js)。基本上它检查了每个渲染过的子组件的 `name` 属性，其后检查 `constructor`，还有一些其他属性。
 
-As mentioned in the previous paragraph, the `name` property is one of the checks done by `find` when you pass a component. Instead of passing the component, you can simply pass an object with the correct `name` property. This means you do not need to `import` the component. Let's test the case when `<Child>` should be rendered:
+正如上一段中提到的，当你传给 `find` 方法一个组件时，`name` 属性是其检查手段之一（译注：源码在 [这里](https://github.com/vuejs/vue-test-utils/blob/dev/packages/test-utils/src/matches.js)）。其实除了传递一个组件，你也可以简单地传入一个有着正确 `name` 属性的对象。这意味着你无需 `import` 相应的组件。让我们用这种方法来试试 `<Child>` 应当被渲染的情况：
 
 ```js
 it("renders a Child component", () => {
@@ -120,11 +122,11 @@ it("renders a Child component", () => {
 })
 ```
 
-It passes! Using the `name` property can be a little unintuitive, so importing the actual component is an alternative. Another option is to simply add a `class` or `id` and query using the `querySelector` style syntax presented in the first two examples.
+通过！使用 `name` 会有那么一点不直观, 所以引入真实的组件也是个辙。另一个选项是像头两个例子中出现的那样简单地添加一个 `class` 或 `id` 并用 `querySelector` 的语法样式查询。 
 
 ## `findAll`
 
-There are often cases when you want to assert that a number of elements are rendered. A common case is a list of items rendered with `v-for`. Here is a `<ParentWithManyChildren>` that renders several `<Child>` components.
+想要断言一定数量的元素都被渲染了也是个频发的场景。一个通常的案例是通过 `v-for` 渲染出的一个项目列表。比如下面这个 `<ParentWithManyChildren>` 就渲染出了若干 `<Child>` 组件。
 
 ```js
 <template>
@@ -144,7 +146,7 @@ export default {
 </script>
 ```
 
-We can write a test using `findAll` to assert three `<Child>` components are rendered like this:
+我们可以像这样用 `findAll` 编写测试以断言有三个 `<Child>` 组件被渲染了：
 
 ```js
 it("renders many children", () => {
@@ -154,15 +156,15 @@ it("renders many children", () => {
 })
 ```
 
-Running `yarn test:unit` shows the test passes. You can use the `querySelector` syntax with `findAll` as well.
+运行 `yarn test:unit` 显示测试通过。对于 `findAll` 同样适用 `querySelector` 语法。
 
-## Conclusion
+## 总结
 
-This page covers:
+本页覆盖了：
 
-- using `find` and `findAll` with the `querySelector` syntax
-- `isVisible` and `exists`
-- using `find` and `findAll` with a component or name as the selector
+- 使用有着 `querySelector` 语法的 `find` 和 `findAll`
+- `isVisible` 和 `exists`
+- 将组件或名称选择器传入 `find` 和 `findAll`
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Parent.spec.js).
+在本页中所描述的测试源码可以在 [这里](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Parent.spec.js) 找到。
 
