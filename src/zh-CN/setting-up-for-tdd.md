@@ -1,22 +1,22 @@
-## Installing vue-cli
+## 安装 vue-cli
 
-`vue-test-utils` is the official testing library for Vue, and will be used throughout the guide. It runs in both a browser and Node.js environment, and works with any test runner. We will be running our tests in a Node.js environment throughout this guide.
+`vue-test-utils` 是 Vue 官方的测试库，并将在本指南中贯穿始终。它在浏览器和 Node.js 环境中皆可运行，并能配合任何 test runner 使用。在本指南中，我们将在 Node.js 环境运行测试。
 
-`vue-cli` is the easiest way to get started. It will set up a project, as well as configure Jest, a popular testing framework. Install it by running:
+`vue-cli` 是起步的最简单方式。它将建立一个项目，也会配置 Jest，一个流行的测试框架。其安装方法是：
 
 ```sh
 yarn global add @vue/cli
 ```
 
-or with npm:
+或通过 npm：
 
 ```sh
 npm install -g @vue/cli
 ```
 
-Create a new project by running `vue create [project-name]`. Choose "Manually select features" and "Unit Testing", and "Jest" for the test runner.
+通过运行 `vue create [project-name]` 来创建一个新项目。选择 "Manually select features" 和 "Unit Testing"，以及 "Jest" 作为 test runner。
 
-Once the installation finishes, `cd` into the project and run `yarn test:unit`. If everything went well, you should see:
+一旦安装完成，`cd` 进入项目目录中并运行 `yarn test:unit`。如果一切顺利，你将看到：
 
 ```
  PASS  tests/unit/HelloWorld.spec.js
@@ -29,17 +29,17 @@ Snapshots:   0 total
 Time:        2.074s
 ```
 
-Congratulations, you just ran your first passing test!
+恭喜，你已经运行了你的第一个通过的测试！
 
-## Writing your first test
+## 编写你的首个测试
 
-We ran an existing test that came with the project. Let's get our hands dirty, writing our own component, and a test. Traditionally when doing TDD, you write the failing test first, then implement the code which allows the test to pass. For now, we will write the component first.
+我们已经运行了项目中既有的一个测试。让我们撸起袖子，编写我们自己的组件，以及一个测试吧。以 TDD 方式的传统来说，你先编写一个失败的测试，然后实现代码以使该测试通过。但现在，我们将先编写组件。
 
-We don't need `src/components/HelloWorld.vue` or `tests/unit/HelloWorld.spec.js` anymore, so you can delete those.
+我们不再需要 `src/components/HelloWorld.vue` 或 `tests/unit/HelloWorld.spec.js` 了，所以你可以删掉它们。
 
-## Creating the `Greeting` component
+## 创建 `Greeting` 组件
 
-Create a `Greeting.vue` file in `src/components`. Inside `Greeting.vue`, add the following:
+在 `src/components` 中创建一个 `Greeting.vue` 文件。在 `Greeting.vue` 中添加如下代码：
 
 ```vue
 <template>
@@ -61,14 +61,14 @@ export default {
 </script>
 ```
 
-## Writing the test
+## 编写测试
 
-`Greeting` has only one responsibility - to render the `greeting` value. The strategy will be:
+`Greeting` 只有唯一的职责 -- 渲染 `greeting` 的值。其测试策略为：
 
-1. render the component with `mount`
-2. assert that the component's text contains "Vue and TDD"
+1. 用 `mount` 渲染组件
+2. 断言组件的文本中包含 "Vue and TDD"
 
-Create a `Greeting.spec.js` inside `tests/unit`. Inside, import `Greeting.vue`, as well as `mount`, and add the outline of the test:
+在 `tests/unit` 中创建一个 `Greeting.spec.js`。在其内容中，引入 `Greeting.vue`，以及 `mount` 方法，并添加测试的概要：
 
 ```
 import { mount } from '@vue/test-utils'
@@ -81,9 +81,9 @@ describe('Greeting.vue', () => {
 })
 ```
 
-There are different syntaxes used for TDD, we will use the commonly seen `describe` and `it` syntax that comes with Jest. `describe` generally outlines what the test is about, in this case `Greeting.vue`. `it` represents a single piece of responsibility that the subject of the test should fulfill. As we add more features to the component, we add more `it` blocks.
+用于 TDD 的由很多不同的语法，我们将使用通常所见的 `describe` 和 `it` 语法，由 Jest 提供。`describe` 一般概述了测试会包含什么，在本例中写的是 `Greeting.vue`。`it` 表示测试应该完成的主题中一段单独的职责。随着我们为组件添加更多特性，在测试中就会添加更多 `it` 块。
 
-Now we should render the component with `mount`. The standard practice is to assign the component to a variable called `wrapper`. We will also print the output, to make sure everything is running correctly:
+现在我们应该用 `mount` 渲染组件。标准做法是将组件引用赋值给一个叫做 `wrapper` 的变量。我们也将输出结果打印出来，以确保一切正常：
 
 ```js
 const wrapper = mount(Greeting)
@@ -91,9 +91,9 @@ const wrapper = mount(Greeting)
 console.log(wrapper.html())
 ```
 
-## Running the test
+## 运行测试
 
-Run the test by typing `yarn test:unit` into your terminal. Any file in the `tests` directory ending with `.spec.js` is automatically executed. If everything went well, you should see:
+通过在终端中输入 `yarn test:unit` 来运行测试。`tests` 目录中任何以 `.spec.js` 结尾的文件都会被自动执行。如果不出所料，你应该看到：
 
 ```
 PASS  tests/unit/Greeting.spec.js
@@ -106,25 +106,25 @@ console.log tests/unit/Greeting.spec.js:7
   </div>
 ```
 
-We can see the markup is correct, and the test passes. The test is passing because there was no failure - this test can never fail, so it is not very useful yet. Even if we change `Greeting.vue` and delete the `greeting` from the template, it will still pass. Let's change that.
+我们可以看到置标语言是正确的，测试也通过了。测试通过是因为并没有失败 -- 这个测试是不可能失败的，所以也没什么用。即便我们更改了 `Greeting.vue` 并从模板中删除了 `greeting`，测试都照样能通过。让我们改变这些。
 
-## Making assertions
+## 做出断言
 
-We need to make an assertion to ensure the component is behaving correctly. We can do that using Jest's `expect` API. It looks like this: `expect(result).to [matcher] (actual)`. 
+我们需要做出断言以确保组件行事正确。我们可以使用 Jest 的 `expect` API 做到这点。它看起来会是 `expect(result).to [matcher] (actual)` 这样。 
 
-_Matchers_ are methods to compare values and objects. For example:
+_matchers_ 是用来比较值和对象的一些方法。例如：
 
 ```js
 expect(1).toBe(1)
 ```
 
-A full list of matchers is available in the [Jest documentation](http://jestjs.io/docs/en/expect). `vue-test-utils` doesn't include any matchers - the ones Jest provides are more than enough. We want to compare the text from `Greeting`. We could write:
+一个关于 matchers 的完整列表可以在 [Jest 文档](http://jestjs.io/docs/en/expect) 中找到。`vue-test-utils` 中并不包含任何的 matchers -- Jest 提供的那些就足够了。我们要比较 `Greeting` 中的文本。可以这样写：
 
 ```js
 expect(wrapper.html().includes("Vue and TDD")).toBe(true)
 ```
 
-but `vue-test-utils` has an even better way to get the markup - `wrapper.text`. Let's finish the test off:
+但 `vue-test-utils` 有一个更好的方式来比较置标 -- `wrapper.text`。让我们完成测试：
 
 ```js
 import { mount } from '@vue/test-utils'
@@ -139,7 +139,7 @@ describe('Greeting.vue', () => {
 })
 ```
 
-We don't need the `console.log` anymore, so you can delete that. Run the tests with `yarn unit:test`, and if everything went well you should get:
+我们不再需要 `console.log` 了，所以你可以删除它了。通过 `yarn unit:test` 运行测试，如果一切正常将得到：
 
 ```
 PASS  tests/unit/Greeting.spec.js
@@ -152,7 +152,7 @@ Snapshots:   0 total
 Time:        1.477s, estimated 2s
 ```
 
-Looking good. But you should always see a test fail, then pass, to make sure it's really working. In traditional TDD, you would write the test before the actual implementation, see it fail, then use the failing errors to guide your code. Let's make sure this test is really working. Update `Greeting.vue`:
+看起来不错，但你应该总是看见一个测试失败，再让它通过，以确保它是真实可行的。在传统的 TDD 中，你应该在编写真正的实现之前先写测试，看着它失败，然后使用报错来引导你的编码。让我们来更新 `Greeting.vue`，确保该测试是真正可行的：
 
 ```vue
 <template>
@@ -174,7 +174,7 @@ export default {
 </script>
 ```
 
-And now run the test with `yarn test:unit`:
+现在通过 `yarn test:unit` 来运行测试：
 
 ```
 FAIL  tests/unit/Greeting.spec.js
@@ -201,6 +201,6 @@ Greeting.vue
     at Object.<anonymous> (tests/unit/Greeting.spec.js:8:28)
 ```
 
-Jest gives us good feedback. We can see the expected and actual result, as well as on which line the expectation failed. The test did fail, as expected. Revert `Greeting.vue` and make sure the test is passing again.
+Jest 给了我们一个良好的反馈。我们可以看到期望的和实际的结果，也能看到期望是在哪一行失败的。测试如期失败了。回到 `Greeting.vue` 做出修改并确保再次的测试能够通过。
 
-Next we will look at the two methods `vue-test-utils` provides to render components: `mount` and `shallowMount`.
+下面我们将看到 `vue-test-utils` 提供的两个渲染组件的方法： `mount` 和 `shallowMount`。
