@@ -1,4 +1,4 @@
-## Stubbing components
+## stub 组件
 
 可以在 [这里](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ParentWithAPICallChild.spec.js) 找到本页中描述的测试.
 

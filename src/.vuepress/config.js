@@ -30,6 +30,10 @@ module.exports = {
       lang: 'ru-RU',
       title: 'Руководство по тестированию Vue-компонентов',
     },
+    '/zh-CN/': {
+      lang: 'zh-CN',
+      title: 'Vue测试指南'
+    }
   },
   themeConfig: {
     repo: 'lmiller1990/vue-testing-handbook',
@@ -115,7 +119,34 @@ module.exports = {
           ['/ru/jest-mocking-modules', 'Jest - мокаем модули'],
           ['/ru/composition-api', 'Composition API'],
         ]
-      }
+      },
+      '/zh-CN/': {
+        label: '简体中文',
+        selectText: '语言',
+        lastUpdated: '更新',
+        editLinkText: '在 GitHub 上编辑本页',
+        sidebar: [
+          ['/zh-CN/', '欢迎'],
+          ['/zh-CN/setting-up-for-tdd', '设置 TDD'],
+          ['/zh-CN/rendering-a-component', '渲染组件'],
+          ['/zh-CN/components-with-props', '测试 Props'],
+          ['/zh-CN/computed-properties', '计算属性'],
+          ['/zh-CN/simulating-user-input', '模拟用户输入'],
+          ['/zh-CN/testing-emitted-events', '测试已发出的事件'],
+          ['/zh-CN/mocking-global-objects', 'mock 全局对象'],
+          ['/zh-CN/stubbing-components', 'stub 组件'],
+          ['/zh-CN/finding-elements-and-components', '找到元素和组件'],
+          ['/zh-CN/testing-vuex', '测试 Vuex'],
+          ['/zh-CN/vuex-mutations', 'Vuex - Mutations'],
+          ['/zh-CN/vuex-actions', 'Vuex - Actions'],
+          ['/zh-CN/vuex-getters', 'Vuex - Getters'],
+          ['/zh-CN/vuex-in-components', '组件中的 Vuex - $state 和 getters'],
+          ['/zh-CN/vuex-in-components-mutations-and-actions', '组件中的 Vuex - mutations 和 actions'],
+          ['/zh-CN/vue-router', 'Vue Router'],
+          ['/zh-CN/composition-api', 'Composition API'],
+          ['/zh-CN/jest-mocking-modules', 'Jest - mock 模块'],
+        ]
+      },
     }
   },
   markdown: {
