@@ -25,6 +25,10 @@
 - замокаем модули и добавим spies (шпионы)
 - используем снимки
 
-## Переводы
+## Дальшейшее чтение
 
-На данный момент руководство доступно на английском, японском и русском языках.
+Другие полезные ресурсы:
+
+- [Официальная документация](https://vue-test-utils.vuejs.org/ru/)
+- [Книга](https://www.manning.com/books/testing-vue-js-applications), написанная автором `vue-test-utils`
+- [Крутые курсы на VueSchool](https://vueschool.io/courses/learn-how-to-test-vuejs-components?friend=vth) от главных контрибьюторов Vue

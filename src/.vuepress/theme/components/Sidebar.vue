@@ -1,8 +1,31 @@
 <template>
   <aside class="sidebar">
-  <CarbonAds />
-
+    <!--
+      <CarbonAds />
+    -->
+    <a href="https://vuejs-course.com/" target="_blank">
+      <img 
+        id="ad" 
+        :src="$withBase('vuejs-course.png')" 
+      />
+    </a>
     <br />
+    <div class="info">
+      <small>
+      Hi! Please check out my 
+      <a href="https://vuejs-course.com/" target="_blank">upcoming</a>
+      <a href="https://vuejs-course.com/" target="_blank">course</a>
+      <a href="https://vuejs-course.com/" target="_blank">on</a>
+      <a href="https://vuejs-course.com/" target="_blank">Vue.js 3</a>,
+      including the Composition API,
+      TypeScript, and Unit Testing.
+      </small>
+    </div>
+
+    <!-- https://vuejs-course.com/ -->
+
+    <!-- 
+
     <VueSchool />
 
     <div 
@@ -29,6 +52,8 @@
 
         to learn vue-test-utils, Jest and the other tooling with guys who literally built Vue.js.
     </div>
+
+    -->
 
     <!--
       <img id="ad" :src="$withBase('ad.png')" />
@@ -121,6 +146,7 @@ export default {
 
 #ad
   margin: 5px 10px 0 10px
+  width: 93%
 
 .sidebar
   ul
