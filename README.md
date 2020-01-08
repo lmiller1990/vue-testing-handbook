@@ -1,4 +1,4 @@
-[English](https://github.com/lmiller1990/vue-testing-handbook#vue-testing-handbook) | [日本語](https://github.com/lmiller1990/vue-testing-handbook#vue-testing-handbook-1) | [Русский](https://github.com/webistomin/vue-testing-handbook/blob/master/README.ru.md)
+[English](https://github.com/lmiller1990/vue-testing-handbook#vue-testing-handbook) | [日本語](https://github.com/lmiller1990/vue-testing-handbook/blob/master/src/ja/README.md) | [Русский](https://github.com/webistomin/vue-testing-handbook/blob/master/README.ru.md) | [简体中文](https://github.com/tonylua/vue-testing-handbook/blob/master/README.zh-CN.md)
 
 ## Vue Testing Handbook
 
