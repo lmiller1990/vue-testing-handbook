@@ -63,6 +63,7 @@ module.exports = {
           ['/vuex-in-components-mutations-and-actions', 'Vuex in components - mutations and actions'],
           ['/vue-router', 'Vue Router'],
           ['/composition-api', 'Composition API'],
+          ['/reducing-boilerplate-in-tests', 'Reducing Boilerplate'],
           ['/jest-mocking-modules', 'Jest - mocking modules'],
         ]
       },
