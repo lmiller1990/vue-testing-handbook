@@ -1,8 +1,12 @@
 ## Reducing Boilerplate in Tests
 
-It is often ideal to start each unit test with a fresh copy of a component. Furthermore, as your apps get larger and more complex, chances are you have a some components with many different props, and possibly a number of third party libraries such as Vuetify, VueRouter and Vuex installed. This can make you tests require even lots of boilerplate code. This article takes component with Vuex and VueRotuer and demonstrates some patterns to help you reduce the amount of setup code for your unit tests
+> This article is available as a screencast on [Vue.js Courses](https://vuejs-course.com/screencasts/reducing-duplication-in-tests.html?ref=vth). Check it out [here](https://vuejs-course.com/screencasts/reducing-duplication-in-tests.html?ref=vth).
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/posts.spec.js).
+It is often ideal to start each unit test with a fresh copy of a component. Furthermore, as your apps get larger and more complex, chances are you have a some components with many different props, and possibly a number of third party libraries such as Vuetify, VueRouter and Vuex installed. This can cause your tests to have lots of boilerplate code - that is, code that is not directly related to the test.
+
+This article takes component using Vuex and VueRotuer and demonstrates some patterns to help you reduce the amount of setup code for your unit tests.
+
+The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Posts.spec.js).
 
 ## The Posts Component
 
@@ -324,4 +328,4 @@ This guide discussed:
 - using factory functions to get a new instance of an object
 - reducing boilerplate and duplication by extract common behavior
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/posts.spec.js).
+The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Posts.spec.js). It is also available as a screencast on [Vue.js Courses](https://vuejs-course.com/screencasts/reducing-duplication-in-tests.html?ref=vth).
