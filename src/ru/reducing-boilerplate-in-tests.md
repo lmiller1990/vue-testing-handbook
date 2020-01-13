@@ -1,16 +1,16 @@
-## Reducing Boilerplate in Tests
+## Уменьшаем шаблонный код
 
-> This article is available as a screencast on [Vue.js Courses](https://vuejs-course.com/screencasts/reducing-duplication-in-tests.html?ref=vth). Check it out [here](https://vuejs-course.com/screencasts/reducing-duplication-in-tests.html?ref=vth).
+> Эта статья доступна в виде скринкаста на [Vue.js Courses](https://vuejs-course.com/screencasts/reducing-duplication-in-tests.html?ref=vth). Посмотреть можно [здесь](https://vuejs-course.com/screencasts/reducing-duplication-in-tests.html?ref=vth).
 
-It is often ideal to start each unit test with a fresh copy of a component. Furthermore, as your apps get larger and more complex, chances are you have a some components with many different props, and possibly a number of third party libraries such as Vuetify, VueRouter and Vuex installed. This can cause your tests to have lots of boilerplate code - that is, code that is not directly related to the test.
+В идеале каждый модульный тест нужно начинать с новой копии компонента. Также, по мере того, как ваши приложения становятся всё сложнее и больше, есть вероятность, что у вас будет несколько компонентов с различными входными параметрами, и, возможно, сторонними библиотеками по типу Vuetify, VueRouter и Vuex. Это может привести к тому, что в ваших тестах будет много шаблонного кода, т.е. кода, который не имеет прямого отношения к тесту.
 
-This article takes component using Vuex and VueRotuer and demonstrates some patterns to help you reduce the amount of setup code for your unit tests.
+В этой статье рассматривается компонент с использованием Vuex и VueRouter, демонстрируются некоторые подходы, которые помогут уменьшить количество шаблонного кода для ваших модульных тестов.
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Posts.spec.js).
+Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Posts.spec.js).
 
-## The Posts Component
+## Компонент новостей
 
-This is the component we will be testing. It shows a `message` prop, if one is received. It shows a New Post button if the user is authenticated and some posts. Both of the `authenticated` and `posts` objects come from the Vuex store. Finally, it renders are `router-link` component, showing a link to a post.
+Это компонент, который мы будем тестировать. Компонент показывает входной параметр `message`, если он был передан. Также показывает кнопку "Добавить новость", если пользователь авторизован, а также выводит список новостей. Оба объекта `authenticated` и `posts` приходят из хранилища Vuex. И, наконец, он отрисовывает компонент`router-link`, который хранит в себе ссылку на новость.
 
 ```vue
 <template>
@@ -22,11 +22,11 @@ This is the component we will be testing. It shows a `message` prop, if one is r
         class="new-post" 
         to="/posts/new"
       >
-        New Post
+        Добавить новость
       </router-link>
     </div>
 
-    <h1>Posts</h1>
+    <h1>Новости</h1>
     <div 
       v-for="post in posts" 
       :key="post.id" 
@@ -65,17 +65,17 @@ export default {
 </script>
 ```
 
-We want to test:
+Мы хотим протестировать:
 
-- is the `message` rendered when a prop is received?
-- are the `posts` correctly rendered?
-- is the New Post button shown when `authenticated` is `true`, hidden when `false`?
+- отрисовывается ли `message`, если входной параметр был передан?
+- правильно ли отрисовываются `posts`?
+- кнопка "Добавить новость" показывается, когда `authenticated` в значении `true` и скрыта, когда в `false`?
 
-Ideally, the tests should be as concise as possible.
+В идеале, тесты должны быть максимально краткими.
 
-## Vuex/VueRouter Factory Functions
+## Функции-фабрики Vuex/VueRouter
 
-One good step you can take to making apps more testable is export factory functions for Vuex and VueRouter. Often, you will see something like:
+Серьезным шагом в тестировании приложений является экспорт функций-фабрик для Vuex и VueRouter. Вы часто встречаете что-то похожее: 
 
 ```js
 // store.js
@@ -86,9 +86,9 @@ export default new Vuex.Store({ ... })
 export default new VueRouter({ ... })
 ```
 
-This is fine for a regular application, but not ideal for testing. If you do this, every time you use the store or router in a test, it will be shared across every other test that also imports it. Ideally, every component should get a fresh copy of the store and router.
+Это нормально для обычного приложения, но не идеально для тестирования. Если вы делаете это, то каждый раз, когда вы используете хранилище или роутер в тестах – оно будет доступно среди всех других тестах, которые его импортируют. В идеале, каждый компонент должен получать новую копию хранилища или роутера.
 
-One easy way to work around this is by exporting a factory function - a function that returns a new instance of an object. For example:
+Одним из легких способов решить эту проблему является экспорт функций-фабрик, т.е. функций, который возвращают новый экземпляр объекта. Например:
 
 ```js
 // store.js
@@ -103,12 +103,11 @@ export const createRouter = () => {
   return new Vuex.Router({ ... })
 }
 ```
+Теперь ваше основное приложение может сделать `import { store } from './store.js`, и ваши тесты смогут получить новую копию хранилища каждый раз, когда будет выполнен `import { createStore } from './store.js`, а затем создан новый экземпляр `const store = createStore()`. То же самое делается и для роутера. Это то, что я сделал в примере `Posts.vue` – исходный код можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/src/createStore.js) для хранилища и [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/src/createRouter.js) для роутера.
 
-Now your main app can do `import { store } from './store.js`, and your tests can get a new copy of the store each time by doing `import { createStore } from './store.js`, then creating and instance with `const store = createStore()`. The same goes for the router. This is what I am doing in the `Posts.vue` example - the store code is found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/src/createStore.js) and the router [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/src/createRouter.js).
+## Тесты (перед рефакторингом)
 
-## The Tests (before refactor)
-
-Now we know what `Posts.vue` and the store and router look like, we can understand what the tests are doing:
+Теперь мы знаем, что представляет из себя `Posts.vue`, как выглядит хранилище и роутер. Теперь мы сможем понять, что делается в тестах: 
 
 ```js
 import Vuex from 'vuex'
@@ -120,49 +119,48 @@ import { createRouter } from '@/createRouter'
 import { createStore } from '@/createStore'
 
 describe('Posts.vue', () => {
-  it('renders a message if passed', () => {
+  it('отрисовывает сообщение, если оно было передано', () => {
     const localVue = createLocalVue()
     localVue.use(VueRouter)
     localVue.use(Vuex)
 
     const store = createStore()
     const router = createRouter()
-    const message = 'New content coming soon!'
+    const message = 'Скоро выйдут новые статьи!'
     const wrapper = mount(Posts, {
       propsData: { message },
       store, router,
     })
 
-    expect(wrapper.find("#message").text()).toBe('New content coming soon!')
+    expect(wrapper.find("#message").text()).toBe('Скоро выйдут новые статьи!')
   })
 
-  it('renders posts', async () => {
+  it('отрисовывает новости', async () => {
     const localVue = createLocalVue()
     localVue.use(VueRouter)
     localVue.use(Vuex)
 
     const store = createStore()
     const router = createRouter()
-    const message = 'New content coming soon!'
+    const message = 'Скоро выйдут новые статьи!'
 
     const wrapper = mount(Posts, {
       propsData: { message },
       store, router,
     })
 
-    wrapper.vm.$store.commit('ADD_POSTS', [{ id: 1, title: 'Post' }])
+    wrapper.vm.$store.commit('ADD_POSTS', [{ id: 1, title: 'Новость' }])
     await wrapper.vm.$nextTick()
 
     expect(wrapper.findAll('.post').length).toBe(1)
   })
 })
 ```
+Покрыты не все возможные исходы; Это минимальный набор, которого достаточно для начала. Обратите внимание на дублирование и повторение - давайте избавимся от этого.
 
-This does not fully tests all the conditions; it's a minimal example, and enough to get us started. Notice the duplication and repetition - let's get rid of that.
+## Кастомная функция `createTestVue`
 
-## A Custom `createTestVue` Function
-
-The first five line of each test are the same:
+Первые пять строчек каждого теста одинаковые:
 
 ```js
 const localVue = createLocalVue()
@@ -173,7 +171,7 @@ const store = createStore()
 const router = createRouter()
 ```
 
-Let's fix that. As not to be confused with Vue Test Utils' `createLocalVue` function, I like to call my function `createTestVue`. It looks something like this:
+Давайте исправим это. Чтобы не путаться с функцией `createLocalVue` из Vue Test Utils, я назову свою функцию `createTestVue`. Она выглядит так:
 
 ```js
 const createTestVue = () => {
@@ -187,14 +185,14 @@ const createTestVue = () => {
 }
 ```
 
-Now we have encapsulated all the logic in a single function. We return the `store`, `router` and `localVue` since we need to pass them to the `mount` function. 
+Теперь мы инкапсулировали всю логику внутри одной функции. Мы возвращаем `store`, `router` и `localVue`, так как нам нужно передавать их в функцию `mount`.
 
-If we refactor the first test using `createTestVue`, it looks like this:
+Если мы перепишем первый тест с использованием `createTestVue`, то он будет выглядеть так:
 
 ```js
-it('renders a message if passed', () => {
+it('отрисовывает сообщение, если оно было передано', () => {
   const { localVue, store, router } = createTestVue()
-  const message = 'New content coming soon!'
+  const message = 'Скоро выйдут новые статьи!'
   const wrapper = mount(Posts, {
     propsData: { message },
     store,
@@ -202,30 +200,30 @@ it('renders a message if passed', () => {
     localVue
   })
 
-  expect(wrapper.find("#message").text()).toBe('New content coming soon!')
+  expect(wrapper.find("#message").text()).toBe('Скоро выйдут новые статьи!')
 })
 ```
 
-Quite a bit more concise. Let's refactor second test, which makes use of the of Vuex store.
+Выглядит лаконичнее. Давайте перепишем второй тест, который использует хранилище Vuex.
 
 ```js
-it('renders posts', async () => {
+it('отрисовывает новости', async () => {
   const { localVue, store, router } = createTestVue()
   const wrapper = mount(Posts, {
     store,
     router,
   })
 
-  wrapper.vm.$store.commit('ADD_POSTS', [{ id: 1, title: 'Post' }])
+  wrapper.vm.$store.commit('ADD_POSTS', [{ id: 1, title: 'Новость' }])
   await wrapper.vm.$nextTick()
 
   expect(wrapper.findAll('.post').length).toBe(1)
 })
 ```
 
-## Defining a `createWrapper` method
+## Определение метода `createWrapper`
 
-While the above code is definitely an improvement, comparing this and the previous test, we can notice that about half of the code is still duplicated. Let's create a new method, `createWrapper`, to address this.
+Приведенный выше код уже определённо лучше того, что было. Сравнивая эти тесты, можно заметить, что около половины кода всё еще повторяется. Давайте создадим новый метод `createWrapper`, чтобы решить эту проблему.
 
 ```js
 const createWrapper = (component, options = {}) => {
@@ -239,31 +237,31 @@ const createWrapper = (component, options = {}) => {
 }
 ```
 
-Now we can just called `createWrapper` and have a fresh copy of the component, ready for testing. Our tests are very concise now.
+Теперь мы можем просто вызывать `createWrapper` и получать новую копию компонента готового для тестирования. Теперь наши тесты очень лаконичные.
 
 ```js
-it('renders a message if passed', () => {
-  const message = 'New content coming soon!'
+it('отрисовывает сообщение, если оно было передано', () => {
+  const message = 'Скоро выйдут новые статьи!'
   const wrapper = createWrapper(Posts, {
     propsData: { message },
   })
 
-  expect(wrapper.find("#message").text()).toBe('New content coming soon!')
+  expect(wrapper.find("#message").text()).toBe('Скоро выйдут новые статьи!')
 })
 
-it('renders posts', async () => {
+it('отрисовывает новости', async () => {
   const wrapper = createWrapper(Posts)
 
-  wrapper.vm.$store.commit('ADD_POSTS', [{ id: 1, title: 'Post' }])
+  wrapper.vm.$store.commit('ADD_POSTS', [{ id: 1, title: 'Новость' }])
   await wrapper.vm.$nextTick()
 
   expect(wrapper.findAll('.post').length).toBe(1)
 })
 ```
 
-## Setting the Initial Vuex State
+## Установка изначального состояния Vuex
 
-The last improvement we can make is to how we populate the Vuex store. In a real application, you store is likely to be complex, and having to `commit` and `dispatch` many different mutations and actions to get your component into the state you want to test is not ideal. We can make a small change to our `createStore` function, which makes it easier to set the initial state:
+Осталось одно улучшение – как заполнить хранилище. В настоящем приложении, ваше хранилище будет сложным. Вызывать множество мутаций и действий только для того, чтобы получить состояние для тестирования – не самое лучшее решение. Мы можем сделать небольшое изменение в нашей функции `createStore`, которое позволит устанавливать начальное состояние:
 
 ```js
 const createStore = (initialState = {}) => new Vuex.Store({
@@ -277,8 +275,8 @@ const createStore = (initialState = {}) => new Vuex.Store({
   }
 })
 ```
+Теперь мы можем получить желаемое начальное состояние через функцию `createStore`. Мы можем сделать быстрый рефакторинг, объединив `createTestVue` и` createWrapper`:
 
-Now we can the desired initial state to the `createStore` function. We can do a quick refactor, merging `createTestVue` and `createWrapper`:
 
 ```js
 const createWrapper = (component, options = {}, storeState = {}) => {
@@ -297,35 +295,35 @@ const createWrapper = (component, options = {}, storeState = {}) => {
 }
 ```
 
-Now our test now can be written as follows:
+Теперь наш тест теперь можно переписать следующим образом:
 
 ```js
-it('renders posts', async () => {
+it('отрисовывает новости', async () => {
   const wrapper = createWrapper(Posts, {}, {
-    posts: [{ id: 1, title: 'Post' }]
+    posts: [{ id: 1, title: 'Новость' }]
   })
 
   expect(wrapper.findAll('.post').length).toBe(1)
 })
 ```
 
-This is a big improvement! We went from a test where roughly half the code was boilerplate, and not actually related to the assertion, to two lines; one to prepare the component for testing, and one for the assertion. 
+Это большое улучшение! Мы прошли от теста, где примерно половина кода была шаблонной, и фактически не связана с проверками, до двух строк; один для подготовки компонента к тестированию, а другой для проверки.
 
-Another bonus of this refactor is we have a flexible `createWrapper` function, which we can use for all our tests.
+Еще один бонус этого рефактора - это гибкая функция `createWrapper`, которую мы можем использовать для всех наших тестов.
 
-## Improvements
+## Улучшения
 
-There are some other potential improvements:
+Есть несколько потенциальных улучшений:
 
-- update the `createStore` function to allow setting initial state for Vuex namespaced modules
-- improve `createRouter` to set a specific route
-- allow the user to pass a `shallow` or `mount` argument to `createWrapper` 
+- обновить функцию `createStore`, чтобы разрешить установку начального состояния для модулей пространства имен Vuex
+- улучшить `createRouter`, чтобы устанавливать конкретный маршрут
+- разрешить пользователю передавать аргумент `shallow` или` mount` в `createWrapper`
 
-## Conclusion
+## Заключение
 
-This guide discussed:
+В этом руководстве обсудили:
 
-- using factory functions to get a new instance of an object
-- reducing boilerplate and duplication by extract common behavior
+- использование функций-фабрик для получения нового экземпляра объекта
+- сокращение шаблонного кода и дублирования путём выноса общего кода
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Posts.spec.js). It is also available as a screencast on [Vue.js Courses](https://vuejs-course.com/screencasts/reducing-duplication-in-tests.html?ref=vth).
+Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Posts.spec.js). Эта статья доступна в виде скринкаста на[Vue.js Courses](https://vuejs-course.com/screencasts/reducing-duplication-in-tests.html?ref=vth).

@@ -4,7 +4,7 @@
 
 It is often ideal to start each unit test with a fresh copy of a component. Furthermore, as your apps get larger and more complex, chances are you have a some components with many different props, and possibly a number of third party libraries such as Vuetify, VueRouter and Vuex installed. This can cause your tests to have lots of boilerplate code - that is, code that is not directly related to the test.
 
-This article takes component using Vuex and VueRotuer and demonstrates some patterns to help you reduce the amount of setup code for your unit tests.
+This article takes component using Vuex and VueRouter and demonstrates some patterns to help you reduce the amount of setup code for your unit tests.
 
 The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Posts.spec.js).
 
