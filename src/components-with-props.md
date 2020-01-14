@@ -165,7 +165,7 @@ The above is a function that will `shallowMount` a `SubmitButton` component. We 
 
 ```js
 describe("SubmitButton", () => {
-  describe("has admin privileges", ()=> {
+  describe("does not have admin privileges", ()=> {
     it("renders a message", () => {
       const wrapper = factory()
 
@@ -174,7 +174,7 @@ describe("SubmitButton", () => {
     })
   })
 
-  describe("does not have admin privileges", ()=> {
+  describe("has admin privileges", ()=> {
     it("renders a message", () => {
       const wrapper = factory({ isAdmin: true })
 
