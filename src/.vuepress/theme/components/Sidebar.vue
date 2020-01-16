@@ -4,15 +4,16 @@
       <CarbonAds />
     -->
     <a href="https://vuejs-course.com/" target="_blank">
-      <img 
-        id="ad" 
-        :src="$withBase('vuejs-course.png')" 
+      <img
+        id="ad"
+        :src="'/vuejs-course.png'"
+        alt='vuejs-course banner'
       />
     </a>
     <br />
     <div class="info">
       <small>
-      Hi! Please check out my 
+      Hi! Please check out my
       <a href="https://vuejs-course.com/" target="_blank">upcoming</a>
       <a href="https://vuejs-course.com/" target="_blank">course</a>
       <a href="https://vuejs-course.com/" target="_blank">on</a>
@@ -24,31 +25,31 @@
 
     <!-- https://vuejs-course.com/ -->
 
-    <!-- 
+    <!--
 
     <VueSchool />
 
-    <div 
+    <div
       class="info"
     >
-      Prefer videos? I recommend Vue School's 
+      Prefer videos? I recommend Vue School's
 
-      <a 
+      <a
         href="https://vueschool.io/courses/learn-how-to-test-vuejs-components?friend=vth"
-        target="_blank" 
+        target="_blank"
         @click="track"
     
         >
           Testing Vue.js
-        </a> 
+        </a>
 
-        <a 
-          target="_blank" 
+        <a
+          target="_blank"
           href="https://vueschool.io/courses/learn-how-to-test-vuejs-components?friend=vth"
           @click="track"
         >
           Components course
-        </a> 
+        </a>
 
         to learn vue-test-utils, Jest and the other tooling with guys who literally built Vue.js.
     </div>
