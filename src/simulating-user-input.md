@@ -111,7 +111,7 @@ handleSubmitAsync() {
 }
 ```
 
-In this case, one technique is to _mock_ `this.$http` to create the desired testing environment. You can read about the `mocks` mounting option [here](https://vue-test-utils.vuejs.org/api/options.html#mocks). Let's see a mock implemtation of a `http.get` method:
+In this case, one technique is to _mock_ `this.$http` to create the desired testing environment. You can read about the `mocks` mounting option [here](https://vue-test-utils.vuejs.org/api/options.html#mocks). Let's see a mock implementation of a `http.get` method:
 
 ```js
 let url = ''
