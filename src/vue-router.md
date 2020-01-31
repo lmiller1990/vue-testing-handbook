@@ -145,7 +145,7 @@ describe("App", () => {
 })
 ```
 
-And the solution is to define the mode as abstract. 
+And the solution is to define the mode as **history** or **abstract**. 
 ```vue 
 const router = new VueRouter({ routes, mode: 'abstract' });
 ```
