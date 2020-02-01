@@ -1,6 +1,6 @@
 ## 전역 객체 모킹
 
-`vue-test-utils`는 테스트 기준으로 `Vue.prototype`에 부착한 전역 객체를 mock 하거나, 모든 테스트의 default mock을 설정하는 간단한 방법을 제공합니다.
+`vue-test-utils`는 테스트의 test basis로 `Vue.prototype`에 부착한 전역 객체를 mock 하거나, 모든 테스트의 default mock을 설정하는 간단한 방법을 제공합니다.
 
 예제에서 사용한 테스트는 [여기](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app/tests/unit/Bilingual.spec.js)에서 찾을 수 있습니다.
 
@@ -85,7 +85,7 @@ describe("Bilingual", () => {
 
 ## config을 사용해서 default mocks 설정하기
 
-때로는 mock을 위한 기본값을 가지고 싶어서, 테스트 기준으로 mock을 생성하지 않기를 원할 수도 있습니다. `vue-test-utils`에서 제공하는 [config](https://vue-test-utils.vuejs.org/api/#config) API를 사용해서 이 일을 할 수 있습니다. `vue-i18n` 예제를 확장해 보겠습니다. 아래와 같이 설정함으로써 어디서든지 default mocks를 설정할 수 있습니다.
+때로는 mock을 위한 기본값을 가지고 싶어서, 테스트의 test basis로 mock을 생성하고 싶지 않을 수도 있습니다. `vue-test-utils`에서 제공하는 [config](https://vue-test-utils.vuejs.org/api/#config) API를 사용해서 이 일을 할 수 있습니다. `vue-i18n` 예제를 확장해 보겠습니다. 아래와 같이 설정함으로써 어디서든지 default mocks를 설정할 수 있습니다.
 
 ```js
 import VueTestUtils from "@vue/test-utils"
@@ -130,5 +130,5 @@ Vuex를 테스트하기 위해 `mocks`를 사용하는 방법은 [여기](https:
 
 이 가이드는 아래의 내용에 관해 얘기했습니다.
 
-- 테스트 기준으로 전역 객체를 모킹하기 위한 `mocks` 사용하기
+- 테스트의 test basis로 전역 객체를 모킹하기 위한 `mocks` 사용하기
 - default mock을 설정하기 위한 `config.mocks` 사용하기

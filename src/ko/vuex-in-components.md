@@ -4,7 +4,7 @@
 
 ## `createLocalVue`를 사용해서 `$store.state` 테스트하기
 
-일반적인 Vue app에서는 `Vue.use(Vuex)`를 사용해서 Vuex를 설치합니다. 그러고 나서 app에 새로운 Vuex 스토어(store)를 넘깁니다. 유닛 테스트에서 같은 행위를 한다면, 모든 유닛 테스트는 Vuex 스토어를 받을 것입니다. 심지어 스토어를 사용하지 않는 테스트도요. `vue-test-utils`는 `createLocalVue` 메서드를 제공하고, 이 메서드는 테스트 기준으로 사용할 임시 `Vue` 인스턴스를 제공합니다. 어떻게 사용하는지 알아보겠습니다. 먼저 스토어의 기본 상태(state)에서 username을 렌더하는 간단한 `<ComponentWithGetter>` 컴포넌트입니다.
+일반적인 Vue app에서는 `Vue.use(Vuex)`를 사용해서 Vuex를 설치합니다. 그러고 나서 app에 새로운 Vuex 스토어(store)를 넘깁니다. 유닛 테스트에서 같은 행위를 한다면, 모든 유닛 테스트는 Vuex 스토어를 받을 것입니다. 심지어 스토어를 사용하지 않는 테스트도요. `vue-test-utils`는 `createLocalVue` 메서드를 제공하고, 이 메서드는 테스트의 test basis로 사용할 임시 `Vue` 인스턴스를 제공합니다. 어떻게 사용하는지 알아보겠습니다. 먼저 스토어의 기본 상태(state)에서 username을 렌더하는 간단한 `<ComponentWithGetter>` 컴포넌트입니다.
 
 ```html
 <template>
