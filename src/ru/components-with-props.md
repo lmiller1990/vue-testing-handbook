@@ -96,7 +96,7 @@ PASS  tests/unit/SubmitButton.spec.js
 
 ## Второй тест
 
-Давайте также добавим проверку еще одного возможного случая, когда `isAdmin` в значении `true`
+Давайте также добавим проверку ещё одного возможного случая, когда `isAdmin` в значении `true`
 
 ```js
 import { shallowMount } from '@vue/test-utils'
@@ -183,7 +183,7 @@ describe("SubmitButton.vue", () => {
 })
 ```
 
-Давайте запустим тесты еще раз. Они всё еще работают.
+Давайте запустим тесты ещё раз. Они всё ещё работают.
 
 ```bash
 PASS  tests/unit/SubmitButton.spec.js
