@@ -1,6 +1,6 @@
 ## Уменьшаем шаблонный код
 
-> Эта статья доступна в виде скринкаста на [Vue.js Courses](https://vuejs-course.com/screencasts/reducing-duplication-in-tests.html?ref=vth). Посмотреть можно [здесь](https://vuejs-course.com/screencasts/reducing-duplication-in-tests.html?ref=vth).
+> Эта статья доступна в виде скринкаста на [Vue.js Courses](https://vuejs-course.com/screencasts/reducing-duplication-in-tests). Посмотреть можно [здесь](https://vuejs-course.com/screencasts/reducing-duplication-in-tests).
 
 В идеале каждый модульный тест нужно начинать с новой копии компонента. Также, по мере того, как ваши приложения становятся всё сложнее и больше, есть вероятность, что у вас будет несколько компонентов с различными входными параметрами, и, возможно, сторонними библиотеками по типу Vuetify, VueRouter и Vuex. Это может привести к тому, что в ваших тестах будет много шаблонного кода, т.е. кода, который не имеет прямого отношения к тесту.
 
@@ -326,4 +326,4 @@ it('отрисовывает новости', async () => {
 - использование функций-фабрик для получения нового экземпляра объекта
 - сокращение шаблонного кода и дублирования путём выноса общего кода
 
-Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Posts.spec.js). Эта статья доступна в виде скринкаста на[Vue.js Courses](https://vuejs-course.com/screencasts/reducing-duplication-in-tests.html?ref=vth).
+Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Posts.spec.js). Эта статья доступна в виде скринкаста на[Vue.js Courses](https://vuejs-course.com/screencasts/reducing-duplication-in-tests).
