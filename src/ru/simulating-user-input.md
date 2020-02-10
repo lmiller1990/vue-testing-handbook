@@ -64,11 +64,12 @@ import { shallowMount } from "@vue/test-utils"
 import FormSubmitter from "@/components/FormSubmitter.vue"
 
 describe("FormSubmitter", () => {
-  it("Показывает сообщение после отправки", () => {
+  it("Показывает сообщение после отправки", async() => {
     const wrapper = shallowMount(FormSubmitter)
 
     wrapper.find("[data-username]").setValue("Алиса")
     wrapper.find("form").trigger("submit.prevent")
+    await wrapper.vm.$nextTick()
 
     expect(wrapper.find(".message").text())
       .toBe("Спасибо за ваше сообщение, Алиса.")
