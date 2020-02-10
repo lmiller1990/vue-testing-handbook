@@ -104,7 +104,64 @@ describe("App", () => {
 
 As usual, we start by importing the various modules for the test. Notably, we are importing the actual routes we will be using for the application. This is ideal in some ways - if the real routing breaks, the unit tests should fail, letting us fix the problem before deploying the application.
 
-We can use the same `localVue` for all the `<App>` tests, so it is declared outside the first `describe` block. However, since we might like to have different tests for different routes, the router is defined inside the `it` block.
+We can use the same `localVue` for all the `<App>` tests, so it is declared outside the first `describe` block. However, since we might like to have different tests for different routes, the solution is not as simple as defining the router inside the `it` block.
+
+Even if you put the router inside the `it` block the router will still point to the previous path. You can try it on the example below:
+
+```js
+import { shallowMount, mount, createLocalVue } from "@vue/test-utils"
+import App from "@/App.vue"
+import VueRouter from "vue-router"
+import NestedRoute from "@/components/NestedRoute.vue"
+import routes from "@/routes.js"
+
+const localVue = createLocalVue()
+localVue.use(VueRouter)
+
+describe("App", () => {
+  it("renders a child component via routing", async () => {
+    const router = new VueRouter({ routes })
+    const wrapper = mount(App, { 
+      localVue,
+      router
+    })
+
+    router.push("/nested-route")
+    await wrapper.vm.$nextTick()
+
+    expect(wrapper.find(NestedRoute).exists()).toBe(true)
+  });
+
+  it("should have a different route that /nested-route", async () => {
+    const router = new VueRouter({ routes })
+    const wrapper = mount(App, { 
+      localVue,
+      router
+    })
+    // This test will fail because we are still on the /nested-route
+    expect(wrapper.find(NestedRoute).exists()).toBe(false)
+    console.log(router.currentRoute)
+  })
+})
+```
+
+And the solution is to define the mode as **history** or **abstract**. 
+```vue 
+const router = new VueRouter({ routes, mode: 'abstract' });
+```
+Now the current path will be the home path.
+```json 
+ {
+      name: null,
+      meta: {},
+      path: '/',
+      hash: '',
+      query: {},
+      params: {},
+      fullPath: '/',
+      matched: []
+    }
+```
 
 Another notable point that is different from other guides in this book is we are using `mount` instead of `shallowMount`. If we use `shallowMount`, `<router-link>` will be stubbed out, regardless of the current route, a useless stub component will be rendered.
 
