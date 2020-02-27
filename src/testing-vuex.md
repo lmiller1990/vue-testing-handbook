@@ -14,4 +14,4 @@ These tests are to assert that the component behaves correctly based on the curr
 
 Any logic performed by the store, such as mutations and getters, can be tested in isolation. Since Vuex stores are comprised of regular JavaScript functions, they are easily unit tested.
 
-The next guide introduces some techniques to test components that use a Vuex store, and ensure they behave correctly based on the store's state. Later guides discuss testing Vuex in isolation.
+The first few guides discuss techniques to test Vuex in isolation considering mutations, actions and getters. Following guides introduce some techniques to test components that use a Vuex store, and ensure they behave correctly based on the store's state.
