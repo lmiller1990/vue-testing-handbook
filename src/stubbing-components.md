@@ -122,7 +122,7 @@ it('renders with mount and does initialize API call', () => {
 })
 ```
 
-The test still passes when `yarn test:unit` is run, however the `console.log` is nowhere to be seen. That's because passing `[component]: true` to `stubs` replaced the original component with a _stub_. The external interface is still the same (we can still select is using `find`, since the `name` property, which is used internally by `find`, is still the same). The internal methods, such as `makeApiCall`, are replaced by dummy methods that don't do anything - they are "stubbed out".
+The test still passes when `yarn test:unit` is run, however the `console.log` is nowhere to be seen. That's because passing `[component]: true` to `stubs` replaced the original component with a _stub_. The external interface is still the same (we can still select it using `find`, since the `name` property, which is used internally by `find`, is still the same). The internal methods, such as `makeApiCall`, are replaced by dummy methods that don't do anything - they are "stubbed out".
 
 You can also specify the markup to use for the stub, if you like:
 
