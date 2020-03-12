@@ -98,7 +98,7 @@ describe("ComponentWithButtons", () => {
 
 Notice the tests are marked `await` and call `nextTick`. See [here](/simulating-user-input.html#writing-the-test) for more details on why.
 
-There is a lot code in the test above - nothing too exciting is happening, though. We create a `localVue` and use Vuex, then create a store, passing a Jest mock function (`jest.fn()`) in place of the `testMutation`. Vuex mutations are always called with two arguments: the first is the current state, and the second is the payload. Since we didn't declare any state for the store, we expect it to be called with an empty object. The second argument is expected to me `{ msg: "Test Commit" }`, which is hard coded in the component.
+There is a lot code in the test above - nothing too exciting is happening, though. We create a `localVue` and use Vuex, then create a store, passing a Jest mock function (`jest.fn()`) in place of the `testMutation`. Vuex mutations are always called with two arguments: the first is the current state, and the second is the payload. Since we didn't declare any state for the store, we expect it to be called with an empty object. The second argument is expected to be `{ msg: "Test Commit" }`, which is hard coded in the component.
 
 This is a lot of boilerplate code to write, but is a correct and valid way to verify components are behaving correctly. Another alternative that requires less code is using a mock store. Let's see how to do that for while writing a test to assert `testAction` is dispatched.
 
