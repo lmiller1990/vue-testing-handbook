@@ -6,7 +6,7 @@ The source code for the test described on this page can be found [here](https://
 
 ## Creating the Components
 
-For this example, we will create a `<Child>` and `<Parent>` and component.
+For this example, we will create a `<Child>` and `<Parent>` component.
 
 Child: 
 
