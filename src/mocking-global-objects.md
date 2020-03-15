@@ -88,9 +88,9 @@ Now the test passes! There are lots of uses for the `mocks` option. Most frequen
 Sometimes you want to have a default value for the mock, so you don't create it on a test by test basis. You can do this using the [config](https://vue-test-utils.vuejs.org/api/#vue-test-utils-config-options) API provided by `vue-test-utils`. Let's expand the `vue-i18n` example. You can set default mocks anywhere by doing the following:
 
 ```js
-import VueTestUtils from "@vue/test-utils"
+import { config } from "@vue/test-utils"
 
-VueTestUtils.config.mocks["mock"] = "Default Mock Value"
+config.mocks["mock"] = "Default Mock Value"
 ```
 
 The demo project for this guide is using Jest, so I will declare the default mock in `jest.init.js`, which is loaded before the tests are run automatically. I will also import the example translations object from earlier, and use it in the mock implementation.
