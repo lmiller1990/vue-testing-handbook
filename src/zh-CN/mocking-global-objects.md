@@ -88,9 +88,9 @@ describe("Bilingual", () => {
 有时需要一个 mock 的默认值，这样就不用为每个测试用例都设置一遍了。可以用 `vue-test-utils` 提供的 [config](https://vue-test-utils.vuejs.org/api/#vue-test-utils-config-options) API 来实现。让我们展开 `vue-i18n` 的例子，通过像下面这样做，你可以在任意位置设置默认的 mocks：
 
 ```js
-import VueTestUtils from "@vue/test-utils"
+import { config } from "@vue/test-utils"
 
-VueTestUtils.config.mocks["mock"] = "Default Mock Value"
+config.mocks["mock"] = "Default Mock Value"
 ```
 
 本文的这个 demo 项目中用到了 Jest，所以我将把默认 mock 声明在 `jest.init.js` 文件中，该文件会在测试运行前被自动加载。同时我也会导入并应用此前用于示例的翻译对象，并将其用在 mock 实现中。

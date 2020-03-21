@@ -88,9 +88,9 @@ describe("Bilingual", () => {
 때로는 mock을 위한 기본값을 가지고 싶어서, 테스트의 test basis로 mock을 생성하고 싶지 않을 수도 있습니다. `vue-test-utils`에서 제공하는 [config](https://vue-test-utils.vuejs.org/api/#config) API를 사용해서 이 일을 할 수 있습니다. `vue-i18n` 예제를 확장해 보겠습니다. 아래와 같이 설정함으로써 어디서든지 default mocks를 설정할 수 있습니다.
 
 ```js
-import VueTestUtils from "@vue/test-utils"
+import { config } from "@vue/test-utils"
 
-VueTestUtils.config.mocks["mock"] = "Default Mock Value"
+config.mocks["mock"] = "Default Mock Value"
 ```
 
 이 가이드를 위한 데모 프로젝트는 Jest를 사용하고 있습니다. 그래서 `jest.init.js`에서 기본 mock을 선언하겠습니다. 해당 mock은 테스트가 자동으로 실행되기 전에 불러와 집니다. 또한 예제인 translations 객체를 앞에서 가져와서 mock 구현에 사용하겠습니다.

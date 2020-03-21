@@ -28,7 +28,7 @@ export default {
 </script>
 ```
 
-We can use `createLocalVue` to create a temporary Vue instance, and install Vuex. Then we simply pass the a new `store` in the component's mounting options. A full test looks like this:
+We can use `createLocalVue` to create a temporary Vue instance, and install Vuex. Then we simply pass the new `store` in the component's mounting options. A full test looks like this:
 
 ```js
 import Vuex from "vuex"
