@@ -100,7 +100,7 @@ export const createStore = () => {
 // router.js
 export default new VueRouter({ ... })
 export const createRouter = () => {
-  return new Vuex.Router({ ... })
+  return new VueRouter({ ... })
 }
 ```
 
