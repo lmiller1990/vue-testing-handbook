@@ -57,12 +57,12 @@ export default {
 Regular elements can easily be selected using the syntax used with `document.querySelector`. `vue-test-utils` also provides a `isVisible` method to check if elements conditionally rendered with `v-show` are visible. Create a `Parent.spec.js`, and inside add the following test:
 
 ```js
-import { mount, shallowMount } from "@vue/test-utils"
+import { mount } from "@vue/test-utils"
 import Parent from "@/components/Parent.vue"
 
 describe("Parent", () => {
   it("does not render a span", () => {
-    const wrapper = shallowMount(Parent)
+    const wrapper = mount(Parent)
 
     expect(wrapper.find("span").isVisible()).toBe(false)
   })
@@ -73,7 +73,7 @@ Since `v-show="showSpan"` defaults to `false`, we expect the found `<span>` elem
 
 ```js
 it("does render a span", () => {
-  const wrapper = shallowMount(Parent, {
+  const wrapper = mount(Parent, {
     data() {
       return { showSpan: true }
     }
@@ -98,7 +98,7 @@ These are a bit easier to understand in the context of an example test. Let's st
 import Child from "@/components/Child.vue"
 
 it("does not render a Child component", () => {
-  const wrapper = shallowMount(Parent)
+  const wrapper = mount(Parent)
 
   expect(wrapper.find(Child).exists()).toBe(false)
 })
@@ -110,7 +110,7 @@ As mentioned in the previous paragraph, the `name` property is one of the checks
 
 ```js
 it("renders a Child component", () => {
-  const wrapper = shallowMount(Parent, {
+  const wrapper = mount(Parent, {
     data() {
       return { showChild: true }
     }
@@ -148,7 +148,7 @@ We can write a test using `findAll` to assert three `<Child>` components are ren
 
 ```js
 it("renders many children", () => {
-  const wrapper = shallowMount(ParentWithManyChildren)
+  const wrapper = mount(ParentWithManyChildren)
 
   expect(wrapper.findAll(Child).length).toBe(3)
 })

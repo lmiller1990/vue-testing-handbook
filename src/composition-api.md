@@ -71,13 +71,13 @@ The two things we will need to test here are:
 Testing the message is correctly rendered is trivial. We just use `propsData` to set the value of the prop, as described [here](/components-with-props.html).
 
 ```js
-import { shallowMount } from "@vue/test-utils"
+import { mount } from "@vue/test-utils"
 
 import CompositionApi from "@/components/CompositionApi.vue"
 
 describe("CompositionApi", () => {
   it("renders a message", () => {
-    const wrapper = shallowMount(CompositionApi, {
+    const wrapper = mount(CompositionApi, {
       propsData: {
         message: "Testing the composition API"
       }
@@ -95,13 +95,13 @@ As expected, this is very simple - regardless of the way we are composing out co
 Writing a test to ensure clicking the button increments the `state.count` is equally simple. Notice the test is marked `async`; read more about why this is required in [Simulating User Input](simulating-user-input.html#writing-the-test).
 
 ```js
-import { shallowMount } from "@vue/test-utils"
+import { mount } from "@vue/test-utils"
 
 import CompositionApi from "@/components/CompositionApi.vue"
 
 describe("CompositionApi", () => {
   it("increments a count when button is clicked", async () => {
-    const wrapper = shallowMount(CompositionApi, {
+    const wrapper = mount(CompositionApi, {
       propsData: { message: '' }
     })
 

@@ -1,9 +1,9 @@
-import { shallowMount } from "@vue/test-utils"
+import { mount } from "@vue/test-utils"
 import NumberRenderer from "@/components/NumberRenderer.vue"
 
 describe("NumberRenderer", () => {
   it("renders even numbers", () => {
-    const wrapper = shallowMount(NumberRenderer, {
+    const wrapper = mount(NumberRenderer, {
       propsData: {
         even: true
       }

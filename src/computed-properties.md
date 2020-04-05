@@ -15,12 +15,12 @@ The `<NumberRenderer>` component will receive an `even` prop, that is a boolean.
 The test:
 
 ```js
-import { shallowMount } from "@vue/test-utils"
+import { mount } from "@vue/test-utils"
 import NumberRenderer from "@/components/NumberRenderer.vue"
 
 describe("NumberRenderer", () => {
   it("renders even numbers", () => {
-    const wrapper = shallowMount(NumberRenderer, {
+    const wrapper = mount(NumberRenderer, {
       propsData: {
         even: true
       }
@@ -195,7 +195,7 @@ FAIL  tests/unit/NumberRenderer.spec.js
 
 So we need to use `call`, which lets us bind an alternative `this` object, in our case, one with a `even` property.
 
-## To `call` or to `shallowMount`?
+## To `call` or to `mount`?
 
 Both techniques presented are useful for testing computed properties. Call can be useful when:
 
@@ -206,5 +206,5 @@ Of course, you want to make sure the value is correctly rendered as well, so mak
 
 ## Conclusion
 
-- computed properties can be using `shallowMount` making assertions on the rendered markup
+- computed properties can be using `mount` making assertions on the rendered markup
 - complex computed properties can be independently tested by using `call`

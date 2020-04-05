@@ -1,5 +1,5 @@
 import Vuex from "vuex"
-import { shallowMount, createLocalVue } from "@vue/test-utils"
+import { mount, createLocalVue } from "@vue/test-utils"
 import ComponentWithVuex from "@/components/ComponentWithVuex.vue"
 import ComponentWithGetters from "@/components/ComponentWithGetters.vue"
 
@@ -20,13 +20,13 @@ const store = new Vuex.Store({
 
 describe("ComponentWithVuex", () => {
   it("renders a username using a real Vuex store", () => {
-    const wrapper = shallowMount(ComponentWithVuex, { store, localVue })
+    const wrapper = mount(ComponentWithVuex, { store, localVue })
 
     expect(wrapper.find(".username").text()).toBe("alice")
   })
 
   it("renders a username using a mock store", () => {
-    const wrapper = shallowMount(ComponentWithVuex, {
+    const wrapper = mount(ComponentWithVuex, {
       mocks: {
         $store: {
           state: { username: "alice" }
@@ -40,13 +40,13 @@ describe("ComponentWithVuex", () => {
 
 describe("ComponentWithGetters", () => {
   it("renders a username using a real Vuex getter", () => {
-    const wrapper = shallowMount(ComponentWithGetters, { store, localVue })
+    const wrapper = mount(ComponentWithGetters, { store, localVue })
 
     expect(wrapper.find(".fullname").text()).toBe("Alice Doe")
   })
 
   it("renders a username using computed mounting options", () => {
-    const wrapper = shallowMount(ComponentWithGetters, {
+    const wrapper = mount(ComponentWithGetters, {
       mocks: {
         $store: {
           getters: {
@@ -60,7 +60,7 @@ describe("ComponentWithGetters", () => {
   })
 
   it("renders a username using computed mounting options", () => {
-    const wrapper = shallowMount(ComponentWithGetters, {
+    const wrapper = mount(ComponentWithGetters, {
       computed: {
         fullname: () => "Alice Doe"
       }

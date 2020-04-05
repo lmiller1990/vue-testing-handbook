@@ -1,5 +1,5 @@
 import flushPromises from "flush-promises"
-import { shallowMount } from "@vue/test-utils"
+import { mount } from "@vue/test-utils"
 import FormSubmitter from "@/components/FormSubmitter.vue"
 
 let url = ''
@@ -17,7 +17,7 @@ const mockHttp = {
 
 describe("FormSubmitter", () => {
   it("reveals a notification when submitted", async () => {
-    const wrapper = shallowMount(FormSubmitter)
+    const wrapper = mount(FormSubmitter)
 
     wrapper.find("[data-username]").setValue("alice")
     wrapper.find("form").trigger("submit.prevent")
@@ -28,7 +28,7 @@ describe("FormSubmitter", () => {
   })
 
   it("reveals a notification when submitted", async () => {
-    const wrapper = shallowMount(FormSubmitter, {
+    const wrapper = mount(FormSubmitter, {
       data() {
         return {
           asyncTest: true

@@ -32,7 +32,7 @@ We can use `createLocalVue` to create a temporary Vue instance, and install Vuex
 
 ```js
 import Vuex from "vuex"
-import { shallowMount, createLocalVue } from "@vue/test-utils"
+import { mount, createLocalVue } from "@vue/test-utils"
 import ComponentWithVuex from "@/components/ComponentWithVuex.vue"
 
 const localVue = createLocalVue()
@@ -46,7 +46,7 @@ const store = new Vuex.Store({
 
 describe("ComponentWithVuex", () => {
   it("renders a username using a real Vuex store", () => {
-    const wrapper = shallowMount(ComponentWithVuex, { 
+    const wrapper = mount(ComponentWithVuex, { 
       store, 
       localVue 
     })
@@ -64,7 +64,7 @@ Using the `mocks` mounting options, you can mock the global `$store` object. Thi
 
 ```js
 it("renders a username using a mock store", () => {
-  const wrapper = shallowMount(ComponentWithVuex, {
+  const wrapper = mount(ComponentWithVuex, {
     mocks: {
       $store: {
         state: { username: "alice" }
@@ -122,7 +122,7 @@ const store = new Vuex.Store({
 })
 
 it("renders a username using a real Vuex getter", () => {
-  const wrapper = shallowMount(ComponentWithGetters, { store, localVue })
+  const wrapper = mount(ComponentWithGetters, { store, localVue })
 
   expect(wrapper.find(".fullname").text()).toBe("Alice Doe")
 })
@@ -134,7 +134,7 @@ Let's see how we can write the test using the `mocks` mounting option:
 
 ```js
 it("renders a username using computed mounting options", () => {
-  const wrapper = shallowMount(ComponentWithGetters, {
+  const wrapper = mount(ComponentWithGetters, {
     mocks: {
       $store: {
         getters: {
@@ -158,7 +158,7 @@ Getters are generally wrapped in `computed` properties. Remember, this test is a
 
 ```js
 it("renders a username using computed mounting options", () => {
-  const wrapper = shallowMount(ComponentWithGetters, {
+  const wrapper = mount(ComponentWithGetters, {
     computed: {
       fullname: () => "Alice Doe"
     }

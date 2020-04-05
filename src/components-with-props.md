@@ -53,13 +53,13 @@ export default {
 We will make an assertion on the message in the case the user does not have admin privileges.
 
 ```js
-import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import SubmitButton from '@/components/SubmitButton.vue'
 
 describe('SubmitButton.vue', () => {
   it("displays a non authorized message", () => {
     const msg = "submit"
-    const wrapper = shallowMount(SubmitButton,{
+    const wrapper = mount(SubmitButton,{
       propsData: {
         msg: msg
       }
@@ -99,14 +99,14 @@ We can see the `msg` prop is processed and the resulting markup is correctly ren
 Let's make an assertion on the other possible state, when `isAdmin` is `true`:
 
 ```js
-import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import SubmitButton from '@/components/SubmitButton.vue'
 
 describe('SubmitButton.vue', () => {
   it('displays a admin privileges message', () => {
     const msg = "submit"
     const isAdmin = true
-    const wrapper = shallowMount(SubmitButton,{
+    const wrapper = mount(SubmitButton,{
       propsData: {
         msg,
         isAdmin
@@ -147,12 +147,12 @@ Let's refactor the tests adhering to the principle "Don't Repeat Yourself" (DRY)
 
 ## Refactor with a Factory Function
 
-In both tests we call `shallowMount` then pass a similar `propsData` object. We can refactor this using a factory function. A factory function is simply a function that returns an object - it _makes_ objects, thus the name "factory" function.
+In both tests we call `mount` then pass a similar `propsData` object. We can refactor this using a factory function. A factory function is simply a function that returns an object - it _makes_ objects, thus the name "factory" function.
 
 ```js
 const msg = "submit"
 const factory = (propsData) => {
-  return shallowMount(SubmitButton, {
+  return mount(SubmitButton, {
     propsData: {
       msg,
       ...propsData
@@ -161,7 +161,7 @@ const factory = (propsData) => {
 }
 ```
 
-The above is a function that will `shallowMount` a `SubmitButton` component. We can pass any props to change as the first argument to `factory`. Let's DRY up the test with the factory function.
+The above is a function that will `mount` a `SubmitButton` component. We can pass any props to change as the first argument to `factory`. Let's DRY up the test with the factory function.
 
 ```js
 describe("SubmitButton", () => {

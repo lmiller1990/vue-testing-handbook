@@ -48,12 +48,12 @@ export default {
 Based on the locale, the correct translation is rendered. Let's try and render the component in a test, without any mocking.
 
 ```js
-import { shallowMount } from "@vue/test-utils"
+import { mount } from "@vue/test-utils"
 import Bilingual from "@/components/Bilingual.vue"
 
 describe("Bilingual", () => {
   it("renders successfully", () => {
-    const wrapper = shallowMount(Bilingual)
+    const wrapper = mount(Bilingual)
   })
 })
 ```
@@ -67,12 +67,12 @@ Running this test with `yarn test:unit` throws a huge stack trace. If you look t
 This is because we did not install `vue-i18n`, so the global `$t` method does not exist. Let's mock it using the `mocks` mounting option:
 
 ```js
-import { shallowMount } from "@vue/test-utils"
+import { mount } from "@vue/test-utils"
 import Bilingual from "@/components/Bilingual.vue"
 
 describe("Bilingual", () => {
   it("renders successfully", () => {
-    const wrapper = shallowMount(Bilingual, {
+    const wrapper = mount(Bilingual, {
       mocks: {
         $t: (msg) => msg
       }
@@ -109,7 +109,7 @@ Now a real translation will be rendered, despite using a mocked `$t` function. R
 ```js
 describe("Bilingual", () => {
   it("renders successfully", () => {
-    const wrapper = shallowMount(Bilingual)
+    const wrapper = mount(Bilingual)
 
     console.log(wrapper.html())
   })

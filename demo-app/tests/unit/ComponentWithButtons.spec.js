@@ -1,5 +1,5 @@
 import Vuex from "vuex"
-import { createLocalVue, shallowMount } from "@vue/test-utils"
+import { createLocalVue, mount } from "@vue/test-utils"
 import ComponentWithButtons from "@/components/ComponentWithButtons.vue"
 
 const localVue = createLocalVue()
@@ -16,7 +16,7 @@ const store = new Vuex.Store({
 describe("ComponentWithButtons", () => {
 
   it("commits a mutation when a button is clicked", async () => {
-    const wrapper = shallowMount(ComponentWithButtons, {
+    const wrapper = mount(ComponentWithButtons, {
       store, localVue
     })
 
@@ -33,7 +33,7 @@ describe("ComponentWithButtons", () => {
     const store = new Vuex.Store()
     store.dispatch = jest.fn()
 
-    const wrapper = shallowMount(ComponentWithButtons, {
+    const wrapper = mount(ComponentWithButtons, {
       store, localVue
     })
 
@@ -49,7 +49,7 @@ describe("ComponentWithButtons", () => {
 
   it("dispatches an action when a button is clicked", async () => {
     const mockStore = { dispatch: jest.fn() }
-    const wrapper = shallowMount(ComponentWithButtons, {
+    const wrapper = mount(ComponentWithButtons, {
       mocks: {
         $store: mockStore 
       }

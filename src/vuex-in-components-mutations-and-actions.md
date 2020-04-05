@@ -65,7 +65,7 @@ We will use `createLocalVue` to avoid polluting the global Vue instance.
 
 ```js
 import Vuex from "vuex"
-import { createLocalVue, shallowMount } from "@vue/test-utils"
+import { createLocalVue, mount } from "@vue/test-utils"
 import ComponentWithButtons from "@/components/ComponentWithButtons.vue"
 
 const localVue = createLocalVue()
@@ -80,7 +80,7 @@ const store = new Vuex.Store({ mutations })
 describe("ComponentWithButtons", () => {
 
   it("commits a mutation when a button is clicked", async () => {
-    const wrapper = shallowMount(ComponentWithButtons, {
+    const wrapper = mount(ComponentWithButtons, {
       store, localVue
     })
 
@@ -112,7 +112,7 @@ Let's see the code, then compare and contrast it to the previous test. Remember,
 ```js
 it("dispatches an action when a button is clicked", async () => {
   const mockStore = { dispatch: jest.fn() }
-  const wrapper = shallowMount(ComponentWithButtons, {
+  const wrapper = mount(ComponentWithButtons, {
     mocks: {
       $store: mockStore 
     }
@@ -140,7 +140,7 @@ it("dispatch a namespaced action when button is clicked", async () => {
   const store = new Vuex.Store()
   store.dispatch = jest.fn()
 
-  const wrapper = shallowMount(ComponentWithButtons, {
+  const wrapper = mount(ComponentWithButtons, {
     store, localVue
   })
 
