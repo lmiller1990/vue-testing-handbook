@@ -10,7 +10,9 @@ This is a collection of short, focused examples on how to test Vue components. I
 
 ## Languages
 
-The handbook is written in English. We have a Russian and Japanese translation in progress. Please make an issue if you would like to translate the book into your own language!
+The handbook is written in English, but there are a number of translations. I prefer not to merge translations until the entire document is completed.
+
+If you like an article, feel free to translate it and post it on your own blog. If you can leave a link to the original, that'd be great, too! Let's spread the good word of Vue.js component testing.
 
 ## Contributing 
 
