@@ -13,13 +13,12 @@
     <br />
     <div class="info">
       <small>
-      Hi! Please check out my
+      Hi! Get $10 off my
       <a href="https://vuejs-course.com/" target="_blank">upcoming</a>
       <a href="https://vuejs-course.com/" target="_blank">course</a>
       <a href="https://vuejs-course.com/" target="_blank">on</a>
       <a href="https://vuejs-course.com/" target="_blank">Vue.js 3</a>,
-      including the Composition API,
-      TypeScript, and Unit Testing.
+      with the discount code VUEJS_COURSE_10_OFF.
       </small>
     </div>
 
