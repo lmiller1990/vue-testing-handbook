@@ -1,4 +1,5 @@
 import { mount } from "@vue/test-utils"
+import '@testing-library/jest-dom'
 import Parent from "@/components/Parent.vue"
 import ParentWithManyChildren from "@/components/ParentWithManyChildren.vue"
 import Child from "@/components/Child.vue"
@@ -7,7 +8,7 @@ describe("Parent", () => {
   it("does not render a span", () => {
     const wrapper = mount(Parent)
 
-    expect(wrapper.find("span").isVisible()).toBe(false)
+    expect(wrapper.find("span").element).not.toBeVisible()
   })
 
   it("does render a span", () => {
@@ -17,13 +18,13 @@ describe("Parent", () => {
       }
     })
 
-    expect(wrapper.find("span").isVisible()).toBe(true)
+    expect(wrapper.find("span").element).toBeVisible()
   })
 
   it("does not render a Child component", () => {
     const wrapper = mount(Parent)
 
-    expect(wrapper.find(Child).exists()).toBe(false)
+    expect(wrapper.findComponent(Child).exists()).toBe(false)
   })
 
   it("renders a Child component", () => {
@@ -33,7 +34,7 @@ describe("Parent", () => {
       }
     })
 
-    expect(wrapper.find({ name: "Child" }).exists()).toBe(true)
+    expect(wrapper.findComponent({ name: "Child" }).exists()).toBe(true)
   })
 })
 
@@ -41,6 +42,6 @@ describe("ParentWithManyChildren", () => {
   it("renders many children", () => {
     const wrapper = mount(ParentWithManyChildren)
 
-    expect(wrapper.findAll(Child).length).toBe(3)
+    expect(wrapper.findAllComponents(Child).length).toBe(3)
   })
 })

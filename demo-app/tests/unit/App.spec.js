@@ -23,6 +23,6 @@ describe("App", () => {
     router.push("/nested-route")
     await wrapper.vm.$nextTick()
 
-    expect(wrapper.find(NestedRoute).exists()).toBe(true)
+    expect(wrapper.findComponent(NestedRoute).exists()).toBe(true)
   })
 })
