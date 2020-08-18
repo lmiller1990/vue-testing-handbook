@@ -1,6 +1,8 @@
 ## Finding Elements
 
-`vue-test-utils` provides a number of ways to find and assert the presence of html elements or other Vue components using the `find` method. The main use of `find` is asserting a component correctly renders an element or child component.
+`vue-test-utils` provides a number of ways to find and assert the presence of html elements or other Vue components using the `find` and `findComponent` methods. The main use of `find` is asserting a component correctly renders an element or child component.
+
+> Note: If you used Vue Test Utils prior to v1, you may remember `find` working with components as well as DOM elements. Now you use `find` and `findAll` for DOM elements, and `findComponent` and `findAllComponents` for Vue components. Ther is also a `get` and `getComponent` pair, which are exactly the same as `find` and `findComponent`, but they will raise an error if they do not find anything. This guide chooses to use `find` and `findComponent`.
 
 The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Parent.spec.js).
 
@@ -58,18 +60,19 @@ Regular elements can easily be selected using the syntax used with `document.que
 
 ```js
 import { mount } from "@vue/test-utils"
+import '@testing-library/jest-dom'
 import Parent from "@/components/Parent.vue"
 
 describe("Parent", () => {
   it("does not render a span", () => {
     const wrapper = mount(Parent)
 
-    expect(wrapper.find("span").isVisible()).toBe(false)
+    expect(wrapper.find("span").element).not.toBeVisible()
   })
 })
 ```
 
-Since `v-show="showSpan"` defaults to `false`, we expect the found `<span>` element's `isVisible` method to return `false`. The tests passes when run with `yarn test:unit`. Next, a test around the case when `showSpan` is `true`.
+Since `v-show="showSpan"` defaults to `false`, we expect the found `<span>` element's not to be visible. We are using the awesome `@testing-library/jest-dom` matchers to validate this - determining visibility is tricky business, so Vue Test Utils leaves it up to another battle tested library. The tests passes when run with `yarn test:unit`. Next, a test around the case when `showSpan` is `true`.
 
 ```js
 it("does render a span", () => {
@@ -79,20 +82,20 @@ it("does render a span", () => {
     }
   })
 
-  expect(wrapper.find("span").isVisible()).toBe(true)
+  expect(wrapper.find("span").element).toBeVisible()
 })
 ```
 
-It passes! Much like `isVisible` for `v-show`, `vue-test-utils` provides an `exists` method to be used when testing elements conditionally rendered using `v-if`.
+It passes!
 
 ## Finding Components with `name` and `Component`
 
 Finding child components is a little different to finding regular HTML elements. There two main ways to assert the presence of child Vue components:
 
-1. `find(Component)`
-2. `find({ name: "ComponentName" })`
+1. `findComponent(Component)`
+2. `findComponent({ name: "ComponentName" })`
 
-These are a bit easier to understand in the context of an example test. Let's start with the `find(Component)` syntax. This requires us to `import` the component, and pass it to the `find` function.
+These are a bit easier to understand in the context of an example test. Let's start with the `findComponent(Component)` syntax. This requires us to `import` the component, and pass it to the `findComponent` function.
 
 ```js
 import Child from "@/components/Child.vue"
@@ -100,11 +103,11 @@ import Child from "@/components/Child.vue"
 it("does not render a Child component", () => {
   const wrapper = mount(Parent)
 
-  expect(wrapper.find(Child).exists()).toBe(false)
+  expect(wrapper.findComponent(Child).exists()).toBe(false)
 })
 ```
 
-The implementation for `find` is quite complex, since it works with the `querySelector` syntax, as well as several other syntaxes. You can see the part of the source that finds children Vue components [here](https://github.com/vuejs/vue-test-utils/blob/dev/packages/test-utils/src/find.js). It basically checks the component's `name` against each child rendered, and then checks the `constructor`, and some other properties. 
+The implementation for `find` and `findComponent` is quite complex, since it works with the `querySelector` for DOM elements, as well as several other syntaxes for Vue components. You can see the part of the source that finds children Vue components [here](https://github.com/vuejs/vue-test-utils/blob/dev/packages/test-utils/src/find.js). It basically checks the component's `name` against each child rendered, and then checks the `constructor`, and some other properties. 
 
 As mentioned in the previous paragraph, the `name` property is one of the checks done by `find` when you pass a component. Instead of passing the component, you can simply pass an object with the correct `name` property. This means you do not need to `import` the component. Let's test the case when `<Child>` should be rendered:
 
@@ -116,13 +119,13 @@ it("renders a Child component", () => {
     }
   })
 
-  expect(wrapper.find({ name: "Child" }).exists()).toBe(true)
+  expect(wrapper.findComponent({ name: "Child" }).exists()).toBe(true)
 })
 ```
 
 It passes! Using the `name` property can be a little unintuitive, so importing the actual component is an alternative. Another option is to simply add a `class` or `id` and query using the `querySelector` style syntax presented in the first two examples.
 
-## `findAll`
+## `findAll` and `findAllComponents`
 
 There are often cases when you want to assert that a number of elements are rendered. A common case is a list of items rendered with `v-for`. Here is a `<ParentWithManyChildren>` that renders several `<Child>` components.
 
@@ -144,13 +147,13 @@ export default {
 </script>
 ```
 
-We can write a test using `findAll` to assert three `<Child>` components are rendered like this:
+We can write a test using `findAllComponents` to assert three `<Child>` components are rendered like this:
 
 ```js
 it("renders many children", () => {
   const wrapper = mount(ParentWithManyChildren)
 
-  expect(wrapper.findAll(Child).length).toBe(3)
+  expect(wrapper.findAllComponents(Child).length).toBe(3)
 })
 ```
 
@@ -160,9 +163,9 @@ Running `yarn test:unit` shows the test passes. You can use the `querySelector` 
 
 This page covers:
 
-- using `find` and `findAll` with the `querySelector` syntax
-- `isVisible` and `exists`
-- using `find` and `findAll` with a component or name as the selector
+- using `find` and `findAll` with the `querySelector` syntax for DOM elements
+- use `findComponent` and `findAllComponents` for Vue components
+- use `exists` to check if something is present, `toBeVisible` from `@testing-library/jest-dom` to see if something is present but not visible 
 
 The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Parent.spec.js).
 

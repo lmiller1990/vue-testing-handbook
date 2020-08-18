@@ -5,7 +5,7 @@
 `propsData` is passed into the second argument of either `shallowMount` or `mount`, in the following form:
 
 ```js
-const wrapper = shallowMount(Foo, {
+const wrapper = mount(Foo, {
   propsData: {
     foo: 'bar'
   }

@@ -70,7 +70,7 @@ export default {
 
 Create a `Greeting.spec.js` inside `tests/unit`. Inside, import `Greeting.vue`, as well as `mount`, and add the outline of the test:
 
-```
+```js
 import { mount } from '@vue/test-utils'
 import Greeting from '@/components/Greeting.vue'
 

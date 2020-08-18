@@ -95,7 +95,7 @@ describe("App", () => {
     router.push("/nested-route")
     await wrapper.vm.$nextTick()
 
-    expect(wrapper.find(NestedRoute).exists()).toBe(true)
+    expect(wrapper.findComponent(NestedRoute).exists()).toBe(true)
   })
 })
 ```
@@ -129,7 +129,7 @@ describe("App", () => {
     router.push("/nested-route")
     await wrapper.vm.$nextTick()
 
-    expect(wrapper.find(NestedRoute).exists()).toBe(true)
+    expect(wrapper.findComponent(NestedRoute).exists()).toBe(true)
   });
 
   it("should have a different route that /nested-route", async () => {
@@ -139,7 +139,7 @@ describe("App", () => {
       router
     })
     // This test will fail because we are still on the /nested-route
-    expect(wrapper.find(NestedRoute).exists()).toBe(false)
+    expect(wrapper.findComponent(NestedRoute).exists()).toBe(false)
     console.log(router.currentRoute)
   })
 })

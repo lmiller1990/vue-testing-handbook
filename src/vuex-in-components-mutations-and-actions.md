@@ -84,8 +84,7 @@ describe("ComponentWithButtons", () => {
       store, localVue
     })
 
-    wrapper.find(".commit").trigger("click")
-    await wrapper.vm.$nextTick()    
+    await wrapper.find(".commit").trigger("click")
 
     expect(mutations.testMutation).toHaveBeenCalledWith(
       {},
@@ -118,8 +117,7 @@ it("dispatches an action when a button is clicked", async () => {
     }
   })
 
-  wrapper.find(".dispatch").trigger("click")
-  await wrapper.vm.$nextTick()
+  await wrapper.find(".dispatch").trigger("click")
   
   expect(mockStore.dispatch).toHaveBeenCalledWith(
     "testAction" , { msg: "Test Dispatch" })
@@ -144,8 +142,7 @@ it("dispatch a namespaced action when button is clicked", async () => {
     store, localVue
   })
 
-  wrapper.find(".namespaced-dispatch").trigger("click")
-  await wrapper.vm.$nextTick()
+  await wrapper.find(".namespaced-dispatch").trigger("click")
 
   expect(store.dispatch).toHaveBeenCalledWith(
     'namespaced/very/deeply/testAction',

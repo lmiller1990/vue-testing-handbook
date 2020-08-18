@@ -60,16 +60,15 @@ Pretty simple, we just set `submitted` to be `true` when the form is submitted, 
 Let's see a test. We are marking this test as `async` - read on to find out why.
 
 ```js
-import { shallowMount } from "@vue/test-utils"
+import { mount } from "@vue/test-utils"
 import FormSubmitter from "@/components/FormSubmitter.vue"
 
 describe("FormSubmitter", () => {
   it("reveals a notification when submitted", async () => {
-    const wrapper = shallowMount(FormSubmitter)
+    const wrapper = mount(FormSubmitter)
 
-    wrapper.find("[data-username]").setValue("alice")
-    wrapper.find("form").trigger("submit.prevent")
-    await wrapper.vm.$nextTick()
+    await wrapper.find("[data-username]").setValue("alice")
+    await wrapper.find("form").trigger("submit.prevent")
 
     expect(wrapper.find(".message").text())
       .toBe("Thank you for your submission, alice.")
@@ -77,9 +76,18 @@ describe("FormSubmitter", () => {
 })
 ```
 
-This test is fairly self explanatory. We `shallowMount` the component, set the username and use the `trigger` method `vue-test-utils` provides to simulate user input. `trigger` works on custom events, as well as events that use modifiers, like `submit.prevent`, `keydown.enter`, and so on.
+This test is fairly self explanatory. We `mount` the component, set the username and use the `trigger` method `vue-test-utils` provides to simulate user input. `trigger` works on custom events, as well as events that use modifiers, like `submit.prevent`, `keydown.enter`, and so on.
 
-Notice after calling `trigger`, we do `await wrapper.vm.$nextTick()`. This is why we had to mark the test as `async` - so we can use `await`. As of `vue-test-utils` beta 28, you need to call `nextTick` to ensure Vue's reactivity system updates the DOM. Sometimes you can get away without calling `nextTick`, but if you components start to get complex, you can hit a race condition and your assertion might run before Vue has updated the DOM. You can read more about this in the official [vue-test-utils documentation](https://vue-test-utils.vuejs.org/guides/#updates-applied-by-vue).
+Notice when we call `setValue` and `trigger`, we are using `await`. This is why we had to mark the test as `async` - so we can use `await`. 
+
+`setValue` and `trigger` both, internally, return `Vue.nextTick()`. As of `vue-test-utils` beta 28, you need to call `nextTick` to ensure Vue's reactivity system updates the DOM. By doing `await setValue(...)` and `await trigger(...)`, you are really just using a shorthand for:
+
+```js
+wrapper.setValue(...)
+await wrapper.vm.$nextTick() // "Wait for the DOM to update before continuing the test"
+```
+
+Sometimes you can get away without awaiting for `nextTick`, but if you components start to get complex, you can hit a race condition and your assertion might run before Vue has updated the DOM. You can read more about this in the official [vue-test-utils documentation](https://vue-test-utils.vuejs.org/guides/#updates-applied-by-vue).
 
 The above test also follows the three steps of unit testing:
 
@@ -91,11 +99,11 @@ We separate each step with a newline as it makes tests more readable.
 
 Run this test with `yarn test:unit`. It should pass.
 
-Trigger is very simple - use `find` to get the element you want to simulate some input, and call `trigger` with the name of the event, and any modifiers.
+Trigger is very simple - use `find` (for DOM elements) or `findComponent` (for Vue components) to get the element you want to simulate some input, and call `trigger` with the name of the event, and any modifiers.
 
 ## A real world example
 
-Forms are usually submitted to some endpoint. Let's see how we might test this component with a different implementation of `handleSubmit`. One common practise is to alias your HTTP library to `Vue.prototype.$http`. This allows us to make an ajax request by simply calling `this.$http.get(...)`. Learn more about this practice [here](https://vuejs.org/v2/cookbook/adding-instance-properties.html). 
+Forms are usually submitted to some endpoint. Let's see how we might test this component with a different implementation of `handleSubmit`. One common practice is to alias your HTTP library to `Vue.prototype.$http`. This allows us to make an ajax request by simply calling `this.$http.get(...)`. Learn more about this practice [here](https://vuejs.org/v2/cookbook/adding-instance-properties.html). 
 
 Often the http library is, `axios`, a popular HTTP client. In this case, our `handleSubmit` would likely look something like this:
 
@@ -189,7 +197,7 @@ Now, add the test, passing the mock `$http` to the `mocks` mounting option:
 
 ```js
 it("reveals a notification when submitted", () => {
-  const wrapper = shallowMount(FormSubmitter, {
+  const wrapper = mount(FormSubmitter, {
     mocks: {
       $http: mockHttp
     }
@@ -214,7 +222,7 @@ FAIL  tests/unit/FormSubmitter.spec.js
     [vue-test-utils]: find did not return .message, cannot call text() on empty Wrapper
 ```
 
-What is happening is that the test is finishing _before_ the promise returned by `mockHttp` resolves. We can make the test async like this:
+What is happening is that the test is finishing _before_ the promise returned by `mockHttp` resolves. Again, we can make the test async like this:
 
 ```js
 it("reveals a notification when submitted", async () => {
@@ -222,21 +230,23 @@ it("reveals a notification when submitted", async () => {
 })
 ```
 
-However, the test will still finish before the promise resolves. One way to work around this is to use [flush-promises](https://www.npmjs.com/package/flush-promises), a simple Node.js module that will immediately resolve all pending promises. Install it with `yarn add flush-promises`, and update the test as follows:
+Now we need to ensure the DOM has updated and all promises have resolved before the test continues. `await wrapper.setValue(...)` is not always reliable here, either, because in this case we are not waiting for Vue to update the DOM, but an external dependency (our mocked HTTP client, in this case) to resolve. 
+
+One way to work around this is to use [flush-promises](https://www.npmjs.com/package/flush-promises), a simple Node.js module that will immediately resolve all pending promises. Install it with `yarn add flush-promises`, and update the test as follows (we are also adding `await wrapper.setValue(...)` for good measure):
 
 ```js
 import flushPromises from "flush-promises"
 // ...
 
 it("reveals a notification when submitted", async () => {
-  const wrapper = shallowMount(FormSubmitter, {
+  const wrapper = mount(FormSubmitter, {
     mocks: {
       $http: mockHttp
     }
   })
 
-  wrapper.find("[data-username]").setValue("alice")
-  wrapper.find("form").trigger("submit.prevent")
+  await wrapper.find("[data-username]").setValue("alice")
+  await wrapper.find("form").trigger("submit.prevent")
 
   await flushPromises()
 
@@ -244,8 +254,6 @@ it("reveals a notification when submitted", async () => {
     .toBe("Thank you for your submission, alice.")
 })
 ```
-
-Using `flush-promises` has the nice side effect of ensuring all the promises, including `nextTick` have resolved, and Vue has updated the DOM.
 
 Now the test passes. The source code for `flush-promises` is only about 10 lines long, if you are interested in Node.js it is worth reading and understanding how it works.
 
@@ -265,6 +273,7 @@ In this section, we saw how to:
 
 - use `trigger` on events, even ones that use modifiers like `prevent`
 - use `setValue` to set a value of an `<input>` using `v-model`
+- use `await` with `trigger` and `setValue` to `await Vue.nextTick` ane ensure the DOM has updated
 - write tests using the three steps of unit testing
 - mock a method attached to `Vue.prototype` using the `mocks` mounting option
 - how to use `flush-promises` to immediately resolve all promises, a useful technique in unit testing

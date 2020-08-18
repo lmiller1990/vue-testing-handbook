@@ -105,8 +105,7 @@ describe("CompositionApi", () => {
       propsData: { message: '' }
     })
 
-    wrapper.find('button').trigger('click')
-    await wrapper.vm.$nextTick()
+    await wrapper.find('button').trigger('click')
 
     expect(wrapper.find(".count").text()).toBe("Count: 1")
   })
