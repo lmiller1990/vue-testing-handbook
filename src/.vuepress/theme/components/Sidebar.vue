@@ -6,7 +6,7 @@
     <a href="https://vuejs-course.com/" target="_blank">
       <img
         id="ad"
-        src="https://raw.githubusercontent.com/lmiller1990/vue-testing-handbook/master/src/.vuepress/public/vuejs-course.png"
+        src="https://raw.githubusercontent.com/lmiller1990/vue-testing-handbook/master/src/.vuepress/public/vue-crash-course.png"
         alt='vuejs-course banner'
       />
     </a>
