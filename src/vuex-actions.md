@@ -73,7 +73,7 @@ Running the above test gives us the following failure message:
 
 This error is coming somewhere from within `axios`. We are making a request to `/api...`, and since we are running in a test environment, there isn't even a server to make a request to, thus the error. We also did not defined `url` or `body` - we will do that while we solve the `axios` error.
 
-Since we are using Jest, we can easily mock the API call using `jest.mock`. We will use a mock `axios` instead of the real one, which will give us more control over it's behavior. Jest provides [ES6 Class Mocks](https://jestjs.io/docs/en/es6-class-mocks), which are a perfect fit for mocking `axios`.
+Since we are using Jest, we can easily mock the API call using `jest.mock`. We will use a mock `axios` instead of the real one, which will give us more control over its behavior. Jest provides [ES6 Class Mocks](https://jestjs.io/docs/en/es6-class-mocks), which are a perfect fit for mocking `axios`.
 
 The `axios` mock looks like this:
 
