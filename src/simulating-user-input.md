@@ -87,7 +87,7 @@ wrapper.setValue(...)
 await wrapper.vm.$nextTick() // "Wait for the DOM to update before continuing the test"
 ```
 
-Sometimes you can get away without awaiting for `nextTick`, but if you components start to get complex, you can hit a race condition and your assertion might run before Vue has updated the DOM. You can read more about this in the official [vue-test-utils documentation](https://vue-test-utils.vuejs.org/guides/#updates-applied-by-vue).
+Sometimes you can get away without awaiting for `nextTick`, but if your components start to get complex, you can hit a race condition and your assertion might run before Vue has updated the DOM. You can read more about this in the official [vue-test-utils documentation](https://vue-test-utils.vuejs.org/guides/#updates-applied-by-vue).
 
 The above test also follows the three steps of unit testing:
 
