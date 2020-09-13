@@ -1,6 +1,6 @@
 ## The Composition API
 
-Vue 3 will introduce a new API for create components - the [Composition API](https://vue-composition-api-rfc.netlify.com/#basic-example). To allow users to try it out and get feedback, the Vue team released a plugin that lets us try it out in Vue 2. You can find it [here](https://github.com/vuejs/composition-api).
+Vue 3 introduced a new API for create components - the [Composition API](https://vue-composition-api-rfc.netlify.com/#basic-example).
 
 Testing a component build with the Composition API should be no different to testing a standard component, since we are not testing the implementation, but the output (*what* the component does, not *how* it does it). This article will show a simple example of a component using the Composition API in Vue 2, and how testing strategies are the same as any other component.
 
@@ -22,15 +22,7 @@ Below the "Hello, World" of the Composition API, more or less. If you don't unde
 </template>
 
 <script>
-import Vue from 'vue'
-import VueCompositionApi from '@vue/composition-api'
-
-Vue.use(VueCompositionApi)
-
-import { 
-  reactive,
-  computed
-} from '@vue/composition-api'
+import { reactive, computed } from 'vue'
 
 export default {
   name: 'CompositionApi',
@@ -68,7 +60,7 @@ The two things we will need to test here are:
 
 ## Testing the Props Message
 
-Testing the message is correctly rendered is trivial. We just use `propsData` to set the value of the prop, as described [here](/components-with-props.html).
+Testing the message is correctly rendered is trivial. We just use `props` to set the value of the prop, as described [here](/components-with-props.html).
 
 ```js
 import { mount } from "@vue/test-utils"
@@ -78,7 +70,7 @@ import CompositionApi from "@/components/CompositionApi.vue"
 describe("CompositionApi", () => {
   it("renders a message", () => {
     const wrapper = mount(CompositionApi, {
-      propsData: {
+      props: {
         message: "Testing the composition API"
       }
     })
@@ -102,7 +94,7 @@ import CompositionApi from "@/components/CompositionApi.vue"
 describe("CompositionApi", () => {
   it("increments a count when button is clicked", async () => {
     const wrapper = mount(CompositionApi, {
-      propsData: { message: '' }
+      props: { message: '' }
     })
 
     await wrapper.find('button').trigger('click')
