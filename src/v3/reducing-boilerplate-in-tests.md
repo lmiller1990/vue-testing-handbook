@@ -80,10 +80,10 @@ One good step you can take to making apps more testable is export factory functi
 ```js
 // store.js
 
-export default new Vuex.Store({ ... })
+export default createStore({ ... })
 
 // router.js
-export default new VueRouter({ ... })
+export default createRouter({ ... })
 ```
 
 This is fine for a regular application, but not ideal for testing. If you do this, every time you use the store or router in a test, it will be shared across every other test that also imports it. Ideally, every component should get a fresh copy of the store and router.
@@ -92,62 +92,55 @@ One easy way to work around this is by exporting a factory function - a function
 
 ```js
 // store.js
-export const store = new Vuex.Store({ ... })
-export const createStore = () => {
-  return new Vuex.Store({ ... })
+export const store = createStore({ ... })
+export const createVuexStore = () => {
+  return new createStore({ ... })
 }
 
 // router.js
-export default new VueRouter({ ... })
-export const createRouter = () => {
-  return new VueRouter({ ... })
+export default createRouter({ ... })
+export const createVueRouter = () => {
+  return createRouter({ ... })
 }
 ```
 
-Now your main app can do `import { store } from './store.js`, and your tests can get a new copy of the store each time by doing `import { createStore } from './store.js`, then creating and instance with `const store = createStore()`. The same goes for the router. This is what I am doing in the `Posts.vue` example - the store code is found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/src/createStore.js) and the router [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/src/createRouter.js).
+Now your main app can do `import { store } from './store.js`, and your tests can get a new copy of the store each time by doing `import { createVuexStore } from './store.js`, then creating and instance with `const store = createStore()`. The same goes for the router. This is what I am doing in the `Posts.vue` example - the store code is found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/src/createStore.js) and the router [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/src/createRouter.js).
 
 ## The Tests (before refactor)
 
 Now we know what `Posts.vue` and the store and router look like, we can understand what the tests are doing:
 
 ```js
-import Vuex from 'vuex'
-import VueRouter from 'vue-router'
-import { mount, createLocalVue } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 
 import Posts from '@/components/Posts.vue'
-import { createRouter } from '@/createRouter'
-import { createStore } from '@/createStore'
+import { createVueRouter } from '@/createRouter'
+import { createVuexStore } from '@/createStore'
 
 describe('Posts.vue', () => {
   it('renders a message if passed', () => {
-    const localVue = createLocalVue()
-    localVue.use(VueRouter)
-    localVue.use(Vuex)
-
-    const store = createStore()
-    const router = createRouter()
+    const store = createVuexStore()
+    const router = createVueRouter()
     const message = 'New content coming soon!'
     const wrapper = mount(Posts, {
-      propsData: { message },
-      store, router,
+      global: {
+        plugins: [store, router]
+      },
+      props: { message },
     })
 
     expect(wrapper.find("#message").text()).toBe('New content coming soon!')
   })
 
   it('renders posts', async () => {
-    const localVue = createLocalVue()
-    localVue.use(VueRouter)
-    localVue.use(Vuex)
-
-    const store = createStore()
-    const router = createRouter()
+    const store = createVuexStore()
+    const router = createVueRouter()
     const message = 'New content coming soon!'
-
     const wrapper = mount(Posts, {
-      propsData: { message },
-      store, router,
+      global: {
+        plugins: [store, router]
+      },
+      props: { message },
     })
 
     wrapper.vm.$store.commit('ADD_POSTS', [{ id: 1, title: 'Post' }])
@@ -160,46 +153,45 @@ describe('Posts.vue', () => {
 
 This does not fully tests all the conditions; it's a minimal example, and enough to get us started. Notice the duplication and repetition - let's get rid of that.
 
-## A Custom `createTestVue` Function
+## A Custom `createWrapper` Function
 
-The first five line of each test are the same:
+The few lines of each test are the same:
 
 ```js
-const localVue = createLocalVue()
-localVue.use(VueRouter)
-localVue.use(Vuex)
+const store = createVuexStore(storeState)
+const router = createVueRouter()
 
-const store = createStore()
-const router = createRouter()
+return mount(component, {
+  global: {
+    plugins: [store, router]
+  },
+  props: { ... }
+})
 ```
 
-Let's fix that. As not to be confused with Vue Test Utils' `createLocalVue` function, I like to call my function `createTestVue`. It looks something like this:
+Let's fix that with a function called `createWrapper`. It looks something like this:
 
 ```js
-const createTestVue = () => {
-  const localVue = createLocalVue()
-  localVue.use(VueRouter)
-  localVue.use(Vuex)
-
+const createWrapper = () => {
   const store = createStore()
   const router = createRouter()
-  return { store, router, localVue }
+  return { store, router }
 }
 ```
 
-Now we have encapsulated all the logic in a single function. We return the `store`, `router` and `localVue` since we need to pass them to the `mount` function. 
+Now we have encapsulated all the logic in a single function. We return the `store`, and `router` since we need to pass them to the `mount` function. 
 
-If we refactor the first test using `createTestVue`, it looks like this:
+If we refactor the first test using `createWrapper`, it looks like this:
 
 ```js
 it('renders a message if passed', () => {
-  const { localVue, store, router } = createTestVue()
+  const { store, router } = createWrapper()
   const message = 'New content coming soon!'
   const wrapper = mount(Posts, {
-    propsData: { message },
-    store,
-    router,
-    localVue
+    global: {
+      plugins: [store, router],
+    },
+    props: { message },
   })
 
   expect(wrapper.find("#message").text()).toBe('New content coming soon!')
@@ -210,10 +202,11 @@ Quite a bit more concise. Let's refactor second test, which makes use of the of 
 
 ```js
 it('renders posts', async () => {
-  const { localVue, store, router } = createTestVue()
+  const { store, router } = createWrapper()
   const wrapper = mount(Posts, {
-    store,
-    router,
+    global: {
+      plugins: [store, router],
+    }
   })
 
   wrapper.vm.$store.commit('ADD_POSTS', [{ id: 1, title: 'Post' }])
@@ -223,17 +216,19 @@ it('renders posts', async () => {
 })
 ```
 
-## Defining a `createWrapper` method
+## Improving the `createWrapper` function
 
-While the above code is definitely an improvement, comparing this and the previous test, we can notice that about half of the code is still duplicated. Let's create a new method, `createWrapper`, to address this.
+While the above code is definitely an improvement, comparing this and the previous test, we can notice that about half of the code is still duplicated. Let's address this by updating the `createWrapper` function to handle mounting the component, too.
 
 ```js
 const createWrapper = (component, options = {}) => {
-  const { localVue, store, router } = createTestVue()
+  const store = createVuexStore()
+  const router = createVueRouter()
+
   return mount(component, {
-    store,
-    router,
-    localVue,
+    global: {
+      plugins: [store, router],
+    },
     ...options
   })
 }
@@ -245,7 +240,7 @@ Now we can just called `createWrapper` and have a fresh copy of the component, r
 it('renders a message if passed', () => {
   const message = 'New content coming soon!'
   const wrapper = createWrapper(Posts, {
-    propsData: { message },
+    props: { message },
   })
 
   expect(wrapper.find("#message").text()).toBe('New content coming soon!')
@@ -263,14 +258,16 @@ it('renders posts', async () => {
 
 ## Setting the Initial Vuex State
 
-The last improvement we can make is to how we populate the Vuex store. In a real application, you store is likely to be complex, and having to `commit` and `dispatch` many different mutations and actions to get your component into the state you want to test is not ideal. We can make a small change to our `createStore` function, which makes it easier to set the initial state:
+The last improvement we can make is to how we populate the Vuex store. In a real application, you store is likely to be complex, and having to `commit` and `dispatch` many different mutations and actions to get your component into the state you want to test is not ideal. We can make a small change to our `createVuexStore` function, which makes it easier to set the initial state:
 
 ```js
-const createStore = (initialState = {}) => new Vuex.Store({
-  state: {
-    authenticated: false,
-    posts: [],
-    ...initialState
+const createVuexStore = (initialState = {}) => createStore({
+  state() {
+    return {
+        authenticated: false,
+        posts: [],
+        ...initialState
+    },
   },
   mutations: {
     // ...
@@ -278,20 +275,17 @@ const createStore = (initialState = {}) => new Vuex.Store({
 })
 ```
 
-Now we can the desired initial state to the `createStore` function. We can do a quick refactor, merging `createTestVue` and `createWrapper`:
+Now we can the desired initial state to the `createVuexStore` function via `createWrapper`:
 
 ```js
 const createWrapper = (component, options = {}, storeState = {}) => {
-  const localVue = createLocalVue()
-  localVue.use(VueRouter)
-  localVue.use(Vuex)
-  const store = createStore(storeState)
-  const router = createRouter()
+  const store = createVuexStore(storeState)
+  const router = createVueRouter()
 
   return mount(component, {
-    store,
-    router,
-    localVue,
+    global: {
+      plugins: [store, router],
+    },
     ...options
   })
 }
@@ -317,8 +311,8 @@ Another bonus of this refactor is we have a flexible `createWrapper` function, w
 
 There are some other potential improvements:
 
-- update the `createStore` function to allow setting initial state for Vuex namespaced modules
-- improve `createRouter` to set a specific route
+- update the `createVuexStore` function to allow setting initial state for Vuex namespaced modules
+- improve `createVueRouter` to set a specific route
 - allow the user to pass a `shallow` or `mount` argument to `createWrapper` 
 
 ## Conclusion
