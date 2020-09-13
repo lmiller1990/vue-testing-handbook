@@ -1,3 +1,7 @@
+:::tip Это руководство было написано для Vue.js 2 и Vue Test Utils v1.
+Версия для Vue.js 3 [здесь](/v3/ru).
+:::
+
 ## Тестирования пользовательских событий
 
 С ростом приложения растёт количество компонентов. Когда им нужно общаться между собой, дочерний компонент может [породить событие](https://ru.vuejs.org/v2/api/index.html#vm-emit), а родитель ответить на него.
@@ -27,9 +31,6 @@
     }
   }
 </script>
-
-<style scoped>
-</style>
 ```
 
 Тест назовём `emitEvent`:
@@ -38,7 +39,7 @@
 import Emitter from "@/components/Emitter.vue"
 import { shallowMount } from "@vue/test-utils"
 
-describe("Emitter", () => {
+describe("Emitter.vue", () => {
   it("Порождает событие с двумя аргументами", () => {
     const wrapper = shallowMount(Emitter)
 
