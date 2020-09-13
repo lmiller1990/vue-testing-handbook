@@ -124,6 +124,8 @@ Since `$emit` is just a JavaScript object, you can mock `$emit`, and by using `c
 
 Using `call` can be useful in situations where you have some heavy processing in lifecycle methods like `created` and `mounted` that you don't want to execute. Since you don't mount the component, the lifecycle methods are never called. It can also be useful when you want to manipulate the `this` context in a specific manner.
 
+Generally, you don't want to call the method manually like we are doing here - if your component emits an event when a button is clicked, then you probably want to do `wrapper.find('button').click()` instead. This article is just to demonstrate some other techniques.
+
 ## Conclusion
 
 - the `emitted` API from `vue-test-utils` is used to make assertions against emitted events
