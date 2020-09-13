@@ -2,9 +2,10 @@
 
 The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ComponentWithVuex.spec.js).
 
-## Using `createLocalVue` to test `$store.state`
+## Using `global.plugins` to test `$store.state`
 
-In a regular Vue app, we install Vuex using `Vue.use(Vuex)`, and then pass a new Vuex store to the app. If we do the same in a unit test, though, all unit tests will receive the Vuex store - even tests that are not using the store. `vue-test-utils` provides a `createLocalVue` method, which provides a temporary `Vue` instance to be used on a test by test basis. Let's see how to use it. First, a simple `<ComponentWithGetters>` component that renders a username in the store's base state.
+In a regular Vue app, we install Vuex using `app.use(store)`, which installs a globally available Vuex store in the app. In a unit test, we can do exactly the same thing. Unlike a regular Vue app, we don't want to share the same Vuex store across every test - we want a fresh one for each test.
+Let's see how we can do that. First, a simple `<ComponentWithGetters>` component that renders a username in the store's base state.
 
 ```html
 <template>
@@ -28,27 +29,33 @@ export default {
 </script>
 ```
 
-We can use `createLocalVue` to create a temporary Vue instance, and install Vuex. Then we simply pass the new `store` in the component's mounting options. A full test looks like this:
+We can use `createStore` to create a new Vuex store. Then we pass the new `store` in the component's `global.plugins` mounting options. A full test looks like this:
 
 ```js
-import Vuex from "vuex"
-import { mount, createLocalVue } from "@vue/test-utils"
-import ComponentWithVuex from "@/components/ComponentWithVuex.vue"
+import { createStore } from "vuex"
+import { mount } from "@vue/test-utils"
+import ComponentWithVuex from "../../src/components/ComponentWithVuex.vue"
 
-const localVue = createLocalVue()
-localVue.use(Vuex)
+const store = createStore({
+  state() {
+    return {
+      username: "alice",
+      firstName: "Alice",
+      lastName: "Doe"
+    }
+  },
 
-const store = new Vuex.Store({
-  state: {
-    username: "alice"
+  getters: {
+    fullname: (state) => state.firstName + " " + state.lastName
   }
 })
 
 describe("ComponentWithVuex", () => {
   it("renders a username using a real Vuex store", () => {
-    const wrapper = mount(ComponentWithVuex, { 
-      store, 
-      localVue 
+    const wrapper = mount(ComponentWithVuex, {
+      global: {
+        plugins: [store]
+      }
     })
 
     expect(wrapper.find(".username").text()).toBe("alice")
@@ -56,11 +63,11 @@ describe("ComponentWithVuex", () => {
 })
 ```
 
-The tests passes. Creating a new `localVue` introduces some boilerplate, and the test is quite long. If you have a lot of components that use a Vuex store, an alternative is to use the `mocks` mounting option, and simply mock the store. 
+The tests passes. Creating a new Vuex store every test introduces some boilerplate. The total code required is quite long. If you have a lot of components that use a Vuex store, an alternative is to use the `global.mocks` mounting option, and simply mock the store. 
 
 ## Using a mock store
 
-Using the `mocks` mounting options, you can mock the global `$store` object. This means you do not need to use `createLocalVue`, or create a new Vuex store. Using this technique, the above test can be rewritten like this:
+Using the `mocks` mounting options, you can mock the global `$store` object. This means you do not need to use create a new Vuex store. Using this technique, the above test can be rewritten like this:
 
 ```js
 it("renders a username using a mock store", () => {
@@ -76,7 +83,11 @@ it("renders a username using a mock store", () => {
 })
 ```
 
-I personally prefer this approach. All the necessary data is declared inside the test, and it is a bit more compact. Both techniques are useful, and neither is better or worse than the other.
+I do not recommend one or the other. The first test uses a real Vuex store, so it's closer to how you app will work in production. That said, it an introduce a lot of boilerplate and if you have a very complex Vuex store you may end up with very large helper methods to create the store that make your tests difficult to understand. 
+
+The second approach uses a mock store. On of the good things about this is all the necessary data is declared inside the test, making it easier to understand, and it is a bit more compact. It is less likely to catch regressions in your Vuex store, though. You could delete your entire Vuex store and this test would still pass - not ideal.
+
+Both techniques are useful, and neither is better or worse than the other.
 
 ## Testing `getters`
 
@@ -104,13 +115,10 @@ export default {
 
 We want to assert that the component correctly renders the user's `fullname`. For this test, we don't care where the `fullname` comes from, just that the component renders is correctly.
 
-First, using a real Vuex store and `createLocalVue`, the test looks like this:
+First, using a real Vuex store, the test looks like this:
 
 ```js
-const localVue = createLocalVue()
-localVue.use(Vuex)
-
-const store = new Vuex.Store({
+const store = createStore({
   state: {
     firstName: "Alice",
     lastName: "Doe"
@@ -122,23 +130,31 @@ const store = new Vuex.Store({
 })
 
 it("renders a username using a real Vuex getter", () => {
-  const wrapper = mount(ComponentWithGetters, { store, localVue })
+  const wrapper = mount(ComponentWithGetters, {
+    global: {
+      plugins: [store]
+    }
+  })
 
   expect(wrapper.find(".fullname").text()).toBe("Alice Doe")
 })
 ```
 
-The test is very compact - just two lines of code. There is a lot of setup involved, however - we are bascially rebuilding the Vuex store. An alternative is to import the real Vuex store, with the actual getter. This introduces another dependency to the test though, and when developing a large system, it's possible the Vuex store might be being developed by another programmer, and has not been implemented yet. 
+The test is very compact - just two lines of code. There is a lot of setup involved, however - we are had to use a Vuex store. Note we are *not* using the Vuex store our app would be using, we created a minimal one with the basic data needed to supply the `fullname` getter the component was expecting.
 
-Let's see how we can write the test using the `mocks` mounting option:
+An alternative is to import the real Vuex store you are using in your app, which includes the actual getters. This introduces another dependency to the test though, and when developing a large system, it's possible the Vuex store might be being developed by another programmer, and has not been implemented yet, but there is no reason this won't work.
+
+An alternative would be to write the test using the `global.mocks` mounting option:
 
 ```js
 it("renders a username using computed mounting options", () => {
   const wrapper = mount(ComponentWithGetters, {
-    mocks: {
-      $store: {
-        getters: {
-          fullname: "Alice Doe"
+    global: {
+      mocks: {
+        $store: {
+          getters: {
+            fullname: "Alice Doe"
+          }
         }
       }
     }
@@ -148,27 +164,7 @@ it("renders a username using computed mounting options", () => {
 })
 ```
 
-Now all the required data is contained in the test. Great! I strongly prefer this, since the test is fully contained, and all the knowledge required to understand what the component should do is contained in the test.
-
-We can make the test even more concise though, using the `computed` mounting option.
-
-## Mocking getters using `computed`
-
-Getters are generally wrapped in `computed` properties. Remember, this test is all about making sure the component behaves correctly given the current state of the store. We are not testing the implementation of `fullname`, or to see if `getters` work. This means we can simply replace real store, or the mock store, using the `computed` mounting option. The test can be rewritten like this:
-
-```js
-it("renders a username using computed mounting options", () => {
-  const wrapper = mount(ComponentWithGetters, {
-    computed: {
-      fullname: () => "Alice Doe"
-    }
-  })
-
-  expect(wrapper.find(".fullname").text()).toBe("Alice Doe")
-})
-```
-
-This is more concise than the two previous tests, and still expresses the component's intention.
+Now all the required data is contained in the test. Great! I like this. The test is fully contained, and all the knowledge required to understand what the component should do is contained in the test.
 
 ## The `mapState` and `mapGetters` helper
 
@@ -194,9 +190,9 @@ The tests still pass.
 
 This guide discussed:
 
-- using `createLocalVue` and a real Vuex store to test `$store.state` and `getters`
-- using the `mocks` mounting option to mock `$store.state` and `getters`
-- using the `computed` mounting option to set the desired value of a Vuex getter
+- using `createStore` to create a real Vuex store and install it with `global.plugins`
+- how to test `$store.state` and `getters`
+- using the `global.mocks` mounting option to mock `$store.state` and `getters`
 
 Techniques to test the implentation of Vuex getters in isolation can be found in [this guide](https://lmiller1990.github.io/vue-testing-handbook/vuex-getters.html).
 
