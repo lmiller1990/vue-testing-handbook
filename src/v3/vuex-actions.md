@@ -6,7 +6,7 @@ Find the Vue.js 2 version [here](/).
 
 Testing actions in isolation is very straight forward. It is very similar to testing mutations in isolation - see [here](https://lmiller1990.github.io/vue-testing-handbook/vuex-mutations.html) for more on mutation testing. Testing actions in the context of a component is correctly dispatching them is discussed [here](https://lmiller1990.github.io/vue-testing-handbook/vuex-in-components-mutations-and-actions.html).
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/actions.spec.js).
+The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/actions.spec.js).
 
 ## Creating the Action
 
@@ -183,4 +183,4 @@ This guide discussed:
 - using Jest ES6 class mocks
 - testing both the success and failure cases of an action
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/actions.spec.js).
+The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/actions.spec.js).

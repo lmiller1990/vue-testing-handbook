@@ -8,7 +8,7 @@ The previous guide discussed testing components that use `$store.state` and `$st
 
 There are two ways to go about this. One is to use a real Vuex store with `createStore`, and another is to use a mock store. Both these techniques are demonstrated [here](https://lmiller1990.github.io/vue-testing-handbook/vuex-in-components.html). Let's see them again, in the context of mutations and actions.
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ComponentWithButtons.spec.js).
+The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/ComponentWithButtons.spec.js).
 
 ## Creating the Component
 
@@ -174,4 +174,4 @@ In this section we covered:
 2. Mocking the Vuex API (`dispatch` and `commit`)
 3. Using a real Vuex store with a mock `dispatch` function
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ComponentWithButtons.spec.js).
+The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/ComponentWithButtons.spec.js).

@@ -4,7 +4,7 @@ Find the Vue.js 2 version [here](/).
 
 ## Stubbing components
 
-You can find the test described on this page [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ParentWithAPICallChild.spec.js).
+You can find the test described on this page [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/ParentWithAPICallChild.spec.js).
 
 ## Why stub?
 
@@ -158,4 +158,4 @@ Running `yarn test:unit` doesn't show any `console.log`, and test passes. `shall
 - `shallowMount` stubs out child components by default
 - you can pass `true` to create a default stub, or pass your own custom implementation
 
-You can find the test described on this page [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ParentWithAPICallChild.spec.js).
+You can find the test described on this page [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/ParentWithAPICallChild.spec.js).

@@ -8,7 +8,7 @@ As applications grow larger, the number of components grows as well. When these 
 
 `vue-test-utils` provides an `emitted` API which allows us to make assertions on emitted events. The documentation for `emitted` is found [here](https://vue-test-utils.vuejs.org/api/wrapper/emitted.html).
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Emitter.spec.js).
+The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/Emitter.spec.js).
 
 ## Write a Component and Test
 
@@ -138,4 +138,4 @@ Generally, you don't want to call the method manually like we are doing here - i
 - the arguments of emitted events are also saved as arrays, and can accessed using the `[0]`, `[1]` array syntax
 - `$emit` can be mocked using `call`, assertions can be made without rendering the component
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Emitter.spec.js).
+The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/Emitter.spec.js).

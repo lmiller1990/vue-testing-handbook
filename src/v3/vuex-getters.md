@@ -6,7 +6,7 @@ Find the Vue.js 2 version [here](/).
 
 Testing getters in isolation is straight forward, since they are basically just JavaScript functions. The techniques are similar to testing mutations, more info [here](https://lmiller1990.github.io/vue-testing-handbook/vuex-mutations.html), and actions. 
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/getters.spec.js).
+The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/getters.spec.js).
 
 We will look at two getters, which operate on a store that looks like this:
 
@@ -101,4 +101,4 @@ It is possible to have `async` getters. They can be tested using the same techni
 - When testing `getters` in isolation, you need to pass the state manually.
 - If a getter uses another getter, you should stub the expected return result of the first getter. This will give you more fine grained control over the test, and let you focus on testing the getter in question
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/getters.spec.js).
+The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/getters.spec.js).

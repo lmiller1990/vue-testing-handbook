@@ -8,7 +8,7 @@ Find the Vue.js 2 version [here](/).
 
 > Note: If you used Vue Test Utils prior to v1, you may remember `find` working with components as well as DOM elements. Now you use `find` and `findAll` for DOM elements, and `findComponent` and `findAllComponents` for Vue components. Ther is also a `get` and `getComponent` pair, which are exactly the same as `find` and `findComponent`, but they will raise an error if they do not find anything. This guide chooses to use `find` and `findComponent`.
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Parent.spec.js).
+The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/Parent.spec.js).
 
 ## Creating the Components
 
@@ -171,5 +171,5 @@ This page covers:
 - use `findComponent` and `findAllComponents` for Vue components
 - use `exists` to check if something is present, `toBeVisible` from `@testing-library/jest-dom` to see if something is present but not visible 
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Parent.spec.js).
+The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/Parent.spec.js).
 

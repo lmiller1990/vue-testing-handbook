@@ -8,7 +8,7 @@ Vue 3 introduced a new API for create components - the [Composition API](https:/
 
 Testing a component build with the Composition API should be no different to testing a standard component, since we are not testing the implementation, but the output (*what* the component does, not *how* it does it). This article will show a simple example of a component using the Composition API in Vue 2, and how testing strategies are the same as any other component.
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/CompositionApi.spec.js).
+The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/CompositionApi.spec.js).
 
 ## The Component
 

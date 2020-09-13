@@ -13,7 +13,7 @@ Much like previous sections discuss, there are two ways to test components that 
 
 Since most Vue applications use the official Vue Router, this guide will focus on that.
 
-The source code for the tests described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/App.spec.js) and [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/NestedRoute.spec.js).
+The source code for the tests described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/App.spec.js) and [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/NestedRoute.spec.js).
 
 ## Creating the Components
 
@@ -372,4 +372,4 @@ This guide covered:
 - decoupling global navigation guards from the router and testing the independently
 - using `jest.mock` to mock a module
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/App.spec.js) and [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/NestedRoute.spec.js).
+The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/App.spec.js) and [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/NestedRoute.spec.js).

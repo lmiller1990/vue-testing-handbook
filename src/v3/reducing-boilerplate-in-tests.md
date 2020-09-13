@@ -10,7 +10,7 @@ It is often ideal to start each unit test with a fresh copy of a component. Furt
 
 This article takes component using Vuex and VueRouter and demonstrates some patterns to help you reduce the amount of setup code for your unit tests.
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Posts.spec.js).
+The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/Posts.spec.js).
 
 ## The Posts Component
 
@@ -108,7 +108,7 @@ export const createVueRouter = () => {
 }
 ```
 
-Now your main app can do `import { store } from './store.js`, and your tests can get a new copy of the store each time by doing `import { createVuexStore } from './store.js`, then creating and instance with `const store = createStore()`. The same goes for the router. This is what I am doing in the `Posts.vue` example - the store code is found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/src/createStore.js) and the router [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/src/createRouter.js).
+Now your main app can do `import { store } from './store.js`, and your tests can get a new copy of the store each time by doing `import { createVuexStore } from './store.js`, then creating and instance with `const store = createStore()`. The same goes for the router. This is what I am doing in the `Posts.vue` example - the store code is found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/src/createStore.js) and the router [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/src/createRouter.js).
 
 ## The Tests (before refactor)
 
@@ -326,4 +326,4 @@ This guide discussed:
 - using factory functions to get a new instance of an object
 - reducing boilerplate and duplication by extract common behavior
 
-The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Posts.spec.js). It is also available as a screencast on [Vue.js Courses](https://vuejs-course.com/screencasts/reducing-duplication-in-tests).
+The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/Posts.spec.js). It is also available as a screencast on [Vue.js Courses](https://vuejs-course.com/screencasts/reducing-duplication-in-tests).

@@ -4,7 +4,7 @@ Find the Vue.js 2 version [here](/).
 
 ## Testing Computed Properties
 
-You can find the test described on this page [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/NumberRenderer.spec.js).
+You can find the test described on this page [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/NumberRenderer.spec.js).
 
 Testing computed properties are especially simple, since they are just plain old JavaScript functions.
 
