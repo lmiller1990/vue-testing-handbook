@@ -158,7 +158,7 @@ const router = new VueRouter({ routes, mode: 'abstract' });
 
 Теперь текущий путь будет домашним.
 
-```json 
+```js
 {
   name: null,
   meta: {},
