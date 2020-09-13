@@ -21,7 +21,7 @@ import NumberRenderer from "@/components/NumberRenderer.vue"
 describe("NumberRenderer", () => {
   it("renders even numbers", () => {
     const wrapper = mount(NumberRenderer, {
-      propsData: {
+      props: {
         even: true
       }
     })
