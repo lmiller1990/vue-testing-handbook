@@ -119,7 +119,7 @@ handleSubmitAsync() {
 }
 ```
 
-In this case, one technique is to _mock_ `this.$http` to create the desired testing environment. You can read about the `mocks` mounting option [here](https://vue-test-utils.vuejs.org/api/options.html#mocks). Let's see a mock implementation of a `http.get` method:
+In this case, one technique is to _mock_ `this.$http` to create the desired testing environment. You can read about the `global.mocks` mounting option [here](https://vue-test-utils.vuejs.org/api/options.html#mocks). Let's see a mock implementation of a `http.get` method:
 
 ```js
 let url = ''
@@ -193,13 +193,15 @@ const mockHttp = {
 }
 ```
 
-Now, add the test, passing the mock `$http` to the `mocks` mounting option:
+Now, add the test, passing the mock `$http` to the `global.mocks` mounting option:
 
 ```js
 it("reveals a notification when submitted", () => {
   const wrapper = mount(FormSubmitter, {
-    mocks: {
-      $http: mockHttp
+    global: {
+      mocks: {
+        $http: mockHttp
+      }
     }
   })
 
@@ -240,8 +242,10 @@ import flushPromises from "flush-promises"
 
 it("reveals a notification when submitted", async () => {
   const wrapper = mount(FormSubmitter, {
-    mocks: {
-      $http: mockHttp
+    global: {
+      mocks: {
+        $http: mockHttp
+      }
     }
   })
 
@@ -275,7 +279,7 @@ In this section, we saw how to:
 - use `setValue` to set a value of an `<input>` using `v-model`
 - use `await` with `trigger` and `setValue` to `await Vue.nextTick` ane ensure the DOM has updated
 - write tests using the three steps of unit testing
-- mock a method attached to `Vue.prototype` using the `mocks` mounting option
+- mock a method attached to `Vue.prototype` using the `global.mocks` mounting option
 - how to use `flush-promises` to immediately resolve all promises, a useful technique in unit testing
 
 The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/FormSubmitter.spec.js).
