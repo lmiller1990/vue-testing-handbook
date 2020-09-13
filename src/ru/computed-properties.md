@@ -70,7 +70,7 @@ export default {
 
 Выглядит так, что всё работает правильно. Давайте реализуем `numbers`:
 
-```vue
+```js
 computed: {
   numbers() {
     const evens = []
@@ -152,7 +152,7 @@ FAIL  tests/unit/NumberRenderer.spec.js
 Обновим `numbers`:
 
 
-```vue
+```js
 numbers() {
   const evens = []
   const odds = []
