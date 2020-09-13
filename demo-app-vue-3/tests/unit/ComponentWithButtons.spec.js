@@ -1,23 +1,22 @@
-import Vuex from "vuex"
-import { createLocalVue, mount } from "@vue/test-utils"
+import { createStore } from "vuex"
+import { mount } from "@vue/test-utils"
 import ComponentWithButtons from "../../src/components/ComponentWithButtons.vue"
-
-const localVue = createLocalVue()
-localVue.use(Vuex)
 
 const mutations = {
   testMutation: jest.fn()
 }
 
-const store = new Vuex.Store({
-  mutations,
+const store = createStore({
+  mutations
 })
 
 describe("ComponentWithButtons", () => {
 
   it("commits a mutation when a button is clicked", async () => {
     const wrapper = mount(ComponentWithButtons, {
-      store, localVue
+      global: {
+        plugins: [store]
+      }
     })
 
     wrapper.find(".commit").trigger("click")
@@ -30,11 +29,13 @@ describe("ComponentWithButtons", () => {
   })
 
   it("dispatch a namespaced action when button is clicked", async () => {
-    const store = new Vuex.Store()
+    const store = createStore()
     store.dispatch = jest.fn()
 
     const wrapper = mount(ComponentWithButtons, {
-      store, localVue
+      global: {
+        plugins: [store]
+      }
     })
 
     wrapper.find(".namespaced-dispatch").trigger("click")
@@ -50,8 +51,10 @@ describe("ComponentWithButtons", () => {
   it("dispatches an action when a button is clicked", async () => {
     const mockStore = { dispatch: jest.fn() }
     const wrapper = mount(ComponentWithButtons, {
-      mocks: {
-        $store: mockStore 
+      global: {
+        mocks: {
+          $store: mockStore 
+        }
       }
     })
 
