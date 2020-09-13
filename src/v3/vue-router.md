@@ -59,41 +59,44 @@ export default [
 In a real app, you normally would create a `router.js` file and import the routes we made, and write something like this:
 
 ```js
-import Vue from "vue"
-import VueRouter from "vue-router"
+import { createRouter } from "vue-router"
+import { createApp } from "vue"
 import routes from "./routes.js"
+import App from './App.vue'
 
-Vue.use(VueRouter)
-
-export default new VueRouter({ routes })
+const router = createRouter({
+  routes
+})
+app.use(router)
+app.mount("#app")
 ```
 
-Since we do not want to polluate the global namespace by calling `Vue.use(...)` in our tests, we will create the router on a test by test basis. This will let us have more fine grained control over the state of the application during the unit tests.
+Much like with Vuex, we will create the router on a test by test basis. This will let us have more fine grained control over the state of the application during the unit tests.
 
 ## Writing the Test
 
 Let's look at some code, then talk about what's going on. We are testing `App.vue`, so in `App.spec.js` add the following:
 
 ```js
-import { shallowMount, mount, createLocalVue } from "@vue/test-utils"
-import App from "@/App.vue"
-import VueRouter from "vue-router"
-import NestedRoute from "@/components/NestedRoute.vue"
-import routes from "@/routes.js"
-
-const localVue = createLocalVue()
-localVue.use(VueRouter)
+import { mount } from "@vue/test-utils"
+import App from "../../src/App.vue"
+import { createRouter, createMemoryHistory } from "vue-router"
+import NestedRoute from "../../src/components/NestedRoute.vue"
+import routes from "../../src/routes.js"
 
 describe("App", () => {
   it("renders a child component via routing", async () => {
-    const router = new VueRouter({ routes })
-    const wrapper = mount(App, { 
-      localVue,
-      router
+    const router = createRouter({ 
+      history: createMemoryHistory(),
+      routes 
     })
-
     router.push("/nested-route")
-    await wrapper.vm.$nextTick()
+    await router.isReady()
+    const wrapper = mount(App, { 
+      global: {
+        plugins: [router]
+      }
+    })
 
     expect(wrapper.findComponent(NestedRoute).exists()).toBe(true)
   })
@@ -104,66 +107,16 @@ describe("App", () => {
 
 As usual, we start by importing the various modules for the test. Notably, we are importing the actual routes we will be using for the application. This is ideal in some ways - if the real routing breaks, the unit tests should fail, letting us fix the problem before deploying the application.
 
-We can use the same `localVue` for all the `<App>` tests, so it is declared outside the first `describe` block. However, since we might like to have different tests for different routes, the solution is not as simple as defining the router inside the `it` block.
-
-Even if you put the router inside the `it` block the router will still point to the previous path. You can try it on the example below:
+Another interesting point is we are doing the following before mounting the component:
 
 ```js
-import { shallowMount, mount, createLocalVue } from "@vue/test-utils"
-import App from "@/App.vue"
-import VueRouter from "vue-router"
-import NestedRoute from "@/components/NestedRoute.vue"
-import routes from "@/routes.js"
-
-const localVue = createLocalVue()
-localVue.use(VueRouter)
-
-describe("App", () => {
-  it("renders a child component via routing", async () => {
-    const router = new VueRouter({ routes })
-    const wrapper = mount(App, { 
-      localVue,
-      router
-    })
-
-    router.push("/nested-route")
-    await wrapper.vm.$nextTick()
-
-    expect(wrapper.findComponent(NestedRoute).exists()).toBe(true)
-  });
-
-  it("should have a different route that /nested-route", async () => {
-    const router = new VueRouter({ routes })
-    const wrapper = mount(App, { 
-      localVue,
-      router
-    })
-    // This test will fail because we are still on the /nested-route
-    expect(wrapper.findComponent(NestedRoute).exists()).toBe(false)
-    console.log(router.currentRoute)
-  })
-})
+router.push("/nested-route")
+await router.isReady()
 ```
 
-And the solution is to define the mode as **history** or **abstract**. 
-```vue 
-const router = new VueRouter({ routes, mode: 'abstract' });
-```
-Now the current path will be the home path.
-```json 
- {
-      name: null,
-      meta: {},
-      path: '/',
-      hash: '',
-      query: {},
-      params: {},
-      fullPath: '/',
-      matched: []
-    }
-```
+Vue Router 4 (the one that works with Vue 3) has asynchronous routing. That means we need to ensure the router has finished the initial routing before mounting the component. This is easily accomplished with `await router.isReady()`.
 
-Another notable point that is different from other guides in this book is we are using `mount` instead of `shallowMount`. If we use `shallowMount`, `<router-link>` will be stubbed out, regardless of the current route, a useless stub component will be rendered.
+Finally, note we are using `mount`. If we use `shallowMount`, `<router-link>` will be stubbed out, regardless of the current route, a useless stub component will be rendered.
 
 ## Workaround for large render trees using `mount`
 
@@ -174,7 +127,7 @@ If you are using Jest, its powerful mocking system provides an elegent solution 
 ```js
 jest.mock("@/components/NestedRoute.vue", () => ({
   name: "NestedRoute",
-  render: h => h("div")
+  template: "<div />"
 }))
 ```
 
@@ -183,14 +136,14 @@ jest.mock("@/components/NestedRoute.vue", () => ({
 Sometimes a real router is not necessary. Let's update `<NestedRoute>` to show a username based on the current path's query string. This time we will use TDD to implement the feature. Here is a basic test that simply renders the component and makes an assertion:
 
 ```js
-import { shallowMount } from "@vue/test-utils"
+import { mount } from "@vue/test-utils"
 import NestedRoute from "@/components/NestedRoute.vue"
 import routes from "@/routes.js"
 
 describe("NestedRoute", () => {
   it("renders a username from query string", () => {
     const username = "alice"
-    const wrapper = shallowMount(NestedRoute)
+    const wrapper = mount(NestedRoute)
 
     expect(wrapper.find(".username").text()).toBe(username)
   })
@@ -239,10 +192,12 @@ This is because `$route` does not exist. We could use a real router, but in this
 ```js
 it("renders a username from query string", () => {
   const username = "alice"
-  const wrapper = shallowMount(NestedRoute, {
-    mocks: {
-      $route: {
-        params: { username }
+  const wrapper = mount(NestedRoute, {
+    global: {
+      mocks: {
+        $route: {
+          params: { username }
+        }
       }
     }
   })
@@ -253,7 +208,7 @@ it("renders a username from query string", () => {
 
 Now the test passes. In this case, we don't do any navigation or anything that relies on the implementation of the router, so using `mocks` is good. We don't really care how `username` comes to be in the query string, only that it is present. 
 
-Often the server will provide the routing, as opposed to client side routing with Vue Router. In such cases, using `mocks` to set the query string in a test is a good alternative to using a real instance of Vue Router.
+Sometimes the server will handle parts of the routing, as opposed to client side routing with Vue Router. In such cases, using `mocks` to set the query string in a test is a good alternative to using a real instance of Vue Router.
 
 ## Strategies for Testing Router Hooks
 
@@ -286,13 +241,14 @@ Using the `shouldBustCache` meta field, you want to invalidate the current cache
 
 ```js
 import Vue from "vue"
-import VueRouter from "vue-router"
+import { createRouter, createMemoryHistory } from "vue-router"
 import routes from "./routes.js"
 import { bustCache } from "./bust-cache.js"
 
-Vue.use(VueRouter)
-
-const router = new VueRouter({ routes })
+const router = createRouter({ 
+  history: createMemoryHistory(),
+  routes 
+})
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.shouldBustCache)) {
