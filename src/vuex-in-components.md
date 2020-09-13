@@ -1,3 +1,7 @@
+:::tip This book is written for Vue.js 2 and Vue Test Utils v1.
+Find the Vue.js 3 version [here](/v3/).
+:::
+
 ## Testing Vuex in components
 
 The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ComponentWithVuex.spec.js).

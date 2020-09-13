@@ -1,3 +1,7 @@
+:::tip This book is written for Vue.js 2 and Vue Test Utils v1.
+Find the Vue.js 3 version [here](/v3/).
+:::
+
 ## Testing Actions
 
 Testing actions in isolation is very straight forward. It is very similar to testing mutations in isolation - see [here](https://lmiller1990.github.io/vue-testing-handbook/vuex-mutations.html) for more on mutation testing. Testing actions in the context of a component is correctly dispatching them is discussed [here](https://lmiller1990.github.io/vue-testing-handbook/vuex-in-components-mutations-and-actions.html).

@@ -1,3 +1,7 @@
+:::tip This book is written for Vue.js 2 and Vue Test Utils v1.
+Find the Vue.js 3 version [here](/v3/).
+:::
+
 ## Setting props with propsData
 
 `propsData` can be used with both `mount` and `shallowMount`. It is often used to test components that receive props from their parent component.

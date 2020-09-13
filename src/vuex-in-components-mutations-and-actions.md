@@ -1,3 +1,7 @@
+:::tip This book is written for Vue.js 2 and Vue Test Utils v1.
+Find the Vue.js 3 version [here](/v3/).
+:::
+
 ## Mutations and Actions
 
 The previous guide discussed testing components that use `$store.state` and `$store.getters`, which both provide the current state to the component. When asserting a component correctly commits a mutation or dispatches an action, what we really want to do is assert `$store.commit` and `$store.dispatch` is called with the correct handler (the mutation or action to call) and payload.

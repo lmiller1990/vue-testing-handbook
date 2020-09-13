@@ -1,3 +1,7 @@
+:::tip This book is written for Vue.js 3 and Vue Test Utils v2.
+Find the Vue.js 2 version [here](/).
+:::
+
 ## The Composition API
 
 Vue 3 introduced a new API for create components - the [Composition API](https://vue-composition-api-rfc.netlify.com/#basic-example).

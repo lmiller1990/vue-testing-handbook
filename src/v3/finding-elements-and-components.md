@@ -1,3 +1,7 @@
+:::tip This book is written for Vue.js 3 and Vue Test Utils v2.
+Find the Vue.js 2 version [here](/).
+:::
+
 ## Finding Elements
 
 `vue-test-utils` provides a number of ways to find and assert the presence of html elements or other Vue components using the `find` and `findComponent` methods. The main use of `find` is asserting a component correctly renders an element or child component.

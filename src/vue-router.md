@@ -1,3 +1,7 @@
+:::tip This book is written for Vue.js 2 and Vue Test Utils v1.
+Find the Vue.js 3 version [here](/v3/).
+:::
+
 ## Vue Router
 
 Since a router usually involves multiple components operating together, often routing tests take place further up the [testing pyramid](https://medium.freecodecamp.org/the-front-end-test-pyramid-rethink-your-testing-3b343c2bca51), right up at the e2e/integration test level. However, having some unit tests around your routing can be beneficial as well.

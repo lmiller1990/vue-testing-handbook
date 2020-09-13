@@ -1,3 +1,7 @@
+:::tip This book is written for Vue.js 3 and Vue Test Utils v2.
+Find the Vue.js 2 version [here](/).
+:::
+
 ## Mocking global objects
 
 `vue-test-utils` provides a simple way to mock global objects attached to `Vue.prototype`, both on test by test basis and to set a default mock for all tests.

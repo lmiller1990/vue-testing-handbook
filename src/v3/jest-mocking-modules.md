@@ -1,3 +1,7 @@
+:::tip This book is written for Vue.js 3 and Vue Test Utils v2.
+Find the Vue.js 2 version [here](/).
+:::
+
 ## Mocking Modules
 
 TODO: Write this article. Interested? Open an issue, let's chat!

@@ -1,3 +1,7 @@
+:::tip This book is written for Vue.js 3 and Vue Test Utils v2.
+Find the Vue.js 2 version [here](/).
+:::
+
 ## Two ways to render
 
 `vue-test-utils` provides two ways to render, or __mount__ a component - `mount` and `shallowMount`. A component mounted using either of these methods returns a `wrapper`, which is an object containing the Vue component, plus some useful methods for testing.

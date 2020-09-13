@@ -1,3 +1,7 @@
+:::tip This book is written for Vue.js 3 and Vue Test Utils v2.
+Find the Vue.js 2 version [here](/).
+:::
+
 ## Reducing Boilerplate in Tests
 
 > This article is available as a screencast on [Vue.js Courses](https://vuejs-course.com/screencasts/reducing-duplication-in-tests). Check it out [here](https://vuejs-course.com/screencasts/reducing-duplication-in-tests).

@@ -1,3 +1,7 @@
+:::tip This book is written for Vue.js 3 and Vue Test Utils v2.
+Find the Vue.js 2 version [here](/).
+:::
+
 ## Testing Mutations
 
 Testing mutations in isolation is very straight forward, because mutations are just regular JavaScript functions. This page discusses testing mutations in isolation. If you want to test mutations in the context of a component committing a mutation, see [here](https://lmiller1990.github.io/vue-testing-handbook/vuex-in-components-mutations-and-actions.html).

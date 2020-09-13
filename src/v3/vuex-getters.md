@@ -1,3 +1,7 @@
+:::tip This book is written for Vue.js 3 and Vue Test Utils v2.
+Find the Vue.js 2 version [here](/).
+:::
+
 ## Testing getters
 
 Testing getters in isolation is straight forward, since they are basically just JavaScript functions. The techniques are similar to testing mutations, more info [here](https://lmiller1990.github.io/vue-testing-handbook/vuex-mutations.html), and actions. 

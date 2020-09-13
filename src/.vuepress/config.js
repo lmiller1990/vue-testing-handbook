@@ -40,11 +40,11 @@ module.exports = {
   locales: {
     '/': {
       lang: 'en-US',
-      title: 'Vue Testing Handbook',
+      title: 'Vue Testing Handbook (Vue.js 2)',
     },
-    '/v3': {
-      lang: 'en-US',
-      title: 'Vue Testing Handbook (Vue 3)',
+    '/v3/': {
+      lang: 'en-AU',
+      title: 'Vue Testing Handbook (Vue.js 3)',
     },
     '/ja/': {
       lang: 'ja-JP',
@@ -101,7 +101,7 @@ module.exports = {
           ['/jest-mocking-modules', 'Jest - mocking modules'],
         ],
       },
-      '/v3': {
+      '/v3/': {
         label: 'v3',
         selectText: 'Languages',
         lastUpdated: 'Last Updated',

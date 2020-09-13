@@ -1,3 +1,7 @@
+:::tip This book is written for Vue.js 3 and Vue Test Utils v2.
+Find the Vue.js 2 version [here](/).
+:::
+
 ## Setting Props
 
 `props` can be used with both `mount` and `shallowMount`. It is often used to test components that receive props from their parent component.
