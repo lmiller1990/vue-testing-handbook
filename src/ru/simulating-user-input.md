@@ -282,4 +282,4 @@ expect(data).toEqual({ username: "Алиса" })
 - мокать методы из `Vue.prototype`, используя `mocks` при монтировании
 - использовать `flush-promises`, чтобы немедленно резолвить все промисы в режиме ожидания. Полезная техника в модульном тестировании
 
-Исходный код для тестов на этой страниц можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/FormSubmitter.spec.js).
+Исходный код для тестов на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/FormSubmitter.spec.js).
