@@ -61,7 +61,7 @@ describe("Bilingual", () => {
 Running this test with `yarn test:unit` throws a huge stack trace. If you look through the output carefully, you can see:
 
 ```
-[Vue warn]: Error in config.errorHandler: "TypeError: _vm.$t is not a function"
+"TypeError: _ctx.$t is not a function"
 ```
 
 This is because we did not install `vue-i18n`, so the global `$t` method does not exist. Let's mock it using the `mocks` mounting option:
@@ -73,8 +73,10 @@ import Bilingual from "@/components/Bilingual.vue"
 describe("Bilingual", () => {
   it("renders successfully", () => {
     const wrapper = mount(Bilingual, {
-      mocks: {
-        $t: (msg) => msg
+      global: {
+        mocks: {
+          $t: (msg) => msg
+        }
       }
     })
   })
@@ -90,18 +92,23 @@ Sometimes you want to have a default value for the mock, so you don't create it 
 ```js
 import { config } from "@vue/test-utils"
 
-config.mocks["mock"] = "Default Mock Value"
+
+config.global.mocks = {
+  mock: "Default Mock Value"
+}
 ```
 
 The demo project for this guide is using Jest, so I will declare the default mock in `jest.init.js`, which is loaded before the tests are run automatically. I will also import the example translations object from earlier, and use it in the mock implementation.
 
 ```js
-import VueTestUtils from "@vue/test-utils"
+import { config } from "@vue/test-utils"
 import translations from "./src/translations.js"
 
 const locale = "en"
 
-VueTestUtils.config.mocks["$t"] = (msg) => translations[locale][msg]
+config.global.mocks = {
+  $t: (msg) => translations[locale][msg]
+}
 ```
 
 Now a real translation will be rendered, despite using a mocked `$t` function. Run the test again, this time using `console.log` on `wrapper.html()` and removing the `mocks` mounting option:
@@ -130,5 +137,5 @@ You can read about using `mocks` to test Vuex [here](https://lmiller1990.github.
 
 This guide discussed:
 
-- using `mocks` to mock a global object on a test by test basis
-- using `config.mocks` to set a default mock 
+- using `global.mocks` to mock a global object on a test by test basis
+- using `config.global.mocks` to set a default mock 
