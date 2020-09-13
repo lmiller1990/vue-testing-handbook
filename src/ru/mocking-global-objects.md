@@ -1,12 +1,16 @@
+:::tip Это руководство было написано для Vue.js 2 и Vue Test Utils v1.
+Версия для Vue.js 3 [здесь](/v3/ru).
+:::
+
 ## Мокаем глобальные объекты
 
 `vue-test-utils` позволяет с лёгкостью мокать глобальные объекты, прикреплённые к `Vue.prototype` внутри теста, а также устанавливать стандартные значения мока для всех тестов.
 
 Тест, использованный в последующем примере, можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app/tests/unit/Bilingual.spec.js).
 
-## Моки опции монтирования
+## Моки опций монтирования
 
-Один из способов установить значение любого свойства из `Vue.prototype` – использовать [моки опции монтирования](https://vue-test-utils.vuejs.org/ru/api/options.html#mocks). Обычно прототип включает в себя:
+Один из способов установить значение любого свойства из `Vue.prototype` – использовать [моки опций монтирования](https://vue-test-utils.vuejs.org/ru/api/options.html#mocks). Обычно прототип включает в себя:
 - `$store`, для Vuex
 - `$router`, для Vue Router
 - `$t`, для vue-i18n
@@ -51,7 +55,7 @@ export default {
 import { shallowMount } from "@vue/test-utils"
 import Bilingual from "@/components/Bilingual.vue"
 
-describe("Bilingual", () => {
+describe("Bilingual.vue", () => {
   it("Успешно отрисовывается", () => {
     const wrapper = shallowMount(Bilingual)
   })
@@ -70,7 +74,7 @@ describe("Bilingual", () => {
 import { shallowMount } from "@vue/test-utils"
 import Bilingual from "@/components/Bilingual.vue"
 
-describe("Bilingual", () => {
+describe("Bilingual.vue", () => {
   it("Успешно отрисовывается", () => {
     const wrapper = shallowMount(Bilingual, {
       mocks: {
@@ -107,7 +111,7 @@ VueTestUtils.config.mocks["$t"] = (msg) => translations[locale][msg]
 Теперь отрисуется настоящий перевод, несмотря на использование мока для функции `$t`. Запустим тест ещё, используя в этот раз `console.log` на `wrapper.html()`, а также уберём `mocks` из опции монтирования.
 
 ```js
-describe("Bilingual", () => {
+describe("Bilingual.vue", () => {
   it("Успешно отрисовывается", () => {
     const wrapper = shallowMount(Bilingual)
 
@@ -115,6 +119,7 @@ describe("Bilingual", () => {
   })
 })
 ```
+
 Тест проходит проверку и отрисовывает следующую разметку:
 
 ```html
@@ -123,7 +128,7 @@ describe("Bilingual", () => {
 </div>
 ```
 
-Как использовать `mocks` при тестирования Vuex можно прочитать [здесь](https://lmiller1990.github.io/vue-testing-handbook/ru/vuex-in-components.html#testing-vuex-in-components). Техника одна и та же.
+Как использовать `mocks` при тестировании Vuex можно прочитать [здесь](https://lmiller1990.github.io/vue-testing-handbook/ru/vuex-in-components.html#testing-vuex-in-components). Техника одна и та же.
 
 ## Заключение
 
