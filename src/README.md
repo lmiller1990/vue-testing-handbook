@@ -1,3 +1,7 @@
+:::tip This book is written for Vue.js 2 and Vue Test Utils v1.
+Find the Vue.js 3 version [here](/v3/).
+:::
+
 ## What is this guide?
 
 Welcome to the Vue.js testing handbook!
@@ -30,6 +34,5 @@ We will also explore how to use the Jest API to make our tests more robust, such
 Other useful resources include:
 
 - [Official docs](https://vue-test-utils.vuejs.org/)
-- [Book](https://www.manning.com/books/testing-vue-js-applications) written by the author of `vue-test-utils`
-- My [Vue.js 3 + Unit Testing Course](https://vuejs-course.com) (early 2020, early preview/review spots available)
-- [This awesome course on VueSchool](https://vueschool.io/courses/learn-how-to-test-vuejs-components?friend=vth) by several Vue core contributors
+- My [Vue.js 3 + Composition API + Unit Testing Course](https://vuejs-course.com) 
+- [Free Course on VueSchool](https://vueschool.io/courses/learn-how-to-test-vuejs-components?friend=vth)

@@ -1,3 +1,7 @@
+:::tip This book is written for Vue.js 2 and Vue Test Utils v1.
+Find the Vue.js 3 version [here](/v3/).
+:::
+
 ## Testing Emitted Events
 
 As applications grow larger, the number of components grows as well. When these components need to share data, child components can [emit](https://vuejs.org/v2/api/#vm-emit) an event, and the parent component responds.
