@@ -9,7 +9,7 @@
 `props` передаётся вторым аргументом в `shallowMount` или `mount` следующим образом:
 
 ```js
-const wrapper = shallowMount(Foo, {
+const wrapper = mount(Foo, {
   props: {
     foo: 'bar'
   }
@@ -57,13 +57,13 @@ export default {
 Добавим проверку сообщения в случае, когда у пользователя нет привилегий администратора.
 
 ```js
-import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import SubmitButton from '@/components/SubmitButton.vue'
 
 describe('SubmitButton.vue', () => {
   it("Отображает сообщение для неавторизованного пользователя", () => {
     const msg = "Войти"
-    const wrapper = shallowMount(SubmitButton,{
+    const wrapper = mount(SubmitButton,{
       props: {
         msg: msg
       }
@@ -103,22 +103,24 @@ PASS  tests/unit/SubmitButton.spec.js
 Давайте также добавим проверку ещё одного возможного случая, когда `isAdmin` в значении `true`
 
 ```js
-import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import SubmitButton from '@/components/SubmitButton.vue'
 
 describe('SubmitButton.vue', () => {
   it('Отображает сообщение для администратора', () => {
     const msg = "Войти"
     const isAdmin = true
-    const wrapper = shallowMount(SubmitButton,{
+    const wrapper = mount(SubmitButton,{
       props: {
         msg,
         isAdmin
       }
     })
 
-    expect(wrapper.find("span").text()).toBe("Привилегии администратора")
-    expect(wrapper.find("button").text()).toBe("Войти")
+    console.log(wrapper.html())
+    
+    expect(wrapper.find("span").text()).toBe("Admin Privileges")
+    expect(wrapper.find("button").text()).toBe("submit")
   })
 })
 ```
@@ -154,8 +156,8 @@ PASS  tests/unit/SubmitButton.spec.js
 ```js
 const msg = "Войти"
 const factory = (props) => {
-  return shallowMount(SubmitButton, {
-    propsData: {
+  return mount(SubmitButton, {
+    props: {
       msg,
       ...props
     }

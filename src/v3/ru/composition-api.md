@@ -67,13 +67,13 @@ export default {
 Тестирование правильно ли отрисовалось сообщение – банально. Мы просто используем `props` для установки значения параметра как описано [здесь](/v3/ru/components-with-props.html).
 
 ```js
-import { shallowMount } from "@vue/test-utils"
+import { mount } from "@vue/test-utils"
 
 import CompositionApi from "@/components/CompositionApi.vue"
 
 describe("CompositionApi", () => {
   it("отрисовывает сообщение", () => {
-    const wrapper = shallowMount(CompositionApi, {
+    const wrapper = mount(CompositionApi, {
       props: {
         message: "Тестируем composition API"
       }
@@ -91,18 +91,17 @@ describe("CompositionApi", () => {
 Написание теста, гарантирующего увеличение `state.count` при клике на кнопку – также просто. Обратите внимание, что в тесте используется `async`; о том, зачем это здесь необходимо читайте в главе [симулирование пользовательского ввода](/ru/simulating-user-input.html#writing-the-test).
 
 ```js
-import { shallowMount } from "@vue/test-utils"
+import { mount } from "@vue/test-utils"
 
 import CompositionApi from "@/components/CompositionApi.vue"
 
 describe("CompositionApi", () => {
   it("увеличивает счётчик при клике на кнопку", async () => {
-    const wrapper = shallowMount(CompositionApi, {
+    const wrapper = mount(CompositionApi, {
       props: { message: '' }
     })
 
-    wrapper.find('button').trigger('click')
-    await wrapper.vm.$nextTick()
+    await wrapper.find('button').trigger('click')
 
     expect(wrapper.find(".count").text()).toBe("Счётчик: 1")
   })

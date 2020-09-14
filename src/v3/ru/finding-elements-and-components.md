@@ -63,13 +63,13 @@ export default {
 Обычные элементы можно легко найти, используя синтаксис похожий на `document.querySelector`. `vue-test-utils` также предоставляет метод `isVisible`, чтобы проверять отрисовался ли элемент по условию с `v-show`. Создадим `Parent.spec.js` и внутрь добавим следующий тест:
 
 ```js
-import { mount, shallowMount } from "@vue/test-utils"
+import { mount } from "@vue/test-utils"
 import '@testing-library/jest-dom'
 import Parent from "@/components/Parent.vue"
 
 describe("Parent.vue", () => {
   it("Не отрисовывает span", () => {
-    const wrapper = shallowMount(Parent)
+    const wrapper = mount(Parent)
 
     expect(wrapper.find("span").element).not.toBeVisible()
   })
@@ -80,7 +80,7 @@ describe("Parent.vue", () => {
 
 ```js
 it("Отрисовывает span", () => {
-  const wrapper = shallowMount(Parent, {
+  const wrapper = mount(Parent, {
     data() {
       return { showSpan: true }
     }
@@ -105,7 +105,7 @@ it("Отрисовывает span", () => {
 import Child from "@/components/Child.vue"
 
 it("не отрисовывает компонент Child", () => {
-  const wrapper = shallowMount(Parent)
+  const wrapper = mount(Parent)
 
   expect(wrapper.findComponent(Child).exists()).toBe(false)
 })
@@ -118,7 +118,7 @@ it("не отрисовывает компонент Child", () => {
 
 ```js
 it("отрисовывает компонент Child", () => {
-  const wrapper = shallowMount(Parent, {
+  const wrapper = mount(Parent, {
     data() {
       return { showChild: true }
     }
@@ -156,7 +156,7 @@ export default {
 
 ```js
 it("отрисовывает несколько дочерних компонентов", () => {
-  const wrapper = shallowMount(ParentWithManyChildren)
+  const wrapper = mount(ParentWithManyChildren)
 
   expect(wrapper.findAllComponents(Child).length).toBe(3)
 })

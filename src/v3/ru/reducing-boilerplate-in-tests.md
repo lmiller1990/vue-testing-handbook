@@ -126,8 +126,8 @@ describe('Posts.vue', () => {
     const router = createVueRouter()
     const message = 'Скоро выйдут новые статьи!'
     const wrapper = mount(Posts, {
-      globals: {
-        plugins: [store, router],
+      global: {
+        plugins: [store, router]
       },
       props: { message },
     })
@@ -141,8 +141,8 @@ describe('Posts.vue', () => {
     const message = 'Скоро выйдут новые статьи!'
 
     const wrapper = mount(Posts, {
-      globals: {
-        plugins: [store, router],
+      global: {
+        plugins: [store, router]
       },
       props: { message },
     })

@@ -27,7 +27,7 @@ export default {
       username, password
     })
 
-    commit("set_authenticated", authenticated)
+    commit("SET_AUTHENTICATED", authenticated)
   }
 }
 ```

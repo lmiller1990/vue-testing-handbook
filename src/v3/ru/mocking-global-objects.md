@@ -52,12 +52,12 @@ export default {
 Основываясь на локали, будет отрисовываться правильный перевод. Давайте попробуем отрендерить компонент, не используя моков в тесте.
 
 ```js
-import { shallowMount } from "@vue/test-utils"
+import { mount } from "@vue/test-utils"
 import Bilingual from "@/components/Bilingual.vue"
 
 describe("Bilingual.vue", () => {
   it("Успешно отрисовывается", () => {
-    const wrapper = shallowMount(Bilingual)
+    const wrapper = mount(Bilingual)
   })
 })
 ```
@@ -71,12 +71,12 @@ describe("Bilingual.vue", () => {
 Это потому, что мы не установили `vue-i18n`, поэтому глобального метода `$t` не существует. Давайте замокаем его, используя опцию монтирования `mocks`.
 
 ```js
-import { shallowMount } from "@vue/test-utils"
+import { mount } from "@vue/test-utils"
 import Bilingual from "@/components/Bilingual.vue"
 
 describe("Bilingual.vue", () => {
   it("Успешно отрисовывается", () => {
-    const wrapper = shallowMount(Bilingual, {
+    const wrapper = mount(Bilingual, {
       global: {
         mocks: {
           $t: (msg) => msg
@@ -120,7 +120,7 @@ config.global.mocks = {
 ```js
 describe("Bilingual.vue", () => {
   it("Успешно отрисовывается", () => {
-    const wrapper = shallowMount(Bilingual)
+    const wrapper = mount(Bilingual)
 
     console.log(wrapper.html())
   })
