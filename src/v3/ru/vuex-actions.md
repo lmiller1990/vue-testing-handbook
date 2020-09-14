@@ -4,7 +4,7 @@
 
 ## Тестирование действий
 
-Тестировать действия в изоляции очень просто. Это очень похоже на тестирование мутаций в изоляции – смотрите [здесь](https://lmiller1990.github.io/vue-testing-handbook/ru/vuex-mutations.html) про тестирование мутаций. Тестирование диспетчеризации действий в контексте компонента обсуждалось [здесь](https://lmiller1990.github.io/vue-testing-handbook/ru/vuex-in-components-mutations-and-actions.html).
+Тестировать действия в изоляции очень просто. Это очень похоже на тестирование мутаций в изоляции – смотрите [здесь](https://lmiller1990.github.io/vue-testing-handbook/v3/ru/vuex-mutations.html) про тестирование мутаций. Тестирование диспетчеризации действий в контексте компонента обсуждалось [здесь](https://lmiller1990.github.io/vue-testing-handbook/ru/vuex-in-components-mutations-and-actions.html).
 
 Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/actions.spec.js).
 

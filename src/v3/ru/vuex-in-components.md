@@ -198,6 +198,6 @@ export default {
 - как тестировать `$store.state` и `getters`
 - как использовать `global.mocks` в опциях монтирования, чтобы устанавливать желаемое значение для `$store.state` или `getters`
 
-Техники для тестирования реализации Vuex геттеров в изоляции можно найти в [этом руководстве](https://lmiller1990.github.io/vue-testing-handbook/ru/vuex-getters.html).
+Техники для тестирования реализации Vuex геттеров в изоляции можно найти в [этом руководстве](https://lmiller1990.github.io/vue-testing-handbook/v3/ru/vuex-getters.html).
 
 Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/ComponentWithVuex.spec.js).

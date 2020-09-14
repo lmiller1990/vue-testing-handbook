@@ -20,7 +20,7 @@
 
 ## Пример с vue-i18n
 
-Примеры использования с Vuex и Vue Router описаны в соответствующих секциях: [тут](https://lmiller1990.github.io/vue-testing-handbook/ru/vuex-in-components.html#testing-vuex-in-components) и [тут](https://lmiller1990.github.io/vue-testing-handbook/ru/vue-router.html#vue-router). Давайте посмотрим на пример с [vue-i18n](https://github.com/kazupon/vue-i18n). Использовать `createLocalVue` и устанавливать `vue-i18n` для каждого теста быстро надоест, а код будет шаблонный. Сперва сделаем компонент `<Bilingual>`, который использует `vue-i18n`:
+Примеры использования с Vuex и Vue Router описаны в соответствующих секциях: [тут](https://lmiller1990.github.io/vue-testing-handbook/v3/ru/vuex-in-components.html#testing-vuex-in-components) и [тут](https://lmiller1990.github.io/vue-testing-handbook/v3/ru/vue-router.html#vue-router). Давайте посмотрим на пример с [vue-i18n](https://github.com/kazupon/vue-i18n). Использовать `createLocalVue` и устанавливать `vue-i18n` для каждого теста быстро надоест, а код будет шаблонный. Сперва сделаем компонент `<Bilingual>`, который использует `vue-i18n`:
 
 ```vue
 <template>
