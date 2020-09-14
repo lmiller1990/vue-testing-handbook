@@ -1,14 +1,14 @@
-:::tip Это руководство было написано для Vue.js 2 и Vue Test Utils v1.
-Версия для Vue.js 3 [здесь](/v3/ru).
+:::tip Это руководство было написано для Vue.js 3 и Vue Test Utils v2.
+Версия для Vue.js 2 [здесь](/ru).
 :::
 
 ## The Composition API
 
-Vue 3 предоставит новое API для создания компонентов – [Composition API](https://vue-composition-api-rfc.netlify.com/#basic-example). Для сбора отзывов от пользователей, команда Vue выложила плагин, который позволяет попробовать это API во Vue 2. Вы можете найти его [здесь](https://github.com/vuejs/composition-api).
+Vue 3 представил новое API для создания компонентов – [Composition API](https://vue-composition-api-rfc.netlify.com/#basic-example).
 
 Тестирование компонента, созданного с помощью Composition API ничем не должно отличаться от тестирования обычного компонента, так как мы тестируем не реализацию, а поведение, то что будет на выходе. (*что* делает компонент, а не *как* он это делает). В этой статье будет разобран пример небольшого компонента, использующего Composition API во Vue 2, и то, как похоже тестирование такого компонента в сравнении с обычным.
 
-Исходный код для тестов на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/CompositionApi.spec.js).
+Исходный код для тестов на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/CompositionApi.spec.js).
 
 ## Компонент
 
@@ -26,15 +26,7 @@ Vue 3 предоставит новое API для создания компон
 </template>
 
 <script>
-import Vue from 'vue'
-import VueCompositionApi from '@vue/composition-api'
-
-Vue.use(VueCompositionApi)
-
-import { 
-  reactive,
-  computed
-} from '@vue/composition-api'
+import { reactive, computed } from 'vue'
 
 export default {
   name: 'CompositionApi',
@@ -72,7 +64,7 @@ export default {
 
 ## Тестирование сообщения из входных параметров
 
-Тестирование правильно ли отрисовалось сообщение – банально. Мы просто используем `propsData` для установки значения параметра как описано [здесь](/ru/components-with-props.html).
+Тестирование правильно ли отрисовалось сообщение – банально. Мы просто используем `props` для установки значения параметра как описано [здесь](/v3/ru/components-with-props.html).
 
 ```js
 import { shallowMount } from "@vue/test-utils"
@@ -82,7 +74,7 @@ import CompositionApi from "@/components/CompositionApi.vue"
 describe("CompositionApi", () => {
   it("отрисовывает сообщение", () => {
     const wrapper = shallowMount(CompositionApi, {
-      propsData: {
+      props: {
         message: "Тестируем composition API"
       }
     })
@@ -106,7 +98,7 @@ import CompositionApi from "@/components/CompositionApi.vue"
 describe("CompositionApi", () => {
   it("увеличивает счётчик при клике на кнопку", async () => {
     const wrapper = shallowMount(CompositionApi, {
-      propsData: { message: '' }
+      props: { message: '' }
     })
 
     wrapper.find('button').trigger('click')
