@@ -250,8 +250,8 @@ it("Показывает сообщение после отправки", async 
     }
   })
 
-  wrapper.find("[data-username]").setValue("Алиса")
-  wrapper.find("form").trigger("submit.prevent")
+  await wrapper.find("[data-username]").setValue("Алиса")
+  await wrapper.find("form").trigger("submit.prevent")
 
   await flushPromises()
 

@@ -37,7 +37,7 @@ export default {
 
 ```js
 import Vuex from "vuex"
-import { shallowMount, createLocalVue } from "@vue/test-utils"
+import { mount, createLocalVue } from "@vue/test-utils"
 import ComponentWithVuex from "@/components/ComponentWithVuex.vue"
 
 const localVue = createLocalVue()
@@ -51,7 +51,7 @@ const store = new Vuex.Store({
 
 describe("ComponentWithVuex", () => {
   it("отрисовывает имя пользователя из настоящего Vuex хранилища", () => {
-    const wrapper = shallowMount(ComponentWithVuex, { 
+    const wrapper = mount(ComponentWithVuex, { 
       store, 
       localVue 
     })
@@ -71,7 +71,7 @@ describe("ComponentWithVuex", () => {
 
 ```js
 it("отрисовывает имя пользователя, используя замоканное хранилище", () => {
-  const wrapper = shallowMount(ComponentWithVuex, {
+  const wrapper = mount(ComponentWithVuex, {
     mocks: {
       $store: {
         state: { username: "Алиса" }
@@ -120,7 +120,7 @@ localVue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     firstName: "Алиса",
-    lastName: "Доу"
+    lastName: "До"
   },
 
   getters: {
@@ -129,9 +129,9 @@ const store = new Vuex.Store({
 })
 
 it("отрисовывает имя пользователя, используя настоящий геттер Vuex", () => {
-  const wrapper = shallowMount(ComponentWithGetters, { store, localVue })
+  const wrapper = mount(ComponentWithGetters, { store, localVue })
 
-  expect(wrapper.find(".fullname").text()).toBe("Алиса Доу")
+  expect(wrapper.find(".fullname").text()).toBe("Алиса До")
 })
 ```
 
@@ -142,17 +142,17 @@ it("отрисовывает имя пользователя, используя
 
 ```js
 it("отрисовываем имя пользователя, используя вычисленные опции монтирования", () => {
-  const wrapper = shallowMount(ComponentWithGetters, {
+  const wrapper = mount(ComponentWithGetters, {
     mocks: {
       $store: {
         getters: {
-          fullname: "Алиса Доу"
+          fullname: "Алиса До"
         }
       }
     }
   })
 
-  expect(wrapper.find(".fullname").text()).toBe("Алиса Доу")
+  expect(wrapper.find(".fullname").text()).toBe("Алиса До")
 })
 ```
 
@@ -167,13 +167,13 @@ it("отрисовываем имя пользователя, используя
 
 ```js
 it("отрисовываем имя пользователя, используя вычисляемое свойство в опции монтирования", () => {
-  const wrapper = shallowMount(ComponentWithGetters, {
+  const wrapper = mount(ComponentWithGetters, {
     computed: {
-      fullname: () => "Алиса Доу"
+      fullname: () => "Алиса До"
     }
   })
 
-  expect(wrapper.find(".fullname").text()).toBe("Алиса Доу")
+  expect(wrapper.find(".fullname").text()).toBe("Алиса До")
 })
 ```
 

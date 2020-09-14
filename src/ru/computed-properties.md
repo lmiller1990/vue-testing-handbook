@@ -19,12 +19,12 @@
 Тест выглядит так:
 
 ```js
-import { shallowMount } from "@vue/test-utils"
+import { mount } from "@vue/test-utils"
 import NumberRenderer from "@/components/NumberRenderer.vue"
 
 describe("NumberRenderer", () => {
   it("выводит чётные числа", () => {
-    const wrapper = shallowMount(NumberRenderer, {
+    const wrapper = mount(NumberRenderer, {
       propsData: {
         even: true
       }

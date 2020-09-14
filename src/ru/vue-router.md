@@ -134,7 +134,7 @@ describe("App", () => {
     await wrapper.vm.$nextTick()
     
     expect(wrapper.findComponent(NestedRoute).exists()).toBe(true)
-  })
+  });
 
   it("должен иметь другой маршрут /nested-route", async () => {
     const router = new VueRouter({ routes })
@@ -401,9 +401,11 @@ import mockModule from "@/bust-cache.js"
 
 jest.mock("@/bust-cache.js", () => ({ bustCache: jest.fn() }))
 
-it("вызывает bustCache и next при переходе из маршрута", () => {
+it("вызывает bustCache и next при переходе из маршрута", async () => {
+  const wrapper = shallowMount(NestedRoute);
   const next = jest.fn()
-  NestedRoute.beforeRouteLeave(undefined, undefined, next)
+  NestedRoute.beforeRouteLeave.call(wrapper.vm, undefined, undefined, next)
+  await wrapper.vm.$nextTick()
 
   expect(mockModule.bustCache).toHaveBeenCalled()
   expect(next).toHaveBeenCalled()

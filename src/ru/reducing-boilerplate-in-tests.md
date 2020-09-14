@@ -104,7 +104,7 @@ export const createStore = () => {
 // router.js
 export default new VueRouter({ ... })
 export const createRouter = () => {
-  return new Vuex.Router({ ... })
+  return new VueRouter({ ... })
 }
 ```
 Теперь ваше основное приложение может сделать `import { store } from './store.js`, и ваши тесты смогут получить новую копию хранилища каждый раз, когда будет выполнен `import { createStore } from './store.js`, а затем создан новый экземпляр `const store = createStore()`. То же самое делается и для роутера. Это то, что я сделал в примере `Posts.vue` – исходный код можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/src/createStore.js) для хранилища и [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/src/createRouter.js) для роутера.
