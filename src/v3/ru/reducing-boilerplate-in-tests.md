@@ -1,5 +1,5 @@
-:::tip Это руководство было написано для Vue.js 2 и Vue Test Utils v1.
-Версия для Vue.js 3 [здесь](/v3/ru).
+:::tip Это руководство было написано для Vue.js 3 и Vue Test Utils v2.
+Версия для Vue.js 2 [здесь](/ru).
 :::
 
 ## Уменьшаем шаблонный код
@@ -10,7 +10,7 @@
 
 В этой статье рассматривается компонент с использованием Vuex и VueRouter, демонстрируются некоторые подходы, которые помогут уменьшить количество шаблонного кода для ваших модульных тестов.
 
-Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Posts.spec.js).
+Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/Posts.spec.js).
 
 ## Компонент новостей
 
@@ -84,10 +84,10 @@ export default {
 ```js
 // store.js
 
-export default new Vuex.Store({ ... })
+export default createStore({ ... })
 
 // router.js
-export default new VueRouter({ ... })
+export default createRouter({ ... })
 ```
 
 Это нормально для обычного приложения, но не идеально для тестирования. Если вы делаете это, то каждый раз, когда вы используете хранилище или роутер в тестах – оно будет доступно среди всех других тестов, которые его импортируют. В идеале, каждый компонент должен получать новую копию хранилища или роутера.
@@ -96,61 +96,55 @@ export default new VueRouter({ ... })
 
 ```js
 // store.js
-export const store = new Vuex.Store({ ... })
-export const createStore = () => {
-  return new Vuex.Store({ ... })
+export const store = createStore({ ... })
+export const createVuexStore = () => {
+  return new createStore({ ... })
 }
 
 // router.js
-export default new VueRouter({ ... })
-export const createRouter = () => {
-  return new Vuex.Router({ ... })
+export default createRouter({ ... })
+export const createVueRouter = () => {
+  return createRouter({ ... })
 }
 ```
-Теперь ваше основное приложение может сделать `import { store } from './store.js`, и ваши тесты смогут получить новую копию хранилища каждый раз, когда будет выполнен `import { createStore } from './store.js`, а затем создан новый экземпляр `const store = createStore()`. То же самое делается и для роутера. Это то, что я сделал в примере `Posts.vue` – исходный код можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/src/createStore.js) для хранилища и [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/src/createRouter.js) для роутера.
+Теперь ваше основное приложение может сделать `import { store } from './store.js`, и ваши тесты смогут получить новую копию хранилища каждый раз, когда будет выполнен `import { createVuexStore } from './store.js`, а затем создан новый экземпляр `const store = createStore()`. То же самое делается и для роутера. Это то, что я сделал в примере `Posts.vue` – исходный код можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/src/createStore.js) для хранилища и [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/src/createRouter.js) для роутера.
 
 ## Тесты (перед рефакторингом)
 
 Теперь мы знаем, что представляет собой `Posts.vue`, как выглядит хранилище и роутер. Теперь мы сможем понять, что делается в тестах: 
 
 ```js
-import Vuex from 'vuex'
-import VueRouter from 'vue-router'
-import { mount, createLocalVue } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 
 import Posts from '@/components/Posts.vue'
-import { createRouter } from '@/createRouter'
-import { createStore } from '@/createStore'
+import { createVueRouter } from '@/createRouter'
+import { createVuexStore } from '@/createStore'
 
 describe('Posts.vue', () => {
   it('отрисовывает сообщение, если оно было передано', () => {
-    const localVue = createLocalVue()
-    localVue.use(VueRouter)
-    localVue.use(Vuex)
-
-    const store = createStore()
-    const router = createRouter()
+    const store = createVuexStore()
+    const router = createVueRouter()
     const message = 'Скоро выйдут новые статьи!'
     const wrapper = mount(Posts, {
-      propsData: { message },
-      store, router,
+      globals: {
+        plugins: [store, router],
+      },
+      props: { message },
     })
 
     expect(wrapper.find("#message").text()).toBe('Скоро выйдут новые статьи!')
   })
 
   it('отрисовывает новости', async () => {
-    const localVue = createLocalVue()
-    localVue.use(VueRouter)
-    localVue.use(Vuex)
-
-    const store = createStore()
-    const router = createRouter()
+    const store = createVuexStore()
+    const router = createVueRouter()
     const message = 'Скоро выйдут новые статьи!'
 
     const wrapper = mount(Posts, {
-      propsData: { message },
-      store, router,
+      globals: {
+        plugins: [store, router],
+      },
+      props: { message },
     })
 
     wrapper.vm.$store.commit('ADD_POSTS', [{ id: 1, title: 'Новость' }])
@@ -162,46 +156,45 @@ describe('Posts.vue', () => {
 ```
 Покрыты не все возможные исходы; Это минимальный набор, которого достаточно для начала. Обратите внимание на дублирование и повторы – давайте избавимся от этого.
 
-## Самописная функция `createTestVue`
+## Самописная функция `createWrapper`
 
-Первые пять строчек каждого теста одинаковые:
+Первые строчки каждого теста одинаковые:
 
 ```js
-const localVue = createLocalVue()
-localVue.use(VueRouter)
-localVue.use(Vuex)
+const store = createVuexStore(storeState)
+const router = createVueRouter()
 
-const store = createStore()
-const router = createRouter()
+return mount(component, {
+  global: {
+    plugins: [store, router]
+  },
+  props: { ... }
+})
 ```
 
-Давайте исправим это. Чтобы не путаться с функцией `createLocalVue` из Vue Test Utils, я назову свою функцию `createTestVue`. Она выглядит так:
+Давайте исправим это. Я назову свою функцию `createWrapper`. Она выглядит так:
 
 ```js
-const createTestVue = () => {
-  const localVue = createLocalVue()
-  localVue.use(VueRouter)
-  localVue.use(Vuex)
-
+const createWrapper = () => {
   const store = createStore()
   const router = createRouter()
-  return { store, router, localVue }
+  return { store, router }
 }
 ```
 
-Теперь мы инкапсулировали всю логику внутри одной функции. Мы возвращаем `store`, `router` и `localVue`, так как нам нужно передавать их в функцию `mount`.
+Теперь мы инкапсулировали всю логику внутри одной функции. Мы возвращаем `store` и `router`, так как нам нужно передавать их в функцию `mount`.
 
-Если мы перепишем первый тест с использованием `createTestVue`, то он будет выглядеть так:
+Если мы перепишем первый тест с использованием `createWrapper`, то он будет выглядеть так:
 
 ```js
 it('отрисовывает сообщение, если оно было передано', () => {
-  const { localVue, store, router } = createTestVue()
+  const { store, router } = createWrapper()
   const message = 'Скоро выйдут новые статьи!'
   const wrapper = mount(Posts, {
-    propsData: { message },
-    store,
-    router,
-    localVue
+    global: {
+      plugins: [store, router],
+    },
+    props: { message },
   })
 
   expect(wrapper.find("#message").text()).toBe('Скоро выйдут новые статьи!')
@@ -212,10 +205,11 @@ it('отрисовывает сообщение, если оно было пер
 
 ```js
 it('отрисовывает новости', async () => {
-  const { localVue, store, router } = createTestVue()
+  const { store, router } = createWrapper()
   const wrapper = mount(Posts, {
-    store,
-    router,
+    global: {
+      plugins: [store, router],
+    }
   })
 
   wrapper.vm.$store.commit('ADD_POSTS', [{ id: 1, title: 'Новость' }])
@@ -225,17 +219,19 @@ it('отрисовывает новости', async () => {
 })
 ```
 
-## Определение метода `createWrapper`
+## Улучшаем функцию `createWrapper`
 
-Приведённый выше код уже определённо лучше того, что было. Сравнивая эти тесты, можно заметить, что около половины кода всё ещё повторяется. Давайте создадим новый метод `createWrapper`, чтобы решить эту проблему.
+Приведённый выше код уже определённо лучше того, что было. Сравнивая эти тесты, можно заметить, что около половины кода всё ещё повторяется. Давайте улучшим `createWrapper`, чтобы решить эту проблему.
 
 ```js
 const createWrapper = (component, options = {}) => {
-  const { localVue, store, router } = createTestVue()
+  const store = createVuexStore()
+  const router = createVueRouter()
+
   return mount(component, {
-    store,
-    router,
-    localVue,
+    global: {
+      plugins: [store, router],
+    },
     ...options
   })
 }
@@ -247,7 +243,7 @@ const createWrapper = (component, options = {}) => {
 it('отрисовывает сообщение, если оно было передано', () => {
   const message = 'Скоро выйдут новые статьи!'
   const wrapper = createWrapper(Posts, {
-    propsData: { message },
+     props: { message },
   })
 
   expect(wrapper.find("#message").text()).toBe('Скоро выйдут новые статьи!')
@@ -265,14 +261,16 @@ it('отрисовывает новости', async () => {
 
 ## Установка изначального состояния Vuex
 
-Осталось одно улучшение – как заполнить хранилище. В настоящем приложении, ваше хранилище будет сложным. Вызывать множество мутаций и действий только для того, чтобы получить состояние для тестирования – не самое лучшее решение. Мы можем сделать небольшое изменение в нашей функции `createStore`, которое позволит устанавливать начальное состояние:
+Осталось одно улучшение – как заполнить хранилище. В настоящем приложении, ваше хранилище будет сложным. Вызывать множество мутаций и действий только для того, чтобы получить состояние для тестирования – не самое лучшее решение. Мы можем сделать небольшое изменение в нашей функции `createVuexStore`, которое позволит устанавливать начальное состояние:
 
 ```js
-const createStore = (initialState = {}) => new Vuex.Store({
-  state: {
-    authenticated: false,
-    posts: [],
-    ...initialState
+const createVuexStore = (initialState = {}) => createStore({
+  state() {
+    return {
+      authenticated: false,
+      posts: [],
+      ...initialState
+    },
   },
   mutations: {
     // ...
@@ -280,20 +278,17 @@ const createStore = (initialState = {}) => new Vuex.Store({
 })
 ```
 
-Теперь мы можем задать желаемое начальное состояние через функцию `createStore`. Мы можем сделать быстрый рефакторинг, объединив `createTestVue` и` createWrapper`:
+Теперь мы можем задать желаемое начальное состояние функции `createVuexStore` через `createWrapper`:
 
 ```js
 const createWrapper = (component, options = {}, storeState = {}) => {
-  const localVue = createLocalVue()
-  localVue.use(VueRouter)
-  localVue.use(Vuex)
-  const store = createStore(storeState)
-  const router = createRouter()
+  const store = createVuexStore(storeState)
+  const router = createVueRouter()
 
   return mount(component, {
-    store,
-    router,
-    localVue,
+    global: {
+      plugins: [store, router],
+    },
     ...options
   })
 }
@@ -319,8 +314,8 @@ it('отрисовывает новости', async () => {
 
 Есть несколько потенциальных улучшений:
 
-- обновить функцию `createStore`, чтобы разрешить установку начального состояния для модулей пространства имён Vuex
-- улучшить `createRouter`, чтобы устанавливать конкретный маршрут
+- обновить функцию `createVuexStore`, чтобы разрешить установку начального состояния для модулей пространства имён Vuex
+- улучшить `createVueRouter`, чтобы устанавливать конкретный маршрут
 - разрешить пользователю передавать аргумент `shallow` или` mount` в `createWrapper`
 
 ## Заключение
@@ -330,4 +325,4 @@ it('отрисовывает новости', async () => {
 - использование функций-фабрик для получения нового экземпляра объекта
 - сокращение шаблонного кода и дублирования путём выноса общего кода
 
-Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Posts.spec.js). Эта статья доступна в виде скринкаста на[Vue.js Courses](https://vuejs-course.com/screencasts/reducing-duplication-in-tests).
+Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/Posts.spec.js). Эта статья доступна в виде скринкаста на[Vue.js Courses](https://vuejs-course.com/screencasts/reducing-duplication-in-tests).

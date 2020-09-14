@@ -6,7 +6,7 @@
 
 `vue-test-utils` позволяет с лёгкостью мокать глобальные объекты, прикреплённые к `Vue.prototype` внутри теста, а также устанавливать стандартные значения мока для всех тестов.
 
-Тест, использованный в последующем примере, можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app/tests/unit/Bilingual.spec.js).
+Тест, использованный в последующем примере, можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/blob/master/demo-app-vue-3/tests/unit/Bilingual.spec.js).
 
 ## Моки опций монтирования
 
