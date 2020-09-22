@@ -1,12 +1,12 @@
-:::tip Это руководство было написано для Vue.js 2 и Vue Test Utils v1.
-Версия для Vue.js 3 [здесь](/v3/ru).
+:::tip Это руководство было написано для Vue.js 3 и Vue Test Utils v2.
+Версия для Vue.js 2 [здесь](/ru).
 :::
 
 ## Тестирование действий
 
-Тестировать действия в изоляции очень просто. Это очень похоже на тестирование мутаций в изоляции – смотрите [здесь](https://lmiller1990.github.io/vue-testing-handbook/ru/vuex-mutations.html) про тестирование мутаций. Тестирование диспетчеризации действий в контексте компонента обсуждалось [здесь](https://lmiller1990.github.io/vue-testing-handbook/ru/vuex-in-components-mutations-and-actions.html).
+Тестировать действия в изоляции очень просто. Это очень похоже на тестирование мутаций в изоляции – смотрите [здесь](https://lmiller1990.github.io/vue-testing-handbook/v3/ru/vuex-mutations.html) про тестирование мутаций. Тестирование диспетчеризации действий в контексте компонента обсуждалось [здесь](https://lmiller1990.github.io/vue-testing-handbook/ru/vuex-in-components-mutations-and-actions.html).
 
-Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/actions.spec.js).
+Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/actions.spec.js).
 
 ## Создание действия
 
@@ -173,7 +173,7 @@ export default {
 
 Теперь тесты проходят проверку.
 
-## Улучшения
+## Улучшение
 
 Теперь вы знаете, как тестировать действия в изоляции. Есть, как минимум, одно улучшение, которое можно сделать – это реализовать мок `axios` в виде [пользовательского мока](https://jestjs.io/docs/ru/manual-mocks). Необходимо создать папку `__mocks__` на том же уровне, где находится `node_modules`, и реализовать мок модуль там. Сделав это, вы можете использовать реализацию мока во всех тестах. Jest автоматически использует мок реализации из `__mocks__`. На сайте Jest и в интернете есть множество примеров, как сделать это. Рефакторинг этого теста, используя пользовательский мок, остаётся как упражнение для читателя.
 
@@ -185,4 +185,4 @@ export default {
 - как использовать моки Jest для ES6 классов
 - как тестировать успешные и неудачные случаи действий
 
-Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/actions.spec.js).
+Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/actions.spec.js).

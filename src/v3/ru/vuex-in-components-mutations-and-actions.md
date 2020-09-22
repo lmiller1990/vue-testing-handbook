@@ -1,14 +1,14 @@
-:::tip Это руководство было написано для Vue.js 2 и Vue Test Utils v1.
-Версия для Vue.js 3 [здесь](/v3/ru).
+:::tip Это руководство было написано для Vue.js 3 и Vue Test Utils v2.
+Версия для Vue.js 2 [здесь](/ru).
 :::
 
 ## Мутации и действия
 
 В предыдущем руководстве обсуждалось как тестировать компоненты, которые используют `$store.state` и `$store.getters`. Оба метода дают представление о состоянии приложения. Когда проверяется, что компонент правильно вызывает мутацию или действие, мы хотим убедиться, что `$store.commit` и `$store.dispatch` вызываются с правильной функцией-обработчиком и нагрузкой.
 
-Есть два способа сделать это. Первый – это использовать настоящее Vuex хранилище с использованием `createLocalVue`. Второй – использовать мок для хранилища. Обе техники продемонстрированы [здесь](https://lmiller1990.github.io/vue-testing-handbook/ru/vuex-in-components.html). Давайте посмотрим на них снова, но уже в контексте мутаций и действий.
+Есть два способа сделать это. Первый – это использовать настоящее Vuex хранилище с использованием `createStore`. Второй – использовать мок для хранилища. Обе техники продемонстрированы [здесь](https://lmiller1990.github.io/vue-testing-handbook/v3/ru/vuex-in-components.html). Давайте посмотрим на них снова, но уже в контексте мутаций и действий.
 
-Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ComponentWithButtons.spec.js).
+Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/ComponentWithButtons.spec.js).
 
 ## Создание компонента
 
@@ -65,30 +65,32 @@ export default {
 1. Правильная ли мутация вызывается?
 2. Правильная ли была нагрузка?
 
-Мы будем использовать `createLocalVue`, чтобы избежать засорения глобального Vue экземпляра.
+Рассмотрим тест.
 
 ```js
-import Vuex from "vuex"
-import { createLocalVue, mount } from "@vue/test-utils"
+import { createStore } from "vuex"
+import { mount } from "@vue/test-utils"
 import ComponentWithButtons from "@/components/ComponentWithButtons.vue"
-
-const localVue = createLocalVue()
-localVue.use(Vuex)
 
 const mutations = {
   testMutation: jest.fn()
 }
 
-const store = new Vuex.Store({ mutations })
+const store = createStore({
+  mutations
+})
 
 describe("ComponentWithButtons", () => {
 
   it("вызывает мутацию после клика по кнопке", async () => {
     const wrapper = mount(ComponentWithButtons, {
-      store, localVue
+      global: {
+        plugins: [store]
+      }
     })
 
-    await wrapper.find(".commit").trigger("click")
+    wrapper.find(".commit").trigger("click")
+    await wrapper.vm.$nextTick()    
 
     expect(mutations.testMutation).toHaveBeenCalledWith(
       {},
@@ -98,7 +100,11 @@ describe("ComponentWithButtons", () => {
 })
 ```
 
-Здесь очень много кода, но ничего особенного не происходит. Мы создаём `localVue` и используем Vuex, затем, создаём хранилище, передаём мок функцию (`jest.fn()`) вместо `testMutation`. Vuex мутации всегда вызываются с двумя аргументами: первым идёт текущее состояние, вторым - нагрузка. Так как мы не объявляли никакого состояния для хранилища, ожидаем, что вызов был с пустым объектом. Вторым аргументом ожидаем `{ msg: "Test Commit" }`, который захардкожен в компоненте.
+:::warning
+Обратите внимание, что тесты помечены как `await` и вызывают` nextTick`. Смотрите [здесь](/v3/ru/simulating-user-input.html#writing-the-test) для получения дополнительной информации о том, почему.
+:::
+
+Здесь очень много кода, но ничего особенного не происходит. Мы создаём новое хранилище с помощью `createStore` затем передаём мок-функцию (`jest.fn()`) вместо `testMutation`. Vuex мутации всегда вызываются с двумя аргументами: первым идёт текущее состояние, вторым - нагрузка. Так как мы не объявляли никакого состояния для хранилища, ожидаем, что вызов был с пустым объектом. Вторым аргументом ожидаем `{ msg: "Тестовый Commit" }`, который захардкожен в компоненте.
 
 Получилось очень много шаблонного кода, но это правильный и действующий способ проверить работу компонента. В качестве альтернативы можно использовать мок для хранилища. Поймём как это делать в процессе тестирования вызова `testAction`.
 
@@ -111,21 +117,26 @@ describe("ComponentWithButtons", () => {
 
 ```js
 it("вызывает действие после клика по кнопке", async () => {
-  const mockStore = { dispatch: jest.fn() }
+  const store = createStore()
+  store.dispatch = jest.fn()
+
   const wrapper = mount(ComponentWithButtons, {
-    mocks: {
-      $store: mockStore 
+    global: {
+      plugins: [store]
     }
   })
 
-  await wrapper.find(".dispatch").trigger("click")
-  
-  expect(mockStore.dispatch).toHaveBeenCalledWith(
-    "testAction" , { msg: "Тестовый Dispatch" })
+  wrapper.find(".namespaced-dispatch").trigger("click")
+  await wrapper.vm.$nextTick()
+
+  expect(store.dispatch).toHaveBeenCalledWith(
+    'namespaced/very/deeply/testAction',
+    { msg: "Тестовый Dispatch" }
+  )
 })
 ```
 
-Получилось намного компактнее, чем в предыдущем примере. Нет `localVue` и `Vuex`, вместо мока функции `testMutation = jest.fn()`, мы используем мок для самой функции `dispatch`. Так как `$store.dispatch` – это обычная JavaScript функции, мы можем себе это позволить. Затем, мы проверяем, что вызов был с правильной функцией-обработчиком `testAction` и нагрузкой, которые выступают в качестве первого и второго аргументов. Нам не важно, что на самом деле выполняет действие – его можно протестировать в изоляции. Цель этого теста - просто убедиться, что при клике на кнопку вызывается действие с правильной функцией-обработчиком и нагрузкой.
+Получилось намного компактнее, чем в предыдущем примере. Нет `createStore`, вместо мока функции `testMutation = jest.fn()`, мы используем мок для самой функции `dispatch`. Так как `$store.dispatch` – это обычная JavaScript функции, мы можем себе это позволить. Затем, мы проверяем, что вызов был с правильной функцией-обработчиком `testAction` и нагрузкой, которые выступают в качестве первого и второго аргументов. Нам не важно, что на самом деле выполняет действие – его можно протестировать в изоляции. Цель этого теста - просто убедиться, что при клике на кнопку вызывается действие с правильной функцией-обработчиком и нагрузкой.
 
 Использовать ли настоящее хранилище или мок в ваших тестах, зависит от личных предпочтений. Оба способа правильные. Важно то, что вы тестируете компоненты.
 
@@ -135,14 +146,17 @@ it("вызывает действие после клика по кнопке", 
 
 ```js
 it("вызывает именованное действие после клика по кнопке", async () => {
-  const store = new Vuex.Store()
+  const store = createStore()
   store.dispatch = jest.fn()
 
   const wrapper = mount(ComponentWithButtons, {
-    store, localVue
+    global: {
+      plugins: [store]
+    }
   })
 
-  await wrapper.find(".namespaced-dispatch").trigger("click")
+  wrapper.find(".namespaced-dispatch").trigger("click")
+  await wrapper.vm.$nextTick()
 
   expect(store.dispatch).toHaveBeenCalledWith(
     'namespaced/very/deeply/testAction',
@@ -159,8 +173,8 @@ it("вызывает именованное действие после клик
 
 В этой секции мы рассмотрели:
 
-1. как использовать Vuex с `localVue` для мока мутаций
+1. как использовать Vuex с `createStore` для мока мутаций
 2. как мокать Vuex API (`dispatch` и `commit`)
 3. как использовать настоящее Vuex хранилище и мок для функции `dispatch`
 
-Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ComponentWithButtons.spec.js).
+Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/ComponentWithButtons.spec.js).

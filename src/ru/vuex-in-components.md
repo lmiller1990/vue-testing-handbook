@@ -1,3 +1,7 @@
+:::tip Это руководство было написано для Vue.js 2 и Vue Test Utils v1.
+Версия для Vue.js 3 [здесь](/v3/ru).
+:::
+
 ## Тестирование Vuex в компонентах
 
 Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ComponentWithVuex.spec.js).
@@ -5,7 +9,7 @@
 
 ## Использование `createLocalVue` для тестирования `$store.state`
 
-В обычном Vue приложении мы устанавливаем Vuex, используя `Vue.use(Vuex)`, а затем, передаём новое хранилище Vuex в приложение. Если мы сделаем тоже самое в юнит тесте, то все тесты получат Vuex хранилище, даже если оно не используется. `vue-test-utils` предоставляет метод `createLocalVue`, создающий временный экземпляр `Vue`, который можно использовать в тестах. Давайте рассмотрим, как это использовать. Сначала сделаем простой компонент `<ComponentWithGetters>`, который отрисовывает имя пользователя, основываясь на состоянии хранилища.
+В обычном Vue приложении мы устанавливаем Vuex, используя `Vue.use(Vuex)`, а затем, передаём новое хранилище Vuex в приложение. Если мы сделаем то же самое в модульном тесте, то все тесты получат Vuex хранилище, даже если оно не используется. `vue-test-utils` предоставляет метод `createLocalVue`, создающий временный экземпляр `Vue`, который можно использовать в тестах. Давайте рассмотрим, как это использовать. Сначала сделаем простой компонент `<ComponentWithGetters>`, который отрисовывает имя пользователя, основываясь на состоянии хранилища.
 
 ```html
 <template>
@@ -33,7 +37,7 @@ export default {
 
 ```js
 import Vuex from "vuex"
-import { shallowMount, createLocalVue } from "@vue/test-utils"
+import { mount, createLocalVue } from "@vue/test-utils"
 import ComponentWithVuex from "@/components/ComponentWithVuex.vue"
 
 const localVue = createLocalVue()
@@ -47,7 +51,7 @@ const store = new Vuex.Store({
 
 describe("ComponentWithVuex", () => {
   it("отрисовывает имя пользователя из настоящего Vuex хранилища", () => {
-    const wrapper = shallowMount(ComponentWithVuex, { 
+    const wrapper = mount(ComponentWithVuex, { 
       store, 
       localVue 
     })
@@ -67,7 +71,7 @@ describe("ComponentWithVuex", () => {
 
 ```js
 it("отрисовывает имя пользователя, используя замоканное хранилище", () => {
-  const wrapper = shallowMount(ComponentWithVuex, {
+  const wrapper = mount(ComponentWithVuex, {
     mocks: {
       $store: {
         state: { username: "Алиса" }
@@ -79,7 +83,7 @@ it("отрисовывает имя пользователя, используя
 })
 ```
 
-Лично я предпочитаю такой подход. Все необходимые данные объявляются внутри теста и он становится более компактным. Обе техники полезны, и ни одна из них не лучше и не хуже, чем другая.
+Я предпочитаю такой подход. Все необходимые данные объявляются внутри теста и он становится более компактным. Обе техники полезны, и ни одна из них не лучше и не хуже, чем другая.
 
 ## Тестирование `getters`
 
@@ -105,7 +109,7 @@ export default {
 </script>
 ```
 
-Мы хотим проверить, что компонент правильно отрисовывает `fullname` пользователя. Для этого теста нам не важно откуда приходит `fullname`: важно только то - правильно ли оно отрисуется.
+Мы хотим проверить, что компонент правильно отрисовывает `fullname` пользователя. Для этого теста нам не важно откуда приходит `fullname`: важно только то – правильно ли оно отрисуется.
 
 Сначала, используя настоящее Vuex хранилище и `createLocalVue`, тест будет выглядеть так:
 
@@ -116,7 +120,7 @@ localVue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     firstName: "Алиса",
-    lastName: "Доу"
+    lastName: "До"
   },
 
   getters: {
@@ -125,9 +129,9 @@ const store = new Vuex.Store({
 })
 
 it("отрисовывает имя пользователя, используя настоящий геттер Vuex", () => {
-  const wrapper = shallowMount(ComponentWithGetters, { store, localVue })
+  const wrapper = mount(ComponentWithGetters, { store, localVue })
 
-  expect(wrapper.find(".fullname").text()).toBe("Алиса Доу")
+  expect(wrapper.find(".fullname").text()).toBe("Алиса До")
 })
 ```
 
@@ -138,17 +142,17 @@ it("отрисовывает имя пользователя, используя
 
 ```js
 it("отрисовываем имя пользователя, используя вычисленные опции монтирования", () => {
-  const wrapper = shallowMount(ComponentWithGetters, {
+  const wrapper = mount(ComponentWithGetters, {
     mocks: {
       $store: {
         getters: {
-          fullname: "Алиса Доу"
+          fullname: "Алиса До"
         }
       }
     }
   })
 
-  expect(wrapper.find(".fullname").text()).toBe("Алиса Доу")
+  expect(wrapper.find(".fullname").text()).toBe("Алиса До")
 })
 ```
 
@@ -163,13 +167,13 @@ it("отрисовываем имя пользователя, используя
 
 ```js
 it("отрисовываем имя пользователя, используя вычисляемое свойство в опции монтирования", () => {
-  const wrapper = shallowMount(ComponentWithGetters, {
+  const wrapper = mount(ComponentWithGetters, {
     computed: {
-      fullname: () => "Алиса Доу"
+      fullname: () => "Алиса До"
     }
   })
 
-  expect(wrapper.find(".fullname").text()).toBe("Алиса Доу")
+  expect(wrapper.find(".fullname").text()).toBe("Алиса До")
 })
 ```
 

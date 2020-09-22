@@ -1,12 +1,12 @@
-:::tip Это руководство было написано для Vue.js 2 и Vue Test Utils v1.
-Версия для Vue.js 3 [здесь](/v3/ru).
+:::tip Это руководство было написано для Vue.js 3 и Vue Test Utils v2.
+Версия для Vue.js 2 [здесь](/ru).
 :::
 
 ## Инициирование событий
 
 Обработка пользовательского ввода – одна из самых распространённых задач во Vue-компонентах. `vue-test-utils` и Jest позволяют с лёгкостью тестировать ввод данных. Давайте посмотрим, как можно использовать `trigger` и моки Jest, чтобы убедиться в правильности работы компонента.
 
-Исходный код для теста можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/FormSubmitter.spec.js).
+Исходный код для теста можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/FormSubmitter.spec.js).
 
 ## Создание компонента
 
@@ -71,7 +71,7 @@ describe("FormSubmitter", () => {
   it("Показывает сообщение после отправки", async () => {
     const wrapper = mount(FormSubmitter)
 
-    await wrapper.find("[data-username]").setValue("Алима")
+    await wrapper.find("[data-username]").setValue("Алиcа")
     await wrapper.find("form").trigger("submit.prevent")
 
     expect(wrapper.find(".message").text())
@@ -123,7 +123,7 @@ handleSubmitAsync() {
 }
 ```
 
-В этом случае, одним из способов тестирования является _мок_ для `this.$http`, чтобы создать желанную среду для тестирования. Подробнее об опциях `mocks` можно почитать [здесь](https://vue-test-utils.vuejs.org/ru/api/options.html#mocks). Давайте посмотрим на мок `http.get` метода:
+В этом случае, одним из способов тестирования является _мок_ для `this.$http`, чтобы создать желанную среду для тестирования. Подробнее об опциях `global.mocks` можно почитать [здесь](https://vue-test-utils.vuejs.org/ru/api/options.html#mocks). Давайте посмотрим на мок `http.get` метода:
 
 ```js
 let url = ''
@@ -197,13 +197,15 @@ const mockHttp = {
 }
 ```
 
-Теперь добавим тест, передавая мок `$http` в `mocks` при монтировании:
+Теперь добавим тест, передавая мок `$http` в `global.mocks` при монтировании:
 
 ```js
 it("Показывает сообщение после отправки", () => {
   const wrapper = mount(FormSubmitter, {
-    mocks: {
-      $http: mockHttp
+    global: {
+      mocks: {
+        $http: mockHttp
+      }
     }
   })
 
@@ -245,8 +247,10 @@ import flushPromises from "flush-promises"
 
 it("Показывает сообщение после отправки", async () => {
   const wrapper = mount(FormSubmitter, {
-    mocks: {
-      $http: mockHttp
+    global: {
+      mocks: {
+        $http: mockHttp
+      }
     }
   })
 
@@ -279,7 +283,7 @@ expect(data).toEqual({ username: "Алиса" })
 - использовать `setValue`, чтобы устанавливать значение для `<input>`, который используют `v-model`
 - использовать `await` в паре с `trigger` и `setValue` с `await Vue.nextTick`, чтобы убедиться, что DOM обновился
 - писать тесты, придерживаясь трёх ступеней модульного тестирования
-- мокать методы из `Vue.prototype`, используя `mocks` при монтировании
+- мокать методы из `Vue.prototype`, используя `global.mocks` при монтировании
 - использовать `flush-promises`, чтобы немедленно резолвить все промисы в режиме ожидания. Полезная техника в модульном тестировании
 
-Исходный код для тестов на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/FormSubmitter.spec.js).
+Исходный код для тестов на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/FormSubmitter.spec.js).

@@ -1,10 +1,10 @@
-:::tip Это руководство было написано для Vue.js 2 и Vue Test Utils v1.
-Версия для Vue.js 3 [здесь](/v3/ru).
+:::tip Это руководство было написано для Vue.js 3 и Vue Test Utils v2.
+Версия для Vue.js 2 [здесь](/ru).
 :::
 
 ## Заглушки для компонентов
 
-Тест, описанный на этой странице, можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ParentWithAPICallChild.spec.js).
+Тест, описанный на этой странице, можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/ParentWithAPICallChild.spec.js).
 
 ## Зачем нужны заглушки?
 
@@ -159,4 +159,4 @@ it('отрисовывается с помощью mount и делает выз�
 - вы можете передать `true`, чтобы создать стандартную заглушку или передать собственную реализацию
 
 
-Тест, описанный на этой странице, можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ParentWithAPICallChild.spec.js).
+Тест, описанный на этой странице, можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/ParentWithAPICallChild.spec.js).

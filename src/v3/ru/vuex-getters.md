@@ -1,12 +1,12 @@
-:::tip Это руководство было написано для Vue.js 2 и Vue Test Utils v1.
-Версия для Vue.js 3 [здесь](/v3/ru).
+:::tip Это руководство было написано для Vue.js 3 и Vue Test Utils v2.
+Версия для Vue.js 2 [здесь](/ru).
 :::
 
 ## Тестирование геттеров
 
-Тестировать геттеры в изоляции достаточно просто, так как это обычные JavaScript функции. Техника очень похожа на тестирование мутаций и действий, больше информации [здесь](https://lmiller1990.github.io/vue-testing-handbook/ru/vuex-mutations.html).
+Тестировать геттеры в изоляции достаточно просто, так как это обычные JavaScript функции. Техника очень похожа на тестирование мутаций и действий, больше информации [здесь](https://lmiller1990.github.io/vue-testing-handbook/v3/ru/vuex-mutations.html).
 
-Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/getters.spec.js).
+Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/getters.spec.js).
 
 Мы рассмотрим два геттера, которые работают с хранилищем, выглядящим так:
 
@@ -93,7 +93,7 @@ describe("poodlesByAge", () => {
 
 Вместо передачи настоящего геттера `poodles`, мы передаём результат, который бы он вернул. Мы уже знаем, что он работает, так как тест написан. Это позволяет нам сфокусироваться на тестировании уникальной логики `poodlesByAge`.
 
-Есть возможность делать `async` геттеры. Они тестируются так же, как и `async` действия, о которых можно прочитать [здесь](https://lmiller1990.github.io/vue-testing-handbook/ru/vuex-actions.html).
+Есть возможность делать `async` геттеры. Они тестируются так же, как и `async` действия, о которых можно прочитать [здесь](https://lmiller1990.github.io/vue-testing-handbook/v3/ru/vuex-actions.html).
 
 ## Заключение
 
@@ -101,4 +101,4 @@ describe("poodlesByAge", () => {
 - При тестировании геттеров в изоляции, нужно передавать хранилище вручную
 - Если геттер использует другой геттер, вы должны использовать заглушку, которая возвращает ожидаемый результат. Это даст больше контроля над тестом и позволит сфокусироваться на тестировании рассматриваемого геттера
 
-Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/getters.spec.js).
+Исходный код для теста на этой странице можно найти [здесь](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/getters.spec.js).

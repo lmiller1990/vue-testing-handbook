@@ -1,5 +1,5 @@
-:::tip Это руководство было написано для Vue.js 2 и Vue Test Utils v1.
-Версия для Vue.js 3 [здесь](/v3/ru).
+:::tip Это руководство было написано для Vue.js 3 и Vue Test Utils v2.
+Версия для Vue.js 2 [здесь](/ru).
 :::
 
 ## О чём это руководство?
@@ -34,5 +34,6 @@
 Другие полезные ресурсы:
 
 - [Официальная документация](https://vue-test-utils.vuejs.org/ru/)
+- [Книга](https://www.manning.com/books/testing-vue-js-applications), написанная авторами `vue-test-utils`
 - Мой курс [Vue.js 3 + Composition API + Unit Testing](https://vuejs-course.com) 
 - [Бесплатный курс на VueSchool](https://vueschool.io/courses/learn-how-to-test-vuejs-components?friend=vth)

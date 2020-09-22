@@ -1,16 +1,16 @@
-:::tip Это руководство было написано для Vue.js 2 и Vue Test Utils v1.
-Версия для Vue.js 3 [здесь](/v3/ru).
+:::tip Это руководство было написано для Vue.js 3 и Vue Test Utils v2.
+Версия для Vue.js 2 [здесь](/ru).
 :::
 
-## Добавляем входные параметры через propsData
+## Добавляем входные параметры
 
-`propsData` может использоваться как с `mount`, так и с `shallowMount`. Данный метод часто используют при тестировании входных параметров, которые компонент получает от своего родителя.
+`props` может использоваться как с `mount`, так и с `shallowMount`. Данный метод часто используют при тестировании входных параметров, которые компонент получает от своего родителя.
 
-`propsData` передаётся вторым аргументом в `shallowMount` или `mount` следующим образом:
+`props` передаётся вторым аргументом в `shallowMount` или `mount` следующим образом:
 
 ```js
 const wrapper = mount(Foo, {
-  propsData: {
+  props: {
     foo: 'bar'
   }
 })
@@ -64,7 +64,7 @@ describe('SubmitButton.vue', () => {
   it("Отображает сообщение для неавторизованного пользователя", () => {
     const msg = "Войти"
     const wrapper = mount(SubmitButton,{
-      propsData: {
+      props: {
         msg: msg
       }
     })
@@ -111,16 +111,16 @@ describe('SubmitButton.vue', () => {
     const msg = "Войти"
     const isAdmin = true
     const wrapper = mount(SubmitButton,{
-      propsData: {
+      props: {
         msg,
         isAdmin
       }
     })
 
     console.log(wrapper.html())
-
-    expect(wrapper.find("span").text()).toBe("Привилегии администратора")
-    expect(wrapper.find("button").text()).toBe("Войти")
+    
+    expect(wrapper.find("span").text()).toBe("Admin Privileges")
+    expect(wrapper.find("button").text()).toBe("submit")
   })
 })
 ```
@@ -151,15 +151,15 @@ PASS  tests/unit/SubmitButton.spec.js
 
 ## Рефакторинг через фабрику (factory function)
 
-В обоих тестах мы вызываем `shallowMount`, затем передаём похожий объект `propsData`. Мы можем это исправить, используя фабрику. Под фабрикой понимают функцию, которая возвращает объект – она производит объекты, отсюда и её название.
+В обоих тестах мы вызываем `shallowMount`, затем передаём похожий объект `props`. Мы можем это поправить, используя фабрику. Под фабрикой понимают функцию, которая возвращает объект – она производит объекты, отсюда и её название.
 
 ```js
 const msg = "Войти"
-const factory = (propsData) => {
+const factory = (props) => {
   return mount(SubmitButton, {
-    propsData: {
+    props: {
       msg,
-      ...propsData
+      ...props
     }
   })
 }
@@ -204,6 +204,6 @@ PASS  tests/unit/SubmitButton.spec.js
 
 ## Заключение
 
-- Передавая `propsData` во время отрисовки компонента, вы можете устанавливать входные параметры, которые будут применены в тесте
+- Передавая `props` во время отрисовки компонента, вы можете устанавливать входные параметры, которые будут применены в тесте
 - Функции-фабрики могут быть использованы, чтобы достичь принципа DRY в тестах
-- Вместо `propsData`, вы также можете использовать [`setProps`](https://vue-test-utils.vuejs.org/api/wrapper-array/#setprops-props) для передачи входных параметров в тесты.
+- Вместо `props`, вы также можете использовать [`setProps`](https://vue-test-utils.vuejs.org/api/wrapper-array/#setprops-props) для передачи входных параметров в тесты.

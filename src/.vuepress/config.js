@@ -52,7 +52,11 @@ module.exports = {
     },
     '/ru/': {
       lang: 'ru-RU',
-      title: 'Руководство по тестированию Vue-приложений',
+      title: 'Руководство по тестированию Vue приложений (Vue.js 2)',
+    },
+    '/v3/ru/': {
+      lang: 'ru-UA',
+      title: 'Руководство по тестированию Vue приложений (Vue.js 3)',
     },
     '/zh-CN/': {
       lang: 'zh-CN',
@@ -169,7 +173,7 @@ module.exports = {
         ],
       },
       '/ru/': {
-        label: 'Русский',
+        label: 'Русский (Vue.js 2)',
         selectText: 'Переводы',
         lastUpdated: 'Последнее обновление',
         editLinkText: 'Редактировать эту страницу на GitHub',
@@ -206,6 +210,46 @@ module.exports = {
           ['/ru/composition-api', 'Composition API'],
           ['/ru/reducing-boilerplate-in-tests', 'Уменьшаем шаблонный код'],
           ['/ru/jest-mocking-modules', 'Jest - мокаем модули'],
+        ],
+      },
+      '/v3/ru/': {
+        label: 'Русский (Vue.js 3)',
+        selectText: 'Переводы',
+        lastUpdated: 'Последнее обновление',
+        editLinkText: 'Редактировать эту страницу на GitHub',
+        sidebar: [
+          ['/v3/ru/', 'Введение'],
+          ['/v3/ru/setting-up-for-tdd', 'Подготовка к TDD'],
+          ['/v3/ru/rendering-a-component', 'Отрисовка компонентов'],
+          ['/v3/ru/components-with-props', 'Тестирование входных параметров'],
+          ['/v3/ru/computed-properties', 'Вычисляемые свойства'],
+          [
+            '/v3/ru/simulating-user-input',
+            'Симулирование пользовательского ввода',
+          ],
+          [
+            '/v3/ru/testing-emitted-events',
+            'Тестирование пользовательских событий',
+          ],
+          ['/v3/ru/mocking-global-objects', 'Мокаем глобальные объекты'],
+          ['/v3/ru/stubbing-components', 'Заглушки для компонентов'],
+          [
+            '/v3/ru/finding-elements-and-components',
+            'Поиск элементов и компонентов',
+          ],
+          ['/v3/ru/testing-vuex', 'Тестирование Vuex'],
+          ['/v3/ru/vuex-mutations', 'Vuex - Мутации'],
+          ['/v3/ru/vuex-actions', 'Vuex - Действия'],
+          ['/v3/ru/vuex-getters', 'Vuex - Геттеры'],
+          ['/v3/ru/vuex-in-components', 'Vuex в компонентах - $state и геттеры'],
+          [
+            '/v3/ru/vuex-in-components-mutations-and-actions',
+            'Vuex в компонентах - мутации и действия',
+          ],
+          ['/v3/ru/vue-router', 'Vue Router'],
+          ['/v3/ru/composition-api', 'Composition API'],
+          ['/v3/ru/reducing-boilerplate-in-tests', 'Уменьшаем шаблонный код'],
+          ['/v3/ru/jest-mocking-modules', 'Jest - мокаем модули'],
         ],
       },
       '/zh-CN/': {
