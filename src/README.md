@@ -34,5 +34,6 @@ We will also explore how to use the Jest API to make our tests more robust, such
 Other useful resources include:
 
 - [Official docs](https://vue-test-utils.vuejs.org/)
-- My [Vue.js 3 + Composition API + Unit Testing Course](https://vuejs-course.com) 
-- [Free Course on VueSchool](https://vueschool.io/courses/learn-how-to-test-vuejs-components?friend=vth)
+- I made free series on Vue Test Utils + Vue 3: [YouTube playlist](https://www.youtube.com/playlist?list=PLC2LZCNWKL9ahK1IoODqYxKu5aA9T5IOA)
+- My [Vue.js 3 + Unit Testing Course](https://vuejs-course.com). VUEJS_COURSE_10_OFF for a $10 discount!
+- [This course on VueSchool](https://vueschool.io/courses/learn-how-to-test-vuejs-components?friend=vth) by several Vue core contributors
