@@ -3,24 +3,26 @@
     <!--
       <CarbonAds />
     -->
-    <a href="https://vuejs-course.com/" target="_blank">
+    <a href="https://lachlan-miller.me/design-patterns-for-vuejs/" target="_blank">
       <img
         id="ad"
-        src="https://raw.githubusercontent.com/lmiller1990/vue-testing-handbook/master/src/.vuepress/public/composition.png"
+        style="border: 1px solid blue"
+        :src="$withBase('./patterns.png')"
         alt='vuejs-course banner'
       />
     </a>
     <br />
     <div class="info">
       <small>
-      Hi! Get $10 off my
-      <a href="https://vuejs-course.com/" target="_blank">new</a>
-      <a href="https://vuejs-course.com/" target="_blank">course</a>
-      <a href="https://vuejs-course.com/" target="_blank">on</a>
-      <a href="https://vuejs-course.com/" target="_blank">Vue.js 3</a>,
-      <a href="https://vuejs-course.com/" target="_blank">TypeScript and</a>,
-      <a href="https://vuejs-course.com/" target="_blank">testing</a>,
-      with the discount code VUEJS_COURSE_10_OFF.
+      Hi! Sign up for an early version and discount on my new book, 
+      <a href="https://lachlan-miller.me/design-patterns-for-vuejs" target="_blank"><em>Design</em></a>
+      <a href="https://lachlan-miller.me/design-patterns-for-vuejs" target="_blank"><em>Patterns</em></a>
+      <a href="https://lachlan-miller.me/design-patterns-for-vuejs" target="_blank"><em>for</em></a>
+      <a href="https://lachlan-miller.me/design-patterns-for-vuejs" target="_blank"><em>Vue.js</em></a>
+      <a href="https://lachlan-miller.me/design-patterns-for-vuejs" target="_blank"><em>a test driven</em></a>
+      <a href="https://lachlan-miller.me/design-patterns-for-vuejs" target="_blank"><em>approach to</em></a>
+      <a href="https://lachlan-miller.me/design-patterns-for-vuejs" target="_blank"><em>maintainable</em></a>
+      <a href="https://lachlan-miller.me/design-patterns-for-vuejs" target="_blank"><em>applications</em>.</a>
       </small>
     </div>
 
