@@ -7,7 +7,7 @@
       <img
         id="ad"
         style="border: 1px solid blue"
-        :src="https://raw.githubusercontent.com/lmiller1990/vue-testing-handbook/master/src/.vuepress/public/patterns.png"
+        src="https://raw.githubusercontent.com/lmiller1990/vue-testing-handbook/master/src/.vuepress/public/patterns.png"
         alt='vuejs-course banner'
       />
     </a>
