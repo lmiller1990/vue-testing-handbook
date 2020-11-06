@@ -40,11 +40,11 @@ module.exports = {
   locales: {
     '/': {
       lang: 'en-US',
-      title: 'Vue Testing Handbook (Vue.js 2)',
+      title: 'Vue Testing Handbook',
     },
     '/v3/': {
       lang: 'en-AU',
-      title: 'Vue Testing Handbook (Vue.js 3)',
+      title: 'Vue Testing Handbook',
     },
     '/ja/': {
       lang: 'ja-JP',

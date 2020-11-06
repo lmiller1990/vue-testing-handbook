@@ -6,15 +6,15 @@
     <a href="https://lachlan-miller.me/design-patterns-for-vuejs/" target="_blank">
       <img
         id="ad"
-        style="border: 1px solid blue"
-        src="https://raw.githubusercontent.com/lmiller1990/vue-testing-handbook/master/src/.vuepress/public/patterns.png"
-        alt='vuejs-course banner'
+        style="border: 1px solid rgba(0,0,0,0.5);"
+        src="https://raw.githubusercontent.com/lmiller1990/vue-testing-handbook/master/src/.vuepress/public/mini.png"
+        alt='banner'
       />
     </a>
     <br />
     <div class="info">
       <small>
-      Hi! Sign up for an early version and discount on my new book, 
+      Hi! Check out my new book, 
       <a href="https://lachlan-miller.me/design-patterns-for-vuejs" target="_blank"><em>Design</em></a>
       <a href="https://lachlan-miller.me/design-patterns-for-vuejs" target="_blank"><em>Patterns</em></a>
       <a href="https://lachlan-miller.me/design-patterns-for-vuejs" target="_blank"><em>for</em></a>
