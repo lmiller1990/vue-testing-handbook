@@ -63,12 +63,13 @@ export default [
 In a real app, you normally would create a `router.js` file and import the routes we made, and write something like this:
 
 ```js
-import { createRouter } from "vue-router"
+import { createRouter, createMemoryHistory } from "vue-router"
 import { createApp } from "vue"
 import routes from "./routes.js"
 import App from './App.vue'
 
 const router = createRouter({
+  history: createMemoryHistory(),
   routes
 })
 app.use(router)
