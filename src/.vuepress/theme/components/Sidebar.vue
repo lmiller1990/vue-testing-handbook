@@ -14,7 +14,7 @@
     <br />
     <div class="info">
       <small>
-      Hi! Check out my new book, 
+      Get $5 of my new book,
       <a href="https://lachlan-miller.me/design-patterns-for-vuejs" target="_blank"><em>Design</em></a>
       <a href="https://lachlan-miller.me/design-patterns-for-vuejs" target="_blank"><em>Patterns</em></a>
       <a href="https://lachlan-miller.me/design-patterns-for-vuejs" target="_blank"><em>for</em></a>
@@ -22,7 +22,8 @@
       <a href="https://lachlan-miller.me/design-patterns-for-vuejs" target="_blank"><em>a test driven</em></a>
       <a href="https://lachlan-miller.me/design-patterns-for-vuejs" target="_blank"><em>approach to</em></a>
       <a href="https://lachlan-miller.me/design-patterns-for-vuejs" target="_blank"><em>maintainable</em></a>
-      <a href="https://lachlan-miller.me/design-patterns-for-vuejs" target="_blank"><em>applications</em>.</a>
+      <a href="https://lachlan-miller.me/design-patterns-for-vuejs" target="_blank"><em>applications</em>,</a>
+      with <b>DESIGN_5_OFF</b> at the discount. 🎉
       </small>
     </div>
 
