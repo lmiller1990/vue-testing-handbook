@@ -120,8 +120,8 @@ Again, entirely uninteresting - we `trigger` the click event, and assert that th
 
 ## Conclusion
 
-The article demonstrates how testing a component using the Composition API is identical to testing one using the traditional options API. The ideas and concepts are the same. The main point to be learned is when writing tests, make asserions based on inputs and outputs. 
+The article demonstrates how testing a component using the Composition API is identical to testing one using the traditional options API. The ideas and concepts are the same. The main point to be learned is when writing tests, make assertions based on inputs and outputs. 
 
-It should be possible to refactor any traditional Vue component to use the Composition API without the need to change the unit tests. If you find yourself needing to change your tests when refactoring, you are likely testing the *implmentation*, not the output. 
+It should be possible to refactor any traditional Vue component to use the Composition API without the need to change the unit tests. If you find yourself needing to change your tests when refactoring, you are likely testing the *implementation*, not the output. 
 
 While an exciting new feature, the Composition API is entirely additive, so there is no immediate need to use it, however regardless of your choice, remember a good unit tests asserts the final state of the component, without considering the implementation details.

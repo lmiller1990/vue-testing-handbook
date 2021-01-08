@@ -127,7 +127,7 @@ Finally, note we are using `mount`. If we use `shallowMount`, `<router-link>` wi
 
 Using `mount` is fine in some cases, but sometimes it is not ideal. For example, if you are rendering your entire `<App>` component, chances are the render tree is large, containing many components with their own children components and so on. A lot of children components will trigger various lifecycle hooks, making API requests and the such.
 
-If you are using Jest, its powerful mocking system provides an elegent solution to this problem. You can simply mock the child components, in this case `<NestedRoute>`. The following mock can be used and the above test will still pass:
+If you are using Jest, its powerful mocking system provides an elegant solution to this problem. You can simply mock the child components, in this case `<NestedRoute>`. The following mock can be used and the above test will still pass:
 
 ```js
 jest.mock("@/components/NestedRoute.vue", () => ({
@@ -222,7 +222,7 @@ Vue Router provides several types of router hooks, called ["navigation guards"](
 1. Global guards (`router.beforeEach`). Declared on the router instance.
 2. In component guards, such as `beforeRouteEnter`. Declared in components.
 
-Making sure these behave correctly is usually a job for an integration test, since you need to have a user navigate from one route to another. However, you can also use unit tests to see if the functions called in the navigation guards are working correctly and get faster feedback about potential bugs. Here are some strategies on decoupling logic from nagivation guards, and writing unit tests around them.
+Making sure these behave correctly is usually a job for an integration test, since you need to have a user navigate from one route to another. However, you can also use unit tests to see if the functions called in the navigation guards are working correctly and get faster feedback about potential bugs. Here are some strategies on decoupling logic from navigation guards, and writing unit tests around them.
 
 ## Global Guards
 

@@ -13,7 +13,7 @@ The source code for the test described on this page can be found [here](https://
 We will write an action that follows a common Vuex pattern:
 
 1. make an asynchronous call to an API
-2. do some proccessing on the data (optional)
+2. do some processing on the data (optional)
 3. commit a mutation with the result as the payload
 
 This is an `authenticate` action, which sends a username and password to an external API to check if they are a match. The result is then used to update the state by committing a `SET_AUTHENTICATED` mutation with the result as the payload.

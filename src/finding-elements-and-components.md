@@ -6,7 +6,7 @@ Find the Vue.js 3 version [here](/v3/).
 
 `vue-test-utils` provides a number of ways to find and assert the presence of html elements or other Vue components using the `find` and `findComponent` methods. The main use of `find` is asserting a component correctly renders an element or child component.
 
-> Note: If you used Vue Test Utils prior to v1, you may remember `find` working with components as well as DOM elements. Now you use `find` and `findAll` for DOM elements, and `findComponent` and `findAllComponents` for Vue components. Ther is also a `get` and `getComponent` pair, which are exactly the same as `find` and `findComponent`, but they will raise an error if they do not find anything. This guide chooses to use `find` and `findComponent`.
+> Note: If you used Vue Test Utils prior to v1, you may remember `find` working with components as well as DOM elements. Now you use `find` and `findAll` for DOM elements, and `findComponent` and `findAllComponents` for Vue components. There is also a `get` and `getComponent` pair, which are exactly the same as `find` and `findComponent`, but they will raise an error if they do not find anything. This guide chooses to use `find` and `findComponent`.
 
 The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/Parent.spec.js).
 

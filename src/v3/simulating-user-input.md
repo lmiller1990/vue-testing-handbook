@@ -281,7 +281,7 @@ In this section, we saw how to:
 
 - use `trigger` on events, even ones that use modifiers like `prevent`
 - use `setValue` to set a value of an `<input>` using `v-model`
-- use `await` with `trigger` and `setValue` to `await Vue.nextTick` ane ensure the DOM has updated
+- use `await` with `trigger` and `setValue` to `await Vue.nextTick` and ensure the DOM has updated
 - write tests using the three steps of unit testing
 - mock a method attached to `Vue.prototype` using the `global.mocks` mounting option
 - how to use `flush-promises` to immediately resolve all promises, a useful technique in unit testing

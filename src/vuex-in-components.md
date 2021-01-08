@@ -132,7 +132,7 @@ it("renders a username using a real Vuex getter", () => {
 })
 ```
 
-The test is very compact - just two lines of code. There is a lot of setup involved, however - we are bascially rebuilding the Vuex store. An alternative is to import the real Vuex store, with the actual getter. This introduces another dependency to the test though, and when developing a large system, it's possible the Vuex store might be being developed by another programmer, and has not been implemented yet. 
+The test is very compact - just two lines of code. There is a lot of setup involved, however - we are basically rebuilding the Vuex store. An alternative is to import the real Vuex store, with the actual getter. This introduces another dependency to the test though, and when developing a large system, it's possible the Vuex store might be being developed by another programmer, and has not been implemented yet. 
 
 Let's see how we can write the test using the `mocks` mounting option:
 
@@ -176,7 +176,7 @@ This is more concise than the two previous tests, and still expresses the compon
 
 ## The `mapState` and `mapGetters` helper
 
-The above techniques all work in conjuction with Vuex's `mapState` and `mapGetters` helpers. We can update `ComponentWithGetters` to the following:
+The above techniques all work in conjunction with Vuex's `mapState` and `mapGetters` helpers. We can update `ComponentWithGetters` to the following:
 
 ```js
 import { mapGetters } from "vuex"
@@ -202,6 +202,6 @@ This guide discussed:
 - using the `mocks` mounting option to mock `$store.state` and `getters`
 - using the `computed` mounting option to set the desired value of a Vuex getter
 
-Techniques to test the implentation of Vuex getters in isolation can be found in [this guide](https://lmiller1990.github.io/vue-testing-handbook/vuex-getters.html).
+Techniques to test the implementation of Vuex getters in isolation can be found in [this guide](https://lmiller1990.github.io/vue-testing-handbook/vuex-getters.html).
 
 The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app/tests/unit/ComponentWithVuex.spec.js).

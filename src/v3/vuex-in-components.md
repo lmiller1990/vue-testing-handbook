@@ -172,7 +172,7 @@ Now all the required data is contained in the test. Great! I like this. The test
 
 ## The `mapState` and `mapGetters` helper
 
-The above techniques all work in conjuction with Vuex's `mapState` and `mapGetters` helpers. We can update `ComponentWithGetters` to the following:
+The above techniques all work in conjunction with Vuex's `mapState` and `mapGetters` helpers. We can update `ComponentWithGetters` to the following:
 
 ```js
 import { mapGetters } from "vuex"
@@ -198,6 +198,6 @@ This guide discussed:
 - how to test `$store.state` and `getters`
 - using the `global.mocks` mounting option to mock `$store.state` and `getters`
 
-Techniques to test the implentation of Vuex getters in isolation can be found in [this guide](https://lmiller1990.github.io/vue-testing-handbook/vuex-getters.html).
+Techniques to test the implementation of Vuex getters in isolation can be found in [this guide](https://lmiller1990.github.io/vue-testing-handbook/vuex-getters.html).
 
 The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/ComponentWithVuex.spec.js).
