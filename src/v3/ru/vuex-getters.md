@@ -14,7 +14,7 @@
 const state = {
   dogs: [
     { name: "Лаки", breed: "пудель", age: 1 },
-    { name: "Песик", breed: "далматинец", age: 2 },
+    { name: "Пёсик", breed: "далматинец", age: 2 },
     { name: "Блэки", breed: "пудель", age: 4 }
   ]
 }
@@ -62,7 +62,7 @@ import getters from "../../src/store/getters.js"
 
 const dogs = [
   { name: "Лаки", breed: "пудель", age: 1 },
-  { name: "Песик", breed: "далматинец", age: 2 },
+  { name: "Пёсик", breed: "далматинец", age: 2 },
   { name: "Блэки", breed: "пудель", age: 4 }
 ]
 const state = { dogs }

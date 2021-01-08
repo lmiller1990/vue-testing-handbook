@@ -142,7 +142,7 @@ describe("App", () => {
       localVue,
       router
     })
-    // Этот тест упадет, потому что мы всё еще на /nested-route
+    // Этот тест упадёт, потому что мы всё ещё на /nested-route
     expect(wrapper.findComponent(NestedRoute).exists()).toBe(false)
     console.log(router.currentRoute)
   })
