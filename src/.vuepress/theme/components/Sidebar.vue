@@ -14,7 +14,7 @@
     <br />
     <div class="info">
       <small>
-      Get $5 of my new book,
+      Get $5 off my new book,
       <a href="https://lachlan-miller.me/design-patterns-for-vuejs" target="_blank"><em>Design</em></a>
       <a href="https://lachlan-miller.me/design-patterns-for-vuejs" target="_blank"><em>Patterns</em></a>
       <a href="https://lachlan-miller.me/design-patterns-for-vuejs" target="_blank"><em>for</em></a>
