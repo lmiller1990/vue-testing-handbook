@@ -5,10 +5,11 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit --watch"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "flush-promises": "^1.0.2",
     "vue": "^3.0.0-0",
