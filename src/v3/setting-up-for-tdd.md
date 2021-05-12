@@ -238,4 +238,6 @@ export default {
 
 When starting with the Composition API you often forget to add the variable to the return. Try omitting this and see how the test fails, in this way you can start converting to this API and still rely on your tests for providing a feedback loop.
 
+## Next
+
 Next we will look at the two methods `vue-test-utils` provides to render components: `mount` and `shallowMount`.
