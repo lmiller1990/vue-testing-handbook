@@ -123,7 +123,7 @@ Now `yarn test:unit` passes!
 
 ## Testing with `call` 
 
-We will now add a test for the case of `even: false`. This time, we will see an alternative way to test a computed property, without actually rendering the component.
+The `call` method is vanilla JavaScript used to call a function and pass to it an argument that will set `this` for that function. Seeing as computed is a function we can use that in the tests. In the `props` we set the value of `even` and in turn this becomes available to the component as `this.even`. So by using call we can override this and set `even` to what we want to test. So now using `call` we will add a test for the case of `even: false`. This time, we will see an alternative way to test a computed property, without actually rendering the component.
 
 The test, first:
 
