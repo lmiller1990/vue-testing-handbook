@@ -8,7 +8,7 @@ describe("Parent", () => {
   it("does not render a span", () => {
     const wrapper = mount(Parent)
 
-    expect(wrapper.find("span").element).not.toBeVisible()
+    expect(wrapper.find("span").isVisible()).toBe(false)
   })
 
   it("does render a span", () => {
@@ -18,7 +18,7 @@ describe("Parent", () => {
       }
     })
 
-    expect(wrapper.find("span").element).toBeVisible()
+    expect(wrapper.find("span").isVisible()).toBe(true)
   })
 
   it("does not render a Child component", () => {
