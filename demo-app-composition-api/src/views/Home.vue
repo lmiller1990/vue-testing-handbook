@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <Greeting />
+    <h2>Example of passing props</h2>
     <SubmitButton msg="Login" />
     <SubmitButton msg="Logout" isAdmin="true" />
   </div>
