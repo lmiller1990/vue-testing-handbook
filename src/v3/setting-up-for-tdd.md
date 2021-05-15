@@ -207,13 +207,9 @@ Greeting.vue
 
 Jest gives us good feedback. We can see the expected and actual result, as well as on which line the expectation failed. The test did fail, as expected. Revert `Greeting.vue` and make sure the test is passing again.
 
-## Using Vue 3 and the composition API
+## Using Vue 3 and the Composition API
 
-With the release of Vue 3 the composition API is built in and another way of building applications. One of the great advantages of using TDD or even having tests for a project is that those tests can still make sure that your original business logic still works when converting over to using the composition API.
-
-Using the above test you can actually setup the code using the composition API and still have passing test. If the test fails we can actually see that something is not working in the code as before. This is one of the super powers of having tests.
-
-Using the composition API we can change the component to the following and it will still pass:
+Vue 3 adds another API for building components - the Composition API. One sign of a good test is we avoid testing implementation details (how the code works) but instead focus on behavior (what the code does). Let's refactor the above component and see what happens. If the test still passes, we know it's testing the right things. If it fails, we could be testing an implementation detail
 
 ```ts
 <template>
@@ -236,7 +232,7 @@ export default {
 </script>
 ```
 
-When starting with the Composition API you often forget to add the variable to the return. Try omitting this and see how the test fails, in this way you can start converting to this API and still rely on your tests for providing a feedback loop.
+When starting with the Composition API you often forget to add the variable to the return. Try omitting this and see how the test fails, in this way you can start converting to this API and still rely on your tests for providing a positive feedback loop.
 
 ## Next
 
