@@ -232,7 +232,7 @@ export default {
 </script>
 ```
 
-When starting with the Composition API you often forget to add the variable to the return. Try omitting this and see how the test fails, in this way you can start converting to this API and still rely on your tests for providing a positive feedback loop.
+When starting with the Composition API you often forget to add the variable to the return. Try omitting this and see how the test fails. If you are planning to convert some of your Options API components the Composition API, some tests can give you confidence and provide a positive feedback loop during the refactor.
 
 ## Next
 
