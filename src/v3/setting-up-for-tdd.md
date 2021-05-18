@@ -207,4 +207,33 @@ Greeting.vue
 
 Jest gives us good feedback. We can see the expected and actual result, as well as on which line the expectation failed. The test did fail, as expected. Revert `Greeting.vue` and make sure the test is passing again.
 
+## Using Vue 3 and the Composition API
+
+Vue 3 adds another API for building components - the Composition API. One sign of a good test is we avoid testing implementation details (how the code works) but instead focus on behavior (what the code does). Let's refactor the above component and see what happens. If the test still passes, we know it's testing the right things. If it fails, we could be testing an implementation detail
+
+```ts
+<template>
+  <div>
+    {{ greeting }}
+  </div>
+</template>
+
+<script lang="ts">
+export default {
+  name: 'Greeting',
+  setup() {
+    const greeting = 'Vue and TDD';
+
+    return {
+      greeting,
+    };
+  },
+};
+</script>
+```
+
+When starting with the Composition API you often forget to add the variable to the return. Try omitting this and see how the test fails. If you are planning to convert some of your Options API components the Composition API, some tests can give you confidence and provide a positive feedback loop during the refactor.
+
+## Next
+
 Next we will look at the two methods `vue-test-utils` provides to render components: `mount` and `shallowMount`.
