@@ -4,9 +4,9 @@ Find the Vue.js 2 version [here](/).
 
 ## Testing Emitted Events
 
-As applications grow larger, the number of components grows as well. When these components need to share data, child components can [emit](https://vuejs.org/v2/api/#vm-emit) an event, and the parent component responds.
+As applications grow larger, the number of components grows as well. When these components need to share data, child components can [emit](https://v3.vuejs.org/api/options-data.html#emits) an event, and the parent component responds.
 
-`vue-test-utils` provides an `emitted` API which allows us to make assertions on emitted events. The documentation for `emitted` is found [here](https://vue-test-utils.vuejs.org/api/wrapper/emitted.html).
+`vue-test-utils` provides an `emitted` API which allows us to make assertions on emitted events. The documentation for `emitted` is found [here](https://next.vue-test-utils.vuejs.org/api/#emitted).
 
 The source code for the test described on this page can be found [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/Emitter.spec.js).
 
