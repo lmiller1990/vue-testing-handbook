@@ -108,7 +108,7 @@ console.log src/components/ComponentWithAsyncCall.vue:17
   Making api call
 ```
 
-The test is passing - great! However, we can do better. Notice the `console.log` in the test output - this comes from the `makeApiCall` method. Ideally we don't want to make calls to external services in our unit tests, especially when it's from a component that is not the main focus of the current test. We can use the `stubs` mounting option, described in the `vue-test-utils` docs [here](https://vue-test-utils.vuejs.org/api/options.html#stubs).
+The test is passing - great! However, we can do better. Notice the `console.log` in the test output - this comes from the `makeApiCall` method. Ideally we don't want to make calls to external services in our unit tests, especially when it's from a component that is not the main focus of the current test. We can use the `stubs` mounting option, described in the `vue-test-utils` docs [here](https://next.vue-test-utils.vuejs.org/migration/#mocks-and-stubs-are-now-in-global).
 
 ## Using `stubs` to stub `<ComponentWithAsyncCall>`
 
@@ -117,9 +117,11 @@ Let's update the test, this time stubbing `<ComponentWithAsyncCall>`:
 ```js
 it('renders with mount and does initialize API call', () => {
   const wrapper = mount(ParentWithAPICallChild, {
-    stubs: {
-      ComponentWithAsyncCall: true
-    }
+    global: {
+      stubs: {
+        ComponentWithAsyncCall: true,
+      },
+    },
   })
 
   expect(wrapper.find(ComponentWithAsyncCall).exists()).toBe(true)
