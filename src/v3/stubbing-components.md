@@ -83,7 +83,7 @@ export default {
 
 ## Write a test using `mount`
 
-Let's start off by writing a test to verify that `<ComponentWithAsyncCall>` is rendered:
+Let's start off by writing a test to verify that `<ComponentWithAsyncCall>` is rendered. Pay attention to the fact that `findComponent` is used and not 'find`. This is a new change in vue-test-utils for Vue 3.
 
 ```js
 import { shallowMount, mount } from '@vue/test-utils'
@@ -94,7 +94,7 @@ describe('ParentWithAPICallChild.vue', () => {
   it('renders with mount and does initialize API call', () => {
     const wrapper = mount(ParentWithAPICallChild)
 
-    expect(wrapper.find(ComponentWithAsyncCall).exists()).toBe(true)
+    expect(wrapper.findComponent(ComponentWithAsyncCall).exists()).toBe(true)
   })
 })
 ```
