@@ -6,7 +6,7 @@ Find the Vue.js 2 version [here](/).
 
 You can find the test described on this page [here](https://github.com/lmiller1990/vue-testing-handbook/tree/master/demo-app-vue-3/tests/unit/NumberRenderer.spec.js).
 
-Testing computed properties are especially simple, since they are just plain old JavaScript functions.
+Testing computed properties is especially simple, since they are just plain old JavaScript functions.
 
 Let's start with looking at two different ways to test a `computed` property. We will develop a `<NumberRenderer>` component, that renders either odd or even numbers, based on a `numbers` computed property. 
 
