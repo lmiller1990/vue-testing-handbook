@@ -83,7 +83,7 @@ export default {
 
 ## Write a test using `mount`
 
-Let's start off by writing a test to verify that `<ComponentWithAsyncCall>` is rendered. Note  that `findComponent` is used. `find` is used for querying DOM elements, and uses the `querySelector` syntax. `findComponent` is used when looking for a specific component, a takes a component as the argument.
+Let's start off by writing a test to verify that `<ComponentWithAsyncCall>` is rendered. Note that `findComponent` is used. `find` is used for querying DOM elements, and uses the `querySelector` syntax. `findComponent` is used when looking for a specific component, it takes a component as the argument.
 
 ```js
 import { shallowMount, mount } from '@vue/test-utils'
