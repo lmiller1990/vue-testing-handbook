@@ -139,7 +139,7 @@ describe('Greeting.vue', () => {
 })
 ```
 
-`console.log`는 더 이상 필요 없습니다. 해당 부분은 삭제해도 됩니다. `yarn unit:test` 명령어를 입력해서 테스트를 실행해보세요. 정상적으로 작동하면 아래와 같은 메세지가 나옵니다.
+`console.log`는 더 이상 필요 없습니다. 해당 부분은 삭제해도 됩니다. `yarn test:unit` 명령어를 입력해서 테스트를 실행해보세요. 정상적으로 작동하면 아래와 같은 메세지가 나옵니다.
 
 ```
 PASS  tests/unit/Greeting.spec.js
