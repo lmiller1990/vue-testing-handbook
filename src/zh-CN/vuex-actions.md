@@ -94,7 +94,7 @@ jest.mock("axios", () => ({
 
 我们将 `url` 和 `body` 保存到了变量中以便断言正确的时间端点接收了正确的 payload。因为我们不想实现真正的端点，用一个理解 resolve 的 promise 模拟一次成功的 API 调用就够了。
 
-`yarn unit:pass` 现在测试通过了！
+`yarn test:unit` 现在测试通过了！
 
 ## 测试 API Error
 

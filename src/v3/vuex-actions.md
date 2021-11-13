@@ -98,7 +98,7 @@ jest.mock("axios", () => ({
 
 We save `url` and `body` to variables to we can assert the correct endpoint is receiving the correct payload. Since we don't actually want to hit a real endpoint, we resolve the promise immediately which simulates a successful API call.
 
-`yarn unit:pass` now yields a passing test!
+`yarn test:unit` now yields a passing test!
 
 ## Testing for the API Error
 

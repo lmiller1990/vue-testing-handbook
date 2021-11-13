@@ -143,7 +143,7 @@ describe('Greeting.vue', () => {
 })
 ```
 
-We don't need the `console.log` anymore, so you can delete that. Run the tests with `yarn unit:test`, and if everything went well you should get:
+We don't need the `console.log` anymore, so you can delete that. Run the tests with `yarn test:unit`, and if everything went well you should get:
 
 ```
 PASS  tests/unit/Greeting.spec.js
