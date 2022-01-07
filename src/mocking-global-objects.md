@@ -128,6 +128,15 @@ The test passes, and the following markup is rendered:
 </div>
 ```
 
+Note: if the test is still failing, it's likely because `jest.init.js` is not set to load before the tests run.  Ensure that your `jest.config.js` file includes the following:
+
+```js
+module.exports = {
+  setupFiles: ["<rootDir>/jest.init.js"]
+}
+```
+and then re-run the test.
+
 You can read about using `mocks` to test Vuex [here](https://lmiller1990.github.io/vue-testing-handbook/vuex-in-components.html#using-a-mock-store). The technique is the same.
 
 ## Conclusion
