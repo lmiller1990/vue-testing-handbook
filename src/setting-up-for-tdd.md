@@ -35,6 +35,37 @@ Time:        2.074s
 
 Congratulations, you just ran your first passing test!
 
+
+## Modify your Jest config file
+
+To ensure your local configuration matches the one used in this book, you should override your current `jest.config.js` file with the following:
+
+```js
+module.exports = {
+  moduleFileExtensions: [
+    'js',
+    'jsx',
+    'json',
+    'vue'
+  ],
+  transform: {
+    '^.+\\.vue$': 'vue-jest',
+    '.+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$': 'jest-transform-stub',
+    '^.+\\.jsx?$': 'babel-jest'
+  },
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1'
+  },
+  snapshotSerializers: [
+    'jest-serializer-vue'
+  ],
+  testMatch: [
+    '<rootDir>/tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)'
+  ],
+  setupFiles: ["<rootDir>/jest.init.js"]
+}
+```
+
 ## Writing your first test
 
 We ran an existing test that came with the project. Let's get our hands dirty, writing our own component, and a test. Traditionally when doing TDD, you write the failing test first, then implement the code which allows the test to pass. For now, we will write the component first.
