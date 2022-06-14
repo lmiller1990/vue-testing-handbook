@@ -210,5 +210,5 @@ Of course, you want to make sure the value is correctly rendered as well, so mak
 
 ## Conclusion
 
-- computed properties can be using `mount` making assertions on the rendered markup
+- computed properties can be tested using `mount` making assertions on the rendered markup
 - complex computed properties can be independently tested by using `call`
