@@ -7,13 +7,14 @@
       <img
         id="ad"
         style="border: 1px solid rgba(0,0,0,0.5);"
-        src="https://raw.githubusercontent.com/lmiller1990/vue-testing-handbook/master/src/.vuepress/public/composition.png"
+        src="https://raw.githubusercontent.com/lmiller1990/vue-testing-handbook/master/src/.vuepress/public/mini.png"
         alt='banner'
       />
     </a>
     <br />
     <div class="info">
-      <small>
+
+      <!-- <small>
       Get $10 off my new course,
       <a 
         target="_blank" 
@@ -24,7 +25,21 @@
         <em>{{ word }}&nbsp;</em>
       </a>with discount code <b>HANDBOOK</b> at the checkout. 🎉 . 
       It's on both <a href="https://gumroad.com/l/vuejs-composition-api">Gumroad</a> and <a href="https://www.udemy.com/course/vuejs-3-the-composition-api/?referralCode=0C911BD2BD6C57007F36">Udemy</a>. Preview <a href="https://vimeo.com/showcase/8603383">it here.</a>
-      </small>
+      </small> -->
+
+ <small>
+       Get $5 of my new book,
+       <a href="https://lachlanmiller.gumroad.com/l/vuejs-design-patterns" target="_blank"><em>Design</em></a>
+       <a href="https://lachlanmiller.gumroad.com/l/vuejs-design-patterns" target="_blank"><em>Patterns</em></a>
+       <a href="https://lachlanmiller.gumroad.com/l/vuejs-design-patterns" target="_blank"><em>for</em></a>
+       <a href="https://lachlanmiller.gumroad.com/l/vuejs-design-patterns" target="_blank"><em>Vue.js</em></a>
+       <a href="https://lachlanmiller.gumroad.com/l/vuejs-design-patterns" target="_blank"><em>a test driven</em></a>
+       <a href="https://lachlanmiller.gumroad.com/l/vuejs-design-patterns" target="_blank"><em>approach to</em></a>
+       <a href="https://lachlanmiller.gumroad.com/l/vuejs-design-patterns" target="_blank"><em>maintainable</em></a>
+       <a href="https://lachlanmiller.gumroad.com/l/vuejs-design-patterns" target="_blank"><em>applications</em>,</a>
+       with <b>DESIGN_5_OFF</b> at the discount. 🎉
+       </small>
+
     </div>
 
     <!-- https://vuejs-course.com/ -->
