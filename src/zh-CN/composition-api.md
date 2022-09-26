@@ -27,7 +27,7 @@ import VueCompositionApi from '@vue/composition-api'
 
 Vue.use(VueCompositionApi)
 
-import { 
+import {
   reactive,
   computed
 } from '@vue/composition-api'
@@ -67,7 +67,7 @@ export default {
 
 ## 测试 Props 中传入的 Message
 
-测试 message 被妥当地渲染是小事一桩。我们只消使用 `propsData` 设置属性值即可，正如 [这里](/components-with-props.html) 所描述的。
+测试 message 被妥当地渲染是小事一桩。我们只须使用 `propsData` 设置属性值即可，正如 [这里](/components-with-props.html) 所描述的。
 
 ```js
 import { shallowMount } from "@vue/test-utils"
